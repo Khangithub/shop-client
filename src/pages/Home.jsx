@@ -1,17 +1,23 @@
-import React, {useContext} from 'react';
-import NavBar from '../components/NavBar/';
-import {Container, Spinner, Row} from 'react-bootstrap';
-import {withRouter} from 'react-router-dom';
-import ProductCard from '../components/ProductCard/';
-import {ProductListContext} from '../ContextProvider/ProductListContextProvider'; // luoon luoon phair cos dau {} khi import context api
-import Banner from '../components/Home/Banner';
-import Footer from '../components/Footer/';
-import CategoryList from '../components/Home/CategoryList';
-import './Home.css';
-import PropTypes from 'prop-types';
+import React, { useContext } from "react";
+import NavBar from "../components/NavBar/";
+import { Container, Spinner, Row } from "react-bootstrap";
+import ProductCard from "../components/ProductCard/";
+import { ProductListContext } from "../ContextProvider/ProductListContextProvider"; // luoon luoon phair cos dau {} khi import context api
+import Banner from "../components/Home/Banner";
+import Footer from "../components/Footer/";
+import CategoryList from "../components/Home/CategoryList";
+import Layout from "../layouts";
+import { grey } from "../assets/colors.json";
+
+const productListContainerStyle = {
+  display: "flex",
+  position: "relative",
+  bottom: "100px",
+};
 
 function Home() {
-  const {productList, getProductListLoading} = useContext(ProductListContext);
+  const { productList, getProductListLoading } = useContext(ProductListContext);
+
   let randomly = Math.floor(Math.random() * Object.values(productList).length);
 
   const getRandomProductList = (productList, randomly) => {
@@ -35,24 +41,29 @@ function Home() {
   return getProductListLoading ? (
     <Spinner animation="grow" variant="danger" />
   ) : (
-    <div className="home">
+    <>
       <NavBar />
-      <Banner />
-      <CategoryList />
-      <Container className="container-fluid home__random__product__list">
-        <Row>
-          {getRandomProductList(productList, randomly).map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
-        </Row>
-      </Container>
+      <Layout bg={`${grey}`} mb="20px">
+        <div className="home">
+          <Banner />
+          <CategoryList />
+          <Container
+            className="container-fluid"
+            style={productListContainerStyle}
+          >
+            <Row>
+              {getRandomProductList(productList, randomly).map(
+                (product, index) => (
+                  <ProductCard key={index} product={product} />
+                )
+              )}
+            </Row>
+          </Container>
+        </div>
+      </Layout>
       <Footer />
-    </div>
+    </>
   );
 }
 
-Home.prototype = {
-  productList: PropTypes.object,
-  getProductListLoading: PropTypes.bool,
-};
-export default withRouter(Home);
+export default Home;
