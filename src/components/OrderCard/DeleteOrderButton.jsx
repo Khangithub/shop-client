@@ -2,14 +2,12 @@ import React, {useContext} from 'react';
 import Cookies from 'universal-cookie';
 import {OrderContext} from '../../ContextProvider/OrderContextProvider';
 import {BillContext} from '../../ContextProvider/BillContextProvider';
-import removedSound from '../../assets/sounds/removed.mp3';
 
 export default function DeleteOrderButton({order}) {
   const {setCartLoading, setCart} = useContext(OrderContext);
   const {setBillList, setBillListLoading} = useContext(BillContext);
   const cookies = new Cookies();
   const token = cookies.get('token');
-  let audio = new Audio(removedSound);
 
   const handleDelete = async (event) => {
     event.preventDefault();
@@ -58,7 +56,6 @@ export default function DeleteOrderButton({order}) {
           setBillListLoading(false);
           setCartLoading(false);
           setCart(cartJson.docs);
-          audio.play();
         } else {
           console.error(
             'DeleteOrderButton error in set orderList back',

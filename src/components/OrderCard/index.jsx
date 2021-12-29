@@ -7,12 +7,10 @@ import DeleteOrderButton from './DeleteOrderButton';
 import {returnPrice, getRandomInRange, convertTimestamp} from '../../helpers';
 import {OrderContext} from '../../ContextProvider/OrderContextProvider';
 import PropTypes from 'prop-types';
-import removedSound from '../../assets/sounds/removed.mp3';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 export default function OrderCard({order, forSaleman, forBuyer}) {
-  console.log('order', order);
   const {product, quantity, buyer, _id, published} = order;
   const [updatedQuantity, setUpdatedQuantity] = useState(0);
   const cookies = new Cookies();
@@ -20,7 +18,6 @@ export default function OrderCard({order, forSaleman, forBuyer}) {
   const rating = getRandomInRange(1, 5);
   const {setCartLoading, setCart} = useContext(OrderContext);
   const history = useHistory();
-  let audio = new Audio(removedSound);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -57,7 +54,6 @@ export default function OrderCard({order, forSaleman, forBuyer}) {
           if (cartJson.docs) {
             setCartLoading(false);
             setCart(cartJson.docs);
-            audio.play();
           } else {
             setCartLoading(true);
             console.error('UpdateOrder error in set orderList back', cartJson);

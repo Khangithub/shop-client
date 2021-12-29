@@ -3,11 +3,9 @@ import {Col, Row, Image} from 'react-bootstrap';
 import lockIcon from '../../../images/common/lock.png';
 import locationIcon from '../../../images/common/location.png';
 import {OrderContext} from '../../../ContextProvider/OrderContextProvider';
-import selectedSound from '../../../assets/sounds/selected.mp3';
 
 function ProductCartCard({product}) {
   let [quantity, setQuantity] = useState(1);
-  let audio = new Audio(selectedSound);
   
   const {createOrder} = useContext(OrderContext);
 
@@ -53,7 +51,6 @@ function ProductCartCard({product}) {
         <Row className="product__cart__card__add_to_cart__button">
           <button
             onClick={() => {
-              audio.play();
               createOrder(product, quantity);
             }}
           >
