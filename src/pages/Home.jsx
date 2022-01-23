@@ -6,14 +6,7 @@ import { ProductListContext } from "../ContextProvider/ProductListContextProvide
 import Banner from "../components/Home/Banner";
 import Footer from "../components/Footer/";
 import CategoryList from "../components/Home/CategoryList";
-import Layout from "../layouts";
-import { grey } from "../assets/colors.json";
-
-const productListContainerStyle = {
-  display: "flex",
-  position: "relative",
-  bottom: "100px",
-};
+import './_pages.scss';
 
 function Home() {
   const { productList, getProductListLoading } = useContext(ProductListContext);
@@ -43,14 +36,11 @@ function Home() {
   ) : (
     <>
       <NavBar />
-      <Layout bg={`${grey}`} mb="20px">
-        <div className="home">
+      {/* <Layout bg={`${grey}`} mb="20px"> */}
+        <div className="home layout">
           <Banner />
           <CategoryList />
-          <Container
-            className="container-fluid"
-            style={productListContainerStyle}
-          >
+          <Container className="container-fluid home-general-product-list">
             <Row>
               {getRandomProductList(productList, randomly).map(
                 (product, index) => (
@@ -60,7 +50,7 @@ function Home() {
             </Row>
           </Container>
         </div>
-      </Layout>
+      {/* </Layout> */}
       <Footer />
     </>
   );

@@ -1,7 +1,5 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import Layout from "../../layouts";
-import {darkBlue} from "../../assets/colors.json"
 import "./Footer.css";
 
 export default function Index() {
@@ -16,7 +14,7 @@ export default function Index() {
         <p>Back to top</p>
       </div>
 
-      <Layout bg={`${darkBlue}`}>
+      {/* <Layout bg={`${darkBlue}`}> */}
         <Row className="footer__info__container container-fluid">
           <Col xs={12} sm={6} md={3} className="footer__section">
             <h5>Get to Know Us</h5>
@@ -58,7 +56,7 @@ export default function Index() {
             <p> Help</p>
           </Col>
         </Row>
-      </Layout>
+      {/* </Layout> */}
     </>
   );
 }

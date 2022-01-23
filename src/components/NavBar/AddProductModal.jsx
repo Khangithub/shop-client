@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import Cookies from 'universal-cookie';
-// import {useHistory} from 'react-router-dom';
 import {Modal, Form, Row, Col, Spinner} from 'react-bootstrap';
 
-function CreateProductModal(props) {
+function AddProductMdal(props) {
   const {
     setProductList,
     setYourProductList,
@@ -13,7 +12,6 @@ function CreateProductModal(props) {
   } = props;
   const cookies = new Cookies();
   const token = cookies.get('token');
-  // const history = useHistory();
 
   const [newProduct, setNewProduct] = useState({
     name: '',
@@ -94,8 +92,8 @@ function CreateProductModal(props) {
     >
       <Modal.Header closeButton />
       <Modal.Body>
-        <Row className="create__product__modal">
-          <Col xs={12} sm={6} className="add__product__modal__col">
+        <Row className="add-product-modal">
+          <Col xs={12} sm={6} className="add-product-modal--col">
             <Form.Group>
               <Form.Label>Name: </Form.Label>
               <Form.Control
@@ -154,7 +152,7 @@ function CreateProductModal(props) {
               />
             </Form.Group>
           </Col>
-          <Col xs={12} sm={6} className="add__product__modal__col">
+          <Col xs={12} sm={6} className="add-product-modal--col">
             <Form.Group>
               <Form.Label>Category: </Form.Label>
               <Form.Control
@@ -210,4 +208,4 @@ function CreateProductModal(props) {
   );
 }
 
-export default CreateProductModal;
+export default AddProductMdal;

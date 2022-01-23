@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
-import './CreateProductButton.css';
-import CreateProductModal from './CreateProductModal';
+import './_addProductBtn.scss';
+import AddProductModal from './AddProductModal';
 import {Image} from 'react-bootstrap';
 import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
 import {ProductListContext} from '../../ContextProvider/ProductListContextProvider';
-import addProductIcon from '../../images/common/addProduct.svg';
+import addProductSvg from '../../assets/svgs/addProduct.svg';
 
-export default function CreateProductButton() {
+function AddProductBtn() {
   const [showModal, setShowModal] = React.useState(false);
   const {getCurrentUserLoading, currentUser} = useContext(CurrentUserContext);
   const {setProductList, setYourProductList, setProductListLoading} = useContext(
@@ -15,15 +15,15 @@ export default function CreateProductButton() {
 
   return (
     !getCurrentUserLoading && (
-      <div className="create__product__button__container">
+      <div className="add-product-btn">
         <Image
-          src={addProductIcon}
+          src={addProductSvg}
           alt="add product icon"
           rounded
           onClick={() => setShowModal(!showModal)}
         />
 
-        <CreateProductModal
+        <AddProductModal
           show={showModal}
           is_loading={getCurrentUserLoading}
           onHide={() => setShowModal(false)}
@@ -36,3 +36,5 @@ export default function CreateProductButton() {
     )
   );
 }
+
+export default AddProductBtn;
