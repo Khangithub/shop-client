@@ -1,13 +1,13 @@
 import React from 'react';
-import './SettingDropdown.css';
+import './_settingDropdown.scss';
 import {Image, NavDropdown} from 'react-bootstrap';
 
 function SettingDropdown({currentUser, billList}) {
   return (
     <NavDropdown
-      className="setting__dropdown"
+      className="setting-dropdown"
       title={
-        <span className="setting__dropdown__title">
+        <span className="setting-dropdown-title">
           <span>Hello, {currentUser ? currentUser.role : 'Sign in'}</span>
           <br />
           <span>{currentUser ? currentUser.username : 'Guest'}</span>
@@ -17,20 +17,20 @@ function SettingDropdown({currentUser, billList}) {
       {currentUser && currentUser.role !== 'client' && (
         <NavDropdown.Item
           href="/yourProducts"
-          className="setting__dropdown__item"
+          className="setting-dropdown-item"
         >
-          <span className="setting__dropdown__item__title">
+          <span className="setting-dropdown-item--title">
             Your Product List
           </span>
         </NavDropdown.Item>
       )}
 
       {currentUser && currentUser.role !== 'client' && (
-        <NavDropdown.Item className="setting__dropdown__item" href="/yourBills">
-          <span className="setting__dropdown__item__title">
+        <NavDropdown.Item className="setting-dropdown-item" href="/yourBills">
+          <span className="setting-dropdown-item--title">
             Your Order List
           </span>
-          <span className="setting__dropdown__item__length">
+          <span className="setting-dropdown-item--length">
             {billList ? billList.length : 'loading'}
           </span>
         </NavDropdown.Item>
@@ -38,15 +38,15 @@ function SettingDropdown({currentUser, billList}) {
 
       {currentUser && (
         <NavDropdown.Item
-          className="setting__dropdown__item"
+          className="setting-dropdown-item"
           href="/personalize"
         >
-          <span className="setting__dropdown__item__title">Personalize</span>
+          <span className="setting-dropdown-item--title">Personalize</span>
 
           {currentUser && (
             <Image
               src={currentUser.avatar}
-              className="setting__dropdown__item__img"
+              className="setting-dropdown-item-img"
               roundedCircle
             />
           )}
@@ -54,17 +54,17 @@ function SettingDropdown({currentUser, billList}) {
       )}
 
       <NavDropdown.Item
-        className="setting__dropdown__item setting__dropdown__login__button"
+        className="setting-dropdown-item setting-dropdown-user-btn"
         href="/login"
       >
-        <span className="setting__dropdown__item__title">Log in</span>
+        <span className="setting-dropdown-item--title">Log in</span>
       </NavDropdown.Item>
 
       <NavDropdown.Item
-        className="setting__dropdown__item setting__dropdown__signup__button"
+        className="setting-dropdown-item setting-dropdown-user-btn"
         href="/signup"
       >
-        <span className="setting__dropdown__item__title">Sign up</span>
+        <span className="setting-dropdown-item--title">Sign up</span>
       </NavDropdown.Item>
     </NavDropdown>
   );

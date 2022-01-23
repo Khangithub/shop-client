@@ -1,12 +1,13 @@
 import React from 'react';
-import './CategoryList.css';
-
-import bookIcon from '../../images/common/book.jpg';
-import phoneIcon from '../../images/common/phone.jpg';
-import foodIcon from '../../images/common/food.jpg';
-import shippingIcon from '../../images/common/shipping.jpg';
-import {useHistory} from 'react-router-dom';
 import {Container, Row, Col, Image} from 'react-bootstrap';
+
+import '../_components.scss';
+
+import bookSvg from '../../assets/svgs/book.svg';
+import phoneSvg from '../../assets/svgs/phone.svg';
+import foodSvg from '../../assets/svgs/food.svg';
+import shippingSvg from '../../assets/svgs/shipping.svg';
+import {useHistory} from 'react-router-dom';
 
 function CategoryList() {
   const history = useHistory();
@@ -14,11 +15,11 @@ function CategoryList() {
   return (
     <div className="category">
       <Container className="container-fluid">
-        <Row className="category__card__list">
+        <Row className="category-card-list">
           {[
-            {name: 'book', icon: bookIcon},
-            {name: 'technology', icon: phoneIcon},
-            {name: 'food', icon: foodIcon},
+            {name: 'book', icon: bookSvg},
+            {name: 'technology', icon: phoneSvg},
+            {name: 'food', icon: foodSvg},
           ].map((category, index) => (
             <Col
               key={index}
@@ -27,31 +28,31 @@ function CategoryList() {
               md={3}
               onClick={() => history.push(`/productList/${category.name}/1`)}
             >
-              <div className="category__card__container">
-                <h4 className="category__card__name">{category.name}</h4>
+              <div className="category-card-container">
+                <h4 className="category-card-name">{category.name}</h4>
                 <Image
                   src={category.icon}
                   alt="icon"
-                  className="category__card__image"
+                  className="category-card-image"
                 />
-                <small className="category__card__link">See more</small>
+                <small className="category-card-link">See more</small>
               </div>
             </Col>
           ))}
           <Col xs={12} sm={6} md={3}>
-            <div className="signin__container">
-              <div className="signin__container__signin__button">
+            <div className="signin-container">
+              <div className="signin-container-signin-btn">
                 <h5>Sign in for the best experience</h5>
                 <button onClick={() => history.push('/login')}>
                   Sign in securely
                 </button>
               </div>
 
-              <div className="shipping__image">
+              <div className="shipping-img">
                 <Image
-                  src={shippingIcon}
+                  src={shippingSvg}
                   alt="shipping-icon"
-                  className="category__image"
+                  className="category-img"
                 />
               </div>
             </div>

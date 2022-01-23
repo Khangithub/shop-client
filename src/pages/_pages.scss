@@ -1,0 +1,14 @@
+@import '../styles/_layout';
+@import '../styles/_colors';
+
+.home {
+    @include layout;
+    background-color: $grey;
+
+    .home-general-product-list {
+        display: "flex";
+        position: "relative";
+        bottom: "100px";
+    }
+}
+

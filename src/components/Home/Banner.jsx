@@ -1,22 +1,20 @@
-import React from 'react';
-import './Banner.css';
-import {Col, Row, Container, Carousel} from 'react-bootstrap';
+import React from "react";
+import "../_components.scss";
+import { Col, Row, Container, Carousel } from "react-bootstrap";
 
-import PropTypes from 'prop-types';
+import ads11 from "../../assets/banners/ads11.jpg";
+import ads12 from "../../assets/banners/ads12.jpg";
+import ads13 from "../../assets/banners/ads13.jpg";
+import ads14 from "../../assets/banners/ads14.jpg";
+import ads15 from "../../assets/banners/ads15.jpg";
+import ads16 from "../../assets/banners/ads16.jpg";
+import ads17 from "../../assets/banners/ads17.jpg";
+import ads18 from "../../assets/banners/ads18.jpg";
+import ads19 from "../../assets/banners/ads19.jpg";
 
-import ads11 from '../../images/ads/ads11.jpg';
-import ads12 from '../../images/ads/ads12.jpg';
-import ads13 from '../../images/ads/ads13.jpg';
-import ads14 from '../../images/ads/ads14.jpg';
-import ads15 from '../../images/ads/ads15.jpg';
-import ads16 from '../../images/ads/ads16.jpg';
-import ads17 from '../../images/ads/ads17.jpg';
-import ads18 from '../../images/ads/ads18.jpg';
-import ads19 from '../../images/ads/ads19.jpg';
-
-export default function Banner() {
+function Banner() {
   return (
-    <Container fluid className="banner__container">
+    <Container fluid className="banner">
       <Row>
         <Col xs={12}>
           <Carousel>
@@ -34,7 +32,7 @@ export default function Banner() {
               return (
                 <Carousel.Item key={index}>
                   <img
-                    className="banner__img d-block w-100"
+                    className="banner-img d-block w-100"
                     src={image}
                     alt="First slide"
                   />
@@ -48,7 +46,4 @@ export default function Banner() {
   );
 }
 
-Banner.prototype = {
-  productList: PropTypes.array,
-  getProductListLoading: PropTypes.bool,
-};
+export default Banner;

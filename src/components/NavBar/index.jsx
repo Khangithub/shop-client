@@ -1,17 +1,16 @@
 import React, { useContext, useState } from "react";
-import "./Navbar.css";
+import "../_components.scss";
 import { Navbar, Nav, Image, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { OrderContext } from "../../ContextProvider/OrderContextProvider";
 import { BillContext } from "../../ContextProvider/BillContextProvider";
 import { CurrentUserContext } from "../../ContextProvider/CurrentUserContextProvider";
-import CreateProductButton from "./CreateProductButton";
+import AddProductBtn from "./AddProductBtn";
 import SettingDropdown from "./SettingDropdown";
-import Layout from '../../layouts'
-import logo from "../../images/common/logo.JPG";
-import cartIcon from "../../images/common/cart.png";
-import productListIcon from "../../images/common/products.svg";
-import {lightGrey} from "../../assets/colors.json";
+
+import logoSvg from "../../assets/svgs/logo.svg";
+import cartSvg from "../../assets/svgs/cart.svg";
+import productSvg from "../../assets/svgs/products.svg";
 
 import { removeAscent } from "../../helpers";
 
@@ -20,7 +19,7 @@ function NavBar() {
   const { currentUser } = useContext(CurrentUserContext);
   let [input, setInput] = useState("");
 
-  const { cart, getCartLoading, isOrderAdded } = useContext(OrderContext);
+  const { cart, getCartLoading } = useContext(OrderContext);
 
   const { billList } = useContext(BillContext);
 
@@ -35,44 +34,34 @@ function NavBar() {
   };
 
   return (
-    <Layout bg={`${lightGrey}`} mb="20px">
-      <div className="NavBar navbar__container">
+    <div className="NavBar navbar-layout">
+      <div className="navbar-content">
         <Navbar bg="light" expand="lg">
           <Navbar.Brand href="/">
-            <Image
-              className="navbar__container__img"
-              src={logo}
-              alt="logo image"
-              rounded
-            />
+            <Image className="navbar-logo" src={logoSvg} alt="logo" rounded />
           </Navbar.Brand>
 
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Toggle />
+          <Navbar.Collapse>
             <Nav className="mr-auto">
               <Nav.Link href="/productList/1">
                 <Image
-                  className="navbar__container__img"
-                  src={productListIcon}
-                  alt="productListIcon"
+                  className="navbar-logo"
+                  src={productSvg}
+                  alt="productSvg"
                 />
               </Nav.Link>
 
               {currentUser && currentUser.role !== "client" && (
-                <div className="navbar__container__create__product__button">
-                  <CreateProductButton />
-                </div>
+                <AddProductBtn />
               )}
 
               {currentUser && (
-                <Nav.Link
-                  className={isOrderAdded && "navbar__container__img__shake"}
-                  href="/orders"
-                >
+                <Nav.Link href="/orders">
                   <Image
-                    src={cartIcon}
-                    className="navbar__container__img"
-                    alt="cartIcon"
+                    src={cartSvg}
+                    className="navbar-logo"
+                    alt="cartSvg"
                   />
 
                   <Badge variant="danger">
@@ -84,7 +73,7 @@ function NavBar() {
               <SettingDropdown currentUser={currentUser} billList={billList} />
             </Nav>
 
-            <form className="navbar__searchbox" onSubmit={handleSearch}>
+            <form className="navbar-searchbox" onSubmit={handleSearch}>
               <input
                 type="text"
                 placeholder="mì tôm, Iphone, ..."
@@ -103,7 +92,7 @@ function NavBar() {
           </Navbar.Collapse>
         </Navbar>
       </div>
-    </Layout>
+    </div>
   );
 }
 
