@@ -2,5 +2,5 @@
 
 https://dev.to/jessesbyers/how-to-update-a-deployed-app-on-heroku-3fde
 
-
-
+# get branchs from remote
+git branch --remotes 

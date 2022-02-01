@@ -8,7 +8,7 @@ const INTIAL_STATE = {
 
 export default function products (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_SALE_OFF_PRODUCTS: {
+    case Types.GET_SALE_OFF_PRODUCTS_SUCCESS: {
       return {
         ...state,
         loading: false,
