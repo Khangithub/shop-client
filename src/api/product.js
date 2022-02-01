@@ -1,4 +1,4 @@
-const getSaleOffProducts = async pageIndex => {
+const getSaleOffProductsSuccess = async pageIndex => {
   try {
     const saleOffProductsRequest = await fetch (
       process.env.REACT_APP_SALE_OFF_PRODUCT + pageIndex
@@ -12,5 +12,5 @@ const getSaleOffProducts = async pageIndex => {
 };
 
 module.exports = {
-  getSaleOffProducts,
+  getSaleOffProductsSuccess,
 };
