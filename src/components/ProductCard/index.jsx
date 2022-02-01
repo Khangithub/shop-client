@@ -3,15 +3,14 @@ import {useHistory} from 'react-router-dom';
 import {Row, Col, Badge, Image} from 'react-bootstrap';
 import './ProductCard.css';
 import {getRandomInRange, returnPrice} from '../../helpers';
-import PropTypes from 'prop-types';
 import EditProductButton from './EditProductButton';
 import DeleteProductButton from './DeleteProductButton';
 
 export default function ProductCard({product, canEdit, canDelete}) {
   const history = useHistory();
-  const rating = getRandomInRange(1, 5);
-  const soldProgress = getRandomInRange(1, 100);
-  const soldQuantity = getRandomInRange(1, 1000);
+  // const rating = getRandomInRange(1, 5);
+  // const soldProgress = getRandomInRange(1, 100);
+  // const soldQuantity = getRandomInRange(1, 1000);
 
   return (
     <Col xs={6} sm={4} md={3} lg={2} className="product__card">
@@ -63,7 +62,7 @@ export default function ProductCard({product, canEdit, canDelete}) {
           </Col>
         </Row>
 
-        <Row>
+        {/* <Row>
           <Col className="product__card__rating">
             {Array(rating)
               .fill()
@@ -84,17 +83,8 @@ export default function ProductCard({product, canEdit, canDelete}) {
               (soldQuantity * soldProgress) / 100
             )}/${soldQuantity}`}</small>
           </Col>
-        </Row>
+        </Row> */}
       </div>
     </Col>
   );
 }
-
-ProductCard.prototype = {
-  product: PropTypes.shape({
-    productImage: PropTypes.string,
-    discount: PropTypes.number,
-    price: PropTypes.number,
-    name: PropTypes.string,
-  }),
-};
