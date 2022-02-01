@@ -1,10 +1,10 @@
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import * as actions from '../actions/product';
-import * as api from '../api/product';
+import {getSaleOffProducts} from '../api/product';
 
 function* getSaleOffProductsSuccess({payload: {pageIndex}}) {
   try {
-    const products = yield call(api.getSaleOffProductsSuccess, {pageIndex});
+    const products = yield call(getSaleOffProducts, {pageIndex});
     yield put(
       actions.getSaleOffProductsSuccess({
         products,

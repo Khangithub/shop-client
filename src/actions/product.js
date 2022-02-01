@@ -26,9 +26,9 @@ const getFailedRequest = ({err}) => ({
   },
 });
 
-module.exports = {
+export {
   Types,
   getSaleOffProductsSuccess,
   getSaleOffProductsRequest,
-  getFailedRequest
+  getFailedRequest,
 };
