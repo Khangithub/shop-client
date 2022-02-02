@@ -4,7 +4,7 @@ import * as api from '../api/product';
 
 function* getSaleOffProductsSuccess({payload: {pageIndex}}) {
   try {
-    const products = yield call(api.getSaleOffProductsSuccess, {pageIndex});
+    const products = yield call(api.getSaleOffProductsRequest, {pageIndex});
     yield put(
       actions.getSaleOffProductsSuccess({
         products,

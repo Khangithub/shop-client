@@ -14,7 +14,7 @@ import "./_pages.scss";
 
 function Home() {
   const dispatch = useDispatch();
-  const [pageIndex, setPageIndex] = useState(1);
+  const [pageIndex] = useState(1);
   const { saleOffProducts, loading, err } = useSelector(
     (state) => state.product
   );

@@ -1,25 +1,25 @@
-import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {Row, Col, Badge, Image} from 'react-bootstrap';
-import './ProductCard.css';
-import {getRandomInRange, returnPrice} from '../../helpers';
-import EditProductButton from './EditProductButton';
-import DeleteProductButton from './DeleteProductButton';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { Row, Col, Badge, Image } from "react-bootstrap";
+import "../_components.scss";
+import { getRandomInRange, returnPrice } from "../../helpers";
+import EditProductButton from "./EditProductButton";
+import DeleteProductButton from "./DeleteProductButton";
 
-export default function ProductCard({product, canEdit, canDelete}) {
+export default function ProductCard({ product, canEdit, canDelete }) {
   const history = useHistory();
   const rating = getRandomInRange(1, 5);
   const soldProgress = getRandomInRange(1, 100);
   const soldQuantity = getRandomInRange(1, 1000);
 
   return (
-    <Col xs={6} sm={4} md={3} lg={2} className="product__card">
-      <div className="product__card__button__list">
+    <Col xs={6} sm={4} md={3} lg={2} className="product-card">
+      <div className="product-card-button-list">
         {canEdit && <EditProductButton product={product} />}
         {canDelete && <DeleteProductButton product={product} />}
       </div>
       <div
-        className="product__card__container"
+        className="product-card-container"
         onClick={() => {
           history.push(`/${product._id}`);
         }}
@@ -27,22 +27,22 @@ export default function ProductCard({product, canEdit, canDelete}) {
         <Image
           src={product.productImage}
           alt="productImage"
-          className="product__card__img"
+          className="product-card-img"
         />
 
         <Row>
-          <Col className="product__card__name">
+          <Col className="product-card-name">
             <p>{product.name}</p>
           </Col>
         </Row>
 
         <Row>
-          <Col className="product__card__price">
+          <Col className="product-card-price">
             <Row
               className={
                 product.discount
-                  ? 'product__card__net__price'
-                  : 'product__card__net__price__hide'
+                  ? "product-card-net-price"
+                  : "product-card-net-price-hide"
               }
             >
               <span>{returnPrice(product)}$ &nbsp;&nbsp;</span>
@@ -53,8 +53,8 @@ export default function ProductCard({product, canEdit, canDelete}) {
             <p
               className={
                 product.discount
-                  ? 'product__card__gross__price__remove'
-                  : 'product__card__gross__price'
+                  ? "product-card-gross-price-remove"
+                  : "product-card-gross-price"
               }
             >
               {product.price}$
@@ -63,7 +63,7 @@ export default function ProductCard({product, canEdit, canDelete}) {
         </Row>
 
         <Row>
-          <Col className="product__card__rating">
+          <Col className="product-card-rating">
             {Array(rating)
               .fill()
               .map((_, index) => (
@@ -75,13 +75,22 @@ export default function ProductCard({product, canEdit, canDelete}) {
         </Row>
 
         <Row>
-          <Col xs={11} className="product__card__sold__progress">
-            <progress value={soldProgress} max="100" />
+          <Col xs={11}>
+            <div class="progress">
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                style={{ width: `${soldProgress}%` }}
+                aria-valuenow="60"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
           </Col>
-          <Col xs={12} className="product__card__sold__quantity">
-            <small>{`sold ${Math.round(
+          <Col xs={12} className="product-card-sold-quantity">
+            <p>{`sold ${Math.round(
               (soldQuantity * soldProgress) / 100
-            )}/${soldQuantity}`}</small>
+            )}/${soldQuantity}`}</p>
           </Col>
         </Row>
       </div>
