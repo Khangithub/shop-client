@@ -8,7 +8,7 @@ import { getSaleOffProductsRequest } from "../actions/product";
 import _ from "lodash";
 
 import Banner from "../components/Home/Banner";
-import Footer from "../components/Footer/";
+import Footer from "../components/Footer";
 import CategoryList from "../components/Home/CategoryList";
 import "./_pages.scss";
 

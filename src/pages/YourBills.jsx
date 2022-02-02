@@ -8,7 +8,7 @@ import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider'
 import {BillContext} from '../ContextProvider/BillContextProvider';
 import OrderCard from '../components/OrderCard';
 import {returnTotalPrice} from '../helpers';
-import Footer from '../components/Footer/';
+import Footer from '../components/Footer';
 
 export default function YourBills() {
   const {currentUser, getCurrentUserLoading} = useContext(CurrentUserContext);

@@ -34,8 +34,8 @@ function NavBar() {
   };
 
   return (
-    <div className="NavBar navbar-layout">
-      <div className="navbar-content">
+    <div className="navbar-container">
+      <div className="navbar-layout">
         <Navbar bg="light" expand="lg">
           <Navbar.Brand href="/">
             <Image className="navbar-logo" src={logoSvg} alt="logo" rounded />

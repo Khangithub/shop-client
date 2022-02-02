@@ -1,23 +1,19 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import "./Footer.css";
+import { backToTop } from "../helpers/position";
+import "./_components.scss";
 
 export default function Index() {
-  const backToTop = () => {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  };
-
   return (
     <>
-      <div className="footer__back__to__top__button" onClick={backToTop}>
-        <p>Back to top</p>
+      <div className="back-to-top-btn" onClick={backToTop}>
+        <span>Back to top</span>
       </div>
 
-      {/* <Layout bg={`${darkBlue}`}> */}
-        <Row className="footer__info__container container-fluid">
-          <Col xs={12} sm={6} md={3} className="footer__section">
-            <h5>Get to Know Us</h5>
+      <Row className="footer-container container-fluid">
+        <Row className="footer-layout">
+          <Col xs={12} sm={6} md={3} className="footer-section">
+            <h4>Get to Know Us</h4>
             <p>Careers</p>
             <p>Blog</p>
             <p>About Amazon</p>
@@ -25,9 +21,8 @@ export default function Index() {
             <p>Amazon Devices</p>
             <p>Amazon Tours</p>
           </Col>
-
-          <Col xs={12} sm={6} md={3} className="footer__section">
-            <h5>Sell productList on Amazon</h5>
+          <Col xs={12} sm={6} md={3} className="footer-section">
+            <h4>Sell productList on Amazon</h4>
             <p>Sell apps on Amazon</p>
             <p>Become an Affiliate</p>
             <p>Advertise Your Products</p>
@@ -35,17 +30,15 @@ export default function Index() {
             <p>Host an Amazon Hub</p>
             <p>›See More Make Money with Us</p>
           </Col>
-
-          <Col xs={12} sm={6} md={3} className="footer__section">
-            <h5> Amazon Payment Products</h5>
+          <Col xs={12} sm={6} md={3} className="footer-section">
+            <h4> Amazon Payment Products</h4>
             <p>Amazon Business Card</p>
             <p>Shop with Points</p>
             <p>Reload Your Balance</p>
             <p>Amazon Currency Converter</p>
           </Col>
-
-          <Col xs={12} sm={6} md={3} className="footer__section">
-            <h5>Let Us Help You</h5>
+          <Col xs={12} sm={6} md={3} className="footer-section">
+            <h4>Let Us Help You</h4>
             <p>Amazon and COVID-19</p>
             <p>Your Account</p>
             <p>Your Orders</p>
@@ -56,7 +49,7 @@ export default function Index() {
             <p> Help</p>
           </Col>
         </Row>
-      {/* </Layout> */}
+      </Row>
     </>
   );
 }

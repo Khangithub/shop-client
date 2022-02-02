@@ -4,7 +4,7 @@ import {Row, Form, Spinner} from 'react-bootstrap';
 import {withRouter} from 'react-router-dom';
 import {ProductListContext} from '../ContextProvider/ProductListContextProvider';
 import ProductCard from '../components/ProductCard';
-import Footer from '../components/Footer/';
+import Footer from '../components/Footer';
 import {removeAscent, sortAccordType} from '../helpers';
 import './Search.css';
 

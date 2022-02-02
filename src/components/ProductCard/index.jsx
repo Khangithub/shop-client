@@ -46,7 +46,7 @@ export default function ProductCard({ product, canEdit, canDelete }) {
               }
             >
               <span>{returnPrice(product)}$ &nbsp;&nbsp;</span>
-              <Badge variant="danger" className="product__card__discount">
+              <Badge variant="danger">
                 -{product.discount}%
               </Badge>
             </Row>

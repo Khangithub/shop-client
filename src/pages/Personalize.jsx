@@ -5,7 +5,7 @@ import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider'
 import EditAvatar from '../components/Personalize/EditAvatar';
 import EditInfo from '../components/Personalize/EditInfo';
 import ChangePwd from '../components/Personalize/ChangePwd';
-import Footer from "../components/Footer/";
+import Footer from "../components/Footer";
 import './Personalize.css';
 import PropTypes from 'prop-types';
 

@@ -2,11 +2,11 @@
 @import '../styles/_colors';
 
 
-.navbar-layout {
+.navbar-container {
     background-color: $lightGrey;
     padding: 10px 0;
 
-    .navbar-content {
+    .navbar-layout {
         @include layout;
 
         .navbar-brand {
@@ -277,6 +277,47 @@
             &>p {
                 color: $greenLink;
             }
+        }
+    }
+}
+
+.back-to-top-btn {
+    margin-top: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: $darkBlue;
+    opacity: 0.7;
+    color: $white;
+    font-size: larger;
+
+    &>:hover {
+        opacity: 0.5;
+    }
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    color: $white;
+    background-color: $darkBlue;
+    margin: 0 !important;
+
+    .footer-layout {
+        @include layout;
+        background-color: $darkBlue;
+
+        .footer-section {
+            padding-top: 40px;
+            padding-bottom: 20px;
+
+            h4 {
+                min-height: 80px;
+                font-weight: 700;
+            }
+
         }
     }
 }
