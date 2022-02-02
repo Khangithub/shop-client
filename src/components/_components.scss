@@ -86,6 +86,10 @@
 }
 
 .category {
+    .col-md-3 {
+        padding: 0;
+    }
+
     display: flex;
     width: 100%;
     position: relative;
