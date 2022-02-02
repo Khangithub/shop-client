@@ -1,28 +1,35 @@
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
-import * as actions from '../actions/product';
+import {
+  getSaleOffProductsSuccess,
+  getFailedRequest,
+  Types,
+} from '../actions/product';
 import {getSaleOffProductsRequest} from '../api/product';
 
-function* getSaleOffProductsSuccess({payload: {pageIndex}}) {
+function* getSaleOffProductsGenerator({payload: {pageIndex}}) {
   try {
-    const products = yield call(getSaleOffProductsRequest, {pageIndex});
-    yield put(
-      actions.getSaleOffProductsSuccess({
+    const products = yield call (getSaleOffProductsRequest, {pageIndex});
+    yield put (
+      getSaleOffProductsSuccess ({
         products,
       })
     );
   } catch (err) {
-    yield put(
-      actions.getFailedRequest({
+    yield put (
+      getFailedRequest ({
         err,
       })
     );
   }
 }
 
-function* watchGetSaleOffProductsRequest() {
-  yield takeLatest(actions.Types.GET_SALE_OFF_PRODUCTS_REQUEST, getSaleOffProductsSuccess);
+function* watchGetSaleOffProductsRequest () {
+  yield takeLatest (
+    Types.GET_SALE_OFF_PRODUCTS_REQUEST,
+    getSaleOffProductsGenerator
+  );
 }
 
-const productSaga = [fork(watchGetSaleOffProductsRequest)];
+const productSaga = [fork (watchGetSaleOffProductsRequest)];
 
 export default productSaga;
