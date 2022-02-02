@@ -11,6 +11,6 @@ const getSaleOffProductsRequest = async pageIndex => {
   }
 };
 
-module.exports = {
+export {
   getSaleOffProductsRequest,
 };
