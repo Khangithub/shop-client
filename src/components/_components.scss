@@ -17,11 +17,12 @@
             width: 50px;
             height: 50px;
             cursor: pointer;
+
+            &:hover {
+                opacity: 0.6;
+            }
         }
 
-        .navbar-logo:hover {
-            opacity: 0.6;
-        }
 
         .navbar-searchbox {
             display: flex;
@@ -108,13 +109,29 @@
         align-items: flex-start;
         flex-direction: column;
         background-color: $white;
-        padding: 20px 5px 5px 5px;
-        margin: 20px 5px 5px 5px;
+        padding: 10px;
+        margin: 10px;
         cursor: pointer;
         border-radius: 5px;
 
         &:hover {
             opacity: 0.4;
+        }
+
+        .video-ad {
+            max-width: 800px;
+            width: 100% !important;
+
+            video {
+                object-fit: cover;
+                border-radius: 5px;
+            }
+        }
+
+        .carousel-inner {
+            height: 100%;
+            max-height: 420px;
+            border-radius: 5px;
         }
 
         .category-card-name {
@@ -125,33 +142,32 @@
 
         .category-card-image {
             width: 100%;
-            height: 100%;
-            min-height: 300px;
+            height: 400px;
+            border-radius: 5px;
             object-fit: cover;
         }
 
         .category-card-link {
             cursor: pointer;
             color: $greenLink;
-            margin: 20px 0;
+            margin: 5px 0;
             font-size: 15px;
         }
     }
 
     .signin-container {
         display: flex;
-        flex: 0.2 1;
         flex-direction: column;
         background-color: $white;
-        padding: 20px 5px 33px 5px;
-        margin: 20px 5px 5px 5px;
+        padding: 10px;
+        margin: 25px;
         border-radius: 5px;
 
         .signin-container-signin-btn {
             >h5 {
                 text-transform: capitalize;
                 font-weight: 700;
-                word-break: break-all;
+                text-align: center;
             }
 
             button {
@@ -160,7 +176,8 @@
                 width: 100%;
                 border: 1px solid;
                 height: 50px;
-                margin: 20px 0;
+                margin: 10px 0px;
+
                 border-color: $darkGold $lightCopperBrown $darkCopperBrown;
                 word-break: break-all;
                 font-size: large;
@@ -168,15 +185,13 @@
         }
 
         .shipping-img {
-            display: flex;
-            flex: 0.8;
 
-            .category-img {
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                height: 300px;
             }
-
         }
     }
 }
