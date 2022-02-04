@@ -26,7 +26,7 @@ function ChangePwd() {
 
     try {
       const changePwdResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/users/me/pwd',
+        'https://shopeeholic-server.herokuapp.com/users/me/pwd',
         {
           method: 'PATCH',
           headers: {
@@ -42,7 +42,7 @@ function ChangePwd() {
       if (changePwdJson.isChanged) {
         try {
           const currentUserResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/users/me',
+            'https://shopeeholic-server.herokuapp.com/users/me',
             {
               method: 'GET',
               headers: {

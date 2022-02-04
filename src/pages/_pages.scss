@@ -4,11 +4,33 @@
 .home {
     @include layout;
     background-color: $grey;
-
-    .home-general-product-list {
+    padding-right: 15px;
+    padding-left: 15px;
+    
+    .layout-1-product-list {
         display: "flex";
         position: "relative";
-        bottom: "100px";
+        bottom: 100px;
+     
+    }
+
+    .layout-2-product-list {
+
+        .carousel-item {
+            background: $white;
+            padding: 10px;
+            border-radius: 5px;
+
+            .banner-img {
+                height: 100%;
+                width: 100%;
+                min-height: 750px;
+                background-size: cover !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+                border-radius: 5px;
+            }
+        }
+
     }
 }
-

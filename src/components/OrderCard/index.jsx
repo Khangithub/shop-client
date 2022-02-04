@@ -25,7 +25,7 @@ export default function OrderCard({order, forSaleman, forBuyer}) {
     if (event.keyCode === 13) {
       try {
         const patchOrderResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/orders/' + _id,
+          'https://shopeeholic-server.herokuapp.com/orders/' + _id,
           {
             method: 'PATCH',
             headers: {
@@ -40,7 +40,7 @@ export default function OrderCard({order, forSaleman, forBuyer}) {
 
         if (patchOrderJson.doc) {
           const cartResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/orders/',
+            'https://shopeeholic-server.herokuapp.com/orders/',
             {
               headers: {
                 Authorization: 'Bearer '.concat(token),

@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard/';
 import {ProductListContext} from '../ContextProvider/ProductListContextProvider';
 import NavBar from '../components/NavBar/';
 import Footer from '../components/Footer';
-import CategoryList from '../components/Home/CategoryList';
+import CategoryList from '../components/CategoryList';
 import VideoAd from '../components/Products/VideoAd';
 import Pagination from '../components/Pagination/Pagination';
 import PropTypes from 'prop-types';

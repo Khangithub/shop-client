@@ -14,7 +14,7 @@ function DeleteSubCommentModal(props) {
 
     try {
       const deleteSubCommentResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/comments/sub/comment/' + commentId,
+        'https://shopeeholic-server.herokuapp.com/comments/sub/comment/' + commentId,
         {
           method: 'DELETE',
           headers: {
@@ -30,7 +30,7 @@ function DeleteSubCommentModal(props) {
       if (deleteSubCommentJson.doc) {
         try {
           const productCommentListResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/comments/of/product/' + productId
+            'https://shopeeholic-server.herokuapp.com/comments/of/product/' + productId
           );
           const productCommentListJson = await productCommentListResponse.json();
           setProductCommentList(productCommentListJson.docs);

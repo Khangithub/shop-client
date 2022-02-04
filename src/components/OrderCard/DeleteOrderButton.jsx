@@ -14,7 +14,7 @@ export default function DeleteOrderButton({order}) {
 
     try {
       const deleteOrderResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/orders/' + order._id,
+        'https://shopeeholic-server.herokuapp.com/orders/' + order._id,
         {
           method: 'DELETE',
           headers: {
@@ -28,7 +28,7 @@ export default function DeleteOrderButton({order}) {
 
       if (deleteOrderJson.doc) {
         const cartResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/orders/ofUser',
+          'https://shopeeholic-server.herokuapp.com/orders/ofUser',
           {
             headers: {
               Authorization: 'Bearer '.concat(token),
@@ -38,7 +38,7 @@ export default function DeleteOrderButton({order}) {
         );
 
         const billListResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/orders/ofSaler',
+          'https://shopeeholic-server.herokuapp.com/orders/ofSaler',
           {
             headers: {
               Authorization: 'Bearer '.concat(token),

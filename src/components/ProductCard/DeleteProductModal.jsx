@@ -19,7 +19,7 @@ const DeleteProductModal = (props) => {
 
     try {
       const deleteProductResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/products/' + product._id,
+        'https://shopeeholic-server.herokuapp.com/products/' + product._id,
         {
           method: 'DELETE',
           headers: {
@@ -34,7 +34,7 @@ const DeleteProductModal = (props) => {
       if (deleteProductJson.doc) {
         try {
           const productListResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/products/'
+            'https://shopeeholic-server.herokuapp.com/products/'
           );
           const productListJson = await productListResponse.json();
 

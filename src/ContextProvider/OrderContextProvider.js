@@ -15,7 +15,7 @@ export default function OrderContextProvider(props) {
     const fetchOrders = async () => {
       try {
         const cartResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/orders/ofUser',
+          'https://shopeeholic-server.herokuapp.com/orders/ofUser',
           {
             method: 'GET',
             headers: {
@@ -45,7 +45,7 @@ export default function OrderContextProvider(props) {
 
   const createOrder = async (product, quantity) => {
     try {
-      const addOrderResponse = await fetch('https://shopeeholic-backend.herokuapp.com/orders/', {
+      const addOrderResponse = await fetch('https://shopeeholic-server.herokuapp.com/orders/', {
         method: 'POST',
         headers: {
           Authorization: 'Bearer '.concat(token),
@@ -62,7 +62,7 @@ export default function OrderContextProvider(props) {
       if (addOrderJson.doc) {
         try {
           const cartResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/orders/ofUser',
+            'https://shopeeholic-server.herokuapp.com/orders/ofUser',
             {
               method: 'GET',
               headers: {

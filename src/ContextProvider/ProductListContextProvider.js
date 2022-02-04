@@ -14,7 +14,7 @@ export default function ProductContextProvider(props) {
     const fetchProductList = async () => {
       try {
         const productListResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/products'
+          'https://shopeeholic-server.herokuapp.com/products'
         );
         const productListJson = await productListResponse.json();
 

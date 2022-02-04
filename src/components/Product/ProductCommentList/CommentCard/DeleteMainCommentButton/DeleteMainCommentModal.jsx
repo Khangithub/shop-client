@@ -23,7 +23,7 @@ function DeleteMainCommentModal(props) {
 
     try {
       const deleteMainCommentResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/comments/main/comment/' +
+        'https://shopeeholic-server.herokuapp.com/comments/main/comment/' +
           commentId,
         {
           method: 'DELETE',
@@ -39,7 +39,7 @@ function DeleteMainCommentModal(props) {
       if (deleteMainCommentJson.doc) {
         try {
           const productCommentListResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/comments/of/product/' +
+            'https://shopeeholic-server.herokuapp.com/comments/of/product/' +
               productId
           );
           const productCommentListJson = await productCommentListResponse.json();

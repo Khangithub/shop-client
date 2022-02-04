@@ -25,7 +25,7 @@ function EditMainCommentModal(props) {
     if (event.keyCode === 13 && updatedMainComment.trim() !== '') {
       try {
         const patchMainCommentResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/comments/main/comment/' +
+          'https://shopeeholic-server.herokuapp.com/comments/main/comment/' +
             commentId,
           {
             method: 'PATCH',
@@ -42,7 +42,7 @@ function EditMainCommentModal(props) {
         if (patchMainCommentJson.doc) {
           try {
             const productCommentListResponse = await fetch(
-              'https://shopeeholic-backend.herokuapp.com/comments/of/product/' + productId
+              'https://shopeeholic-server.herokuapp.com/comments/of/product/' + productId
             );
             const productCommentListJson = await productCommentListResponse.json();
             setProductCommentList(productCommentListJson.docs);

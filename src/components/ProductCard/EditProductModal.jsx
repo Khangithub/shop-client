@@ -31,7 +31,7 @@ const EditProductModal = (props) => {
 
     try {
       const editProductResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/products/' + product._id,
+        'https://shopeeholic-server.herokuapp.com/products/' + product._id,
         {
           method: 'PATCH',
           body: JSON.stringify(revertEditedProduct),
@@ -47,7 +47,7 @@ const EditProductModal = (props) => {
       if (editProductJson.doc) {
         try {
           const productListResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/products/'
+            'https://shopeeholic-server.herokuapp.com/products/'
           );
           const productListJson = await productListResponse.json();
 

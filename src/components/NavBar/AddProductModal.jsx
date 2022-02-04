@@ -36,7 +36,7 @@ function AddProductMdal(props) {
 
     try {
       const createProductResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/products/',
+        'https://shopeeholic-server.herokuapp.com/products/',
         {
           method: 'POST',
           body: JSON.stringify({...revertedProduct}),
@@ -51,7 +51,7 @@ function AddProductMdal(props) {
       if (createProductJson.doc) {
         try {
           const productListResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/products/'
+            'https://shopeeholic-server.herokuapp.com/products/'
           );
           const productListJson = await productListResponse.json();
 

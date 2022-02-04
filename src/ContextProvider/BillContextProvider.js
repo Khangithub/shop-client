@@ -15,7 +15,7 @@ export default function BillContextProvider(props) {
     const fetchOrders = async () => {
       try {
         const billListResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/orders/ofSaler',
+          'https://shopeeholic-server.herokuapp.com/orders/ofSaler',
           {
             headers: {
               Authorization: 'Bearer '.concat(token),

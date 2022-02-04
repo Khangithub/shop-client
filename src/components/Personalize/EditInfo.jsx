@@ -19,7 +19,7 @@ function EditInfo({currentUser}) {
 
     try {
       const uploadAvatarResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/users/me/info',
+        'https://shopeeholic-server.herokuapp.com/users/me/info',
         {
           method: 'PATCH',
           headers: {
@@ -35,7 +35,7 @@ function EditInfo({currentUser}) {
       if (uploadAvatarJson.doc) {
         try {
           const currentUserResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/users/me',
+            'https://shopeeholic-server.herokuapp.com/users/me',
             {
               method: 'GET',
               headers: {

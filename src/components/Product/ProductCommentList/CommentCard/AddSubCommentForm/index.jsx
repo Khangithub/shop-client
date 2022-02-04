@@ -30,7 +30,7 @@ export default function AddSubCommentForm(props) {
     if (event.keyCode === 13 && content.trim() !== '') {
       try {
         const addSubCommentResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/comments/sub/comment/' +
+          'https://shopeeholic-server.herokuapp.com/comments/sub/comment/' +
             commentId,
           {
             method: 'POST',
@@ -47,7 +47,7 @@ export default function AddSubCommentForm(props) {
         if (addSubCommentJson.doc) {
           try {
             const productCommentListResponse = await fetch(
-              'https://shopeeholic-backend.herokuapp.com/comments/of/product/' + productId
+              'https://shopeeholic-server.herokuapp.com/comments/of/product/' + productId
             );
             const productCommentListJson = await productCommentListResponse.json();
             setProductCommentList(productCommentListJson.docs);

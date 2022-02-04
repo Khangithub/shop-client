@@ -13,7 +13,7 @@ export default function CurrentUserContextProvider(props) {
     const fetchCurrentUser = async () => {
       try {
         const currentUserResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/users/me',
+          'https://shopeeholic-server.herokuapp.com/users/me',
           {
             method: 'GET',
             headers: {

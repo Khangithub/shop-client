@@ -26,7 +26,7 @@ export default function Product() {
     const fetchProduct = async (productId) => {
       try {
         const productResponse = await fetch(
-          'https://shopeeholic-backend.herokuapp.com/products/' + productId
+          'https://shopeeholic-server.herokuapp.com/products/' + productId
         );
 
         const productJson = await productResponse.json();

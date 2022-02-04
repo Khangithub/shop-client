@@ -20,7 +20,7 @@ export default function Signup() {
         if (result.user) {
           console.log(result);
           const signupResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/users/signup',
+            'https://shopeeholic-server.herokuapp.com/users/signup',
             {
               method: 'POST',
               body: JSON.stringify({

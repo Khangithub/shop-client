@@ -25,7 +25,7 @@ export default function Login() {
 
     try {
       const loginResponse = await fetch(
-        'https://shopeeholic-backend.herokuapp.com/users/login/pwd',
+        'https://shopeeholic-server.herokuapp.com/users/login/pwd',
         {
           method: 'POST',
           body: JSON.stringify({
@@ -63,7 +63,7 @@ export default function Login() {
         if (result.user) {
           try {
             const loginResponse = await fetch(
-              'https://shopeeholic-backend.herokuapp.com/users/login/google',
+              'https://shopeeholic-server.herokuapp.com/users/login/google',
               {
                 method: 'POST',
                 body: JSON.stringify({

@@ -18,7 +18,7 @@ function AddMainCommentForm({productId, setProductCommentList}) {
       const addMainComment = async () => {
         try {
           const addCommentResponse = await fetch(
-            'https://shopeeholic-backend.herokuapp.com/comments/main/comment',
+            'https://shopeeholic-server.herokuapp.com/comments/main/comment',
             {
               method: 'POST',
               headers: {
@@ -34,7 +34,7 @@ function AddMainCommentForm({productId, setProductCommentList}) {
           if (addCommentJson.doc) {
             try {
               const productCommentListResponse = await fetch(
-                'https://shopeeholic-backend.herokuapp.com/comments/of/product/' +
+                'https://shopeeholic-server.herokuapp.com/comments/of/product/' +
                   productId
               );
               const productCommentListJson = await productCommentListResponse.json();
