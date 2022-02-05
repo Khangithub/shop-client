@@ -36,10 +36,10 @@ export default function ProductCard({
         ></div>
 
         <div className="product-card-info">
-          <h5 className="product-card-name">{product.name}</h5>
+          <h4 className="product-card-name">{product.name}</h4>
 
           <div className="product-card-price">
-            <div className={!product.discount && "net-price--hide"}>
+            <div className={!product.discount ? "net-price--hide" : undefined}>
               <strong>{returnPrice(product)}$ &nbsp;&nbsp;</strong>
               <Badge variant="danger">-{product.discount}%</Badge>
             </div>
@@ -64,11 +64,13 @@ export default function ProductCard({
                   ))}
               </div>
 
-              <div class="progress">
+              <div className="progress">
                 <div
-                  class="progress-bar bg-danger"
+                  className="progress-bar bg-danger"
                   role="progressbar"
-                  style={{ width: `${product.sold / product.inStock}%` }}
+                  style={{
+                    width: `${(product.sold / product.inStock) * 100}%`,
+                  }}
                   aria-valuenow="60"
                   aria-valuemin="0"
                   aria-valuemax="100"

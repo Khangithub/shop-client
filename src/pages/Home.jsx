@@ -17,6 +17,9 @@ import foodBanner4 from "../assets/banners/food-4.jpg";
 import foodBanner5 from "../assets/banners/food-5.jpg";
 import foodBanner6 from "../assets/banners/food-6.jpg";
 
+import HorizontalDevider from "../components/HorizontalDevider";
+import CategoryTitle from "../components/CategoryTitle";
+
 function Home() {
   const dispatch = useDispatch();
   const [pageIndex] = useState(1);
@@ -42,7 +45,12 @@ function Home() {
       <div className="home">
         <Banner />
         <CategoryList />
-        <div className="layout-2-product-list">
+        <div className="best-selling-product-list">
+          <CategoryTitle
+            title="Best Selling Products"
+            btnText="Check it out"
+            link="/"
+          />
           <Row>
             <Col xs={12} sm={4}>
               <Carousel>
@@ -114,7 +122,14 @@ function Home() {
           </Row>
         </div>
 
+        <HorizontalDevider />
+
         <div className="layout-1-product-list">
+          <CategoryTitle
+            title="Biggest Discounts Products"
+            btnText="Check it out"
+            link="/"
+          />
           <Row>
             {saleOffProducts.map((product, index) => (
               <ProductCard key={index} product={product} />

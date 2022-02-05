@@ -7,7 +7,7 @@
     padding: 10px 0;
 
     .navbar-layout {
-        @include layout;
+        @include parentLayout;
 
         .navbar-brand {
             margin: 0 !important;
@@ -72,7 +72,6 @@
 .banner {
     width: 100%;
     display: flex;
-    position: relative;
 
     .carousel-indicators {
         visibility: hidden;
@@ -87,7 +86,6 @@
 }
 
 .category {
-
     display: flex;
     width: 100%;
     position: relative;
@@ -111,10 +109,6 @@
         margin: 10px;
         cursor: pointer;
         border-radius: 5px;
-
-        &:hover {
-            opacity: 0.4;
-        }
 
         .video-ad {
             max-width: 1050px;
@@ -148,13 +142,6 @@
             height: 400px;
             border-radius: 5px;
             object-fit: cover;
-        }
-
-        .category-card-link {
-            cursor: pointer;
-            color: $greenLink;
-            margin: 5px 0;
-            font-size: 15px;
         }
     }
 
@@ -193,7 +180,7 @@
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                height: 300px;
+                height: 320px;
             }
         }
     }
@@ -259,6 +246,7 @@
             }
 
             .product-card-price {
+                font-size: larger;
                 margin-top: auto;
 
                 .net-price--hide {
@@ -313,7 +301,7 @@
     margin: 0 !important;
 
     .footer-layout {
-        @include layout;
+        @include parentLayout;
         background-color: $darkBlue;
 
         .footer-section {
@@ -326,5 +314,32 @@
             }
 
         }
+    }
+}
+
+.see-more-link {
+    cursor: pointer;
+    color: $greenLink;
+    margin: 5px;
+    padding: 5px 0;
+
+    &:hover {
+        opacity: 0.4;
+    }
+}
+
+.category-title {
+    @include parentLayout;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: $white;
+    border-radius: 10px;
+
+    margin-bottom: 10px;
+
+    &>h1 {
+        font-weight: bolder;
     }
 }
