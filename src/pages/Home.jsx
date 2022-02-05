@@ -47,17 +47,15 @@ function Home() {
             <Col xs={12} sm={4}>
               <Carousel>
                 {[foodBanner3, foodBanner4, foodBanner5, foodBanner6].map(
-                  (img, index) => {
-                    return (
-                      <Carousel.Item key={index}>
-                        <img
-                          className="banner-img d-block w-100"
-                          src={img}
-                          alt="slide"
-                        />
-                      </Carousel.Item>
-                    );
-                  }
+                  (img, index) => (
+                    <Carousel.Item key={index}>
+                      <img
+                        className="banner-img d-block w-100"
+                        src={img}
+                        alt="slide"
+                      />
+                    </Carousel.Item>
+                  )
                 )}
               </Carousel>
             </Col>

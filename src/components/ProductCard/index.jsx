@@ -1,8 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Badge } from "react-bootstrap";
+import { Col, Badge } from "react-bootstrap";
 import "../_components.scss";
-import { getRandomInRange, returnPrice } from "../../helpers";
+import { returnPrice } from "../../helpers";
 import EditProductButton from "./EditProductButton";
 import DeleteProductButton from "./DeleteProductButton";
 
@@ -17,9 +17,6 @@ export default function ProductCard({
   lg = 2,
 }) {
   const history = useHistory();
-  const rating = getRandomInRange(1, 5);
-  const soldProgress = getRandomInRange(1, 100);
-  const soldQuantity = getRandomInRange(1, 1000);
 
   return (
     <Col xs={xs} sm={sm} md={md} lg={lg} className="product-card">
@@ -33,80 +30,52 @@ export default function ProductCard({
           history.push(`/${product._id}`);
         }}
       >
-        {/* <Image
-          src={product.productImage}
-          alt="productImage"
-          className=""
-        /> */}
         <div
           className="product-card-img"
           style={{ background: `url(${product.productImage})` }}
         ></div>
 
         <div className="product-card-info">
-          <Row>
-            <Col className="product-card-name">
-              <p>{product.name}</p>
-            </Col>
-          </Row>
+          <h5 className="product-card-name">{product.name}</h5>
 
-          <Row>
-            <Col className="product-card-price">
-              <Row
-                className={
-                  product.discount
-                    ? "product-card-net-price"
-                    : "product-card-net-price-hide"
-                }
-              >
-                <span>{returnPrice(product)}$ &nbsp;&nbsp;</span>
-                <Badge variant="danger">-{product.discount}%</Badge>
-              </Row>
-              <p
-                className={
-                  product.discount
-                    ? "product-card-gross-price-remove"
-                    : "product-card-gross-price"
-                }
-              >
-                {product.price}$
-              </p>
-            </Col>
-          </Row>
+          <div className="product-card-price">
+            <div className={!product.discount && "net-price--hide"}>
+              <strong>{returnPrice(product)}$ &nbsp;&nbsp;</strong>
+              <Badge variant="danger">-{product.discount}%</Badge>
+            </div>
+            <p
+              className={
+                product.discount ? "gross-price--remove" : "gross-price"
+              }
+            >
+              {product.price}$
+            </p>
+          </div>
 
           {!showPriceOnly && (
             <>
-              <Row>
-                <Col className="product-card-rating">
-                  {Array(rating)
-                    .fill()
-                    .map((_, index) => (
-                      <span role="img" key={index} aria-label="">
-                        ⭐
-                      </span>
-                    ))}
-                </Col>
-              </Row>
+              <div>
+                {Array(product.rating)
+                  .fill()
+                  .map((_, index) => (
+                    <span role="img" key={index} aria-label="">
+                      ⭐
+                    </span>
+                  ))}
+              </div>
 
-              <Row>
-                <Col xs={11}>
-                  <div class="progress">
-                    <div
-                      class="progress-bar bg-danger"
-                      role="progressbar"
-                      style={{ width: `${soldProgress}%` }}
-                      aria-valuenow="60"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                </Col>
-                <Col xs={12} className="product-card-sold-quantity">
-                  <p>{`sold ${Math.round(
-                    (soldQuantity * soldProgress) / 100
-                  )}/${soldQuantity}`}</p>
-                </Col>
-              </Row>
+              <div class="progress">
+                <div
+                  class="progress-bar bg-danger"
+                  role="progressbar"
+                  style={{ width: `${product.sold / product.inStock}%` }}
+                  aria-valuenow="60"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+
+              <p className="product-card-sold-quantity">{`sold ${product.sold}/${product.inStock}`}</p>
             </>
           )}
         </div>
