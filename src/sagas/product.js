@@ -6,9 +6,9 @@ import {
 } from '../actions/product';
 import {getSaleOffProductsRequest} from '../api/product';
 
-function* getSaleOffProductsGenerator({payload: {pageIndex}}) {
+function* getSaleOffProductsGenerator({payload: {pageIndex, limit}}) {
   try {
-    const products = yield call (getSaleOffProductsRequest, {pageIndex});
+    const products = yield call (getSaleOffProductsRequest, {pageIndex, limit});
     yield put (
       getSaleOffProductsSuccess ({
         products,

@@ -1,7 +1,7 @@
-const getSaleOffProductsRequest = async pageIndex => {
+const getSaleOffProductsRequest = async (args) => {
   try {
     const saleOffProductsRequest = await fetch (
-      process.env.REACT_APP_SALE_OFF_PRODUCT + pageIndex
+      process.env.REACT_APP_SALE_OFF_PRODUCT + args.pageIndex
     );
     const saleOffProductsJson = await saleOffProductsRequest.json ();
 

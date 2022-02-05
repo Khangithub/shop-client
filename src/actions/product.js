@@ -12,10 +12,11 @@ const getSaleOffProductsSuccess = ({products}) => ({
   },
 });
 
-const getSaleOffProductsRequest = ({pageIndex}) => ({
+const getSaleOffProductsRequest = ({pageIndex, limit}) => ({
   type: Types.GET_SALE_OFF_PRODUCTS_REQUEST,
   payload: {
     pageIndex,
+    limit,
   },
 });
 
