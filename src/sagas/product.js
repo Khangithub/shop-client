@@ -1,16 +1,24 @@
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import {
-  getSaleOffProductsSuccess,
+  getMostDiscountsProductsSuccess,
+  getBestSaleProductsSuccess,
   getFailedRequest,
   Types,
 } from '../actions/product';
-import {getMostDiscoutsProductsCall} from '../api/product';
+import {
+  getMostDiscoutsProductsCall,
+  getBestSaleProductsCall,
+} from '../api/product';
 
+// generator functions
 function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   try {
-    const products = yield call (getMostDiscoutsProductsCall, {pageIndex, limit});
+    const products = yield call (getMostDiscoutsProductsCall, {
+      pageIndex,
+      limit,
+    });
     yield put (
-      getSaleOffProductsSuccess ({
+      getMostDiscountsProductsSuccess ({
         products,
       })
     );
@@ -23,6 +31,23 @@ function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   }
 }
 
+function* getBestSaleProductsGenerator({payload: {pageIndex, limit}}) {
+  try {
+    const products = yield call (getBestSaleProductsCall, {
+      pageIndex,
+      limit,
+    });
+    yield put (getBestSaleProductsSuccess ({products}));
+  } catch (err) {
+    yield put (
+      getFailedRequest ({
+        err,
+      })
+    );
+  }
+}
+
+// watcher functions
 function* getMostDiscountsProductsRequestWatcher () {
   yield takeLatest (
     Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
@@ -30,6 +55,16 @@ function* getMostDiscountsProductsRequestWatcher () {
   );
 }
 
-const productSaga = [fork (getMostDiscountsProductsRequestWatcher)];
+function* getBestSaleProductsWatcher () {
+  yield takeLatest (
+    Types.GET_BEST_SALE_PRODUCTS_REQUEST,
+    getBestSaleProductsGenerator
+  );
+}
+
+const productSaga = [
+  fork (getMostDiscountsProductsRequestWatcher),
+  fork (getBestSaleProductsWatcher),
+];
 
 export default productSaga;

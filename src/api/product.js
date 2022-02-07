@@ -1,7 +1,7 @@
-const getMostDiscoutsProductsCall = async args => {
+const getMostDiscoutsProductsCall = async ({pageIndex, limit}) => {
   try {
     const saleOffProductsRequest = await fetch (
-      process.env.REACT_APP_SALE_OFF_PRODUCT + args.pageIndex + '/'+args.limit
+      process.env.REACT_APP_MOST_DISCOUNTS_PRODUCT + pageIndex + '/' + limit
     );
     const saleOffProductsJson = await saleOffProductsRequest.json ();
 
@@ -11,4 +11,14 @@ const getMostDiscoutsProductsCall = async args => {
   }
 };
 
-export {getMostDiscoutsProductsCall};
+const getBestSaleProductsCall = async ({pageIndex, limit}) => {
+  try {
+    const bestSaleProductsRequest = await fetch (
+      process.env.REACT_APP_BEST_SALE_PRODUCTS + pageIndex + '/' + limit
+    );
+    const bestSaleProductsJson = await bestSaleProductsRequest.json ();
+    return bestSaleProductsJson.bestSaleList;
+  } catch (err) {}
+};
+
+export {getMostDiscoutsProductsCall, getBestSaleProductsCall};

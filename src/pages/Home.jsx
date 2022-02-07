@@ -4,7 +4,10 @@ import { Spinner, Row, Col, Carousel } from "react-bootstrap";
 import ProductCard from "../components/ProductCard/";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getMostDiscountsProductsRequest } from "../actions/product";
+import {
+  getBestSaleProductsRequest,
+  getMostDiscountsProductsRequest,
+} from "../actions/product";
 import _ from "lodash";
 
 import Banner from "../components/Banner";
@@ -23,15 +26,18 @@ function Home() {
   const dispatch = useDispatch();
   const [pageIndex] = useState(1);
   const [limit] = useState(6);
-  const { mostDiscountsProducts, loading, err } = useSelector(
+
+  const { mostDiscountsProducts, bestSaleProducts, loading, err } = useSelector(
     (state) => state.product
   );
 
   useEffect(() => {
     dispatch(getMostDiscountsProductsRequest({ pageIndex, limit }));
+    dispatch(getBestSaleProductsRequest({ pageIndex, limit }));
   }, [dispatch, pageIndex, limit]);
 
-  if (!mostDiscountsProducts) return <Spinner animation="grow" variant="danger" />;
+  if (_.isEmpty(mostDiscountsProducts) || _.isEmpty(bestSaleProducts))
+    return <Spinner animation="grow" variant="danger" />;
 
   if (loading) return <Spinner animation="grow" variant="danger" />;
 
@@ -66,14 +72,14 @@ function Home() {
               <div>
                 <Row>
                   <ProductCard
-                    product={mostDiscountsProducts[0]}
+                    product={bestSaleProducts[0]}
                     sm={6}
                     md={6}
                     lg={6}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={mostDiscountsProducts[1]}
+                    product={bestSaleProducts[1]}
                     sm={6}
                     md={6}
                     lg={6}
@@ -83,28 +89,28 @@ function Home() {
 
                 <Row>
                   <ProductCard
-                    product={mostDiscountsProducts[0]}
+                    product={bestSaleProducts[2]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={mostDiscountsProducts[1]}
+                    product={bestSaleProducts[3]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={mostDiscountsProducts[0]}
+                    product={bestSaleProducts[4]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={mostDiscountsProducts[1]}
+                    product={bestSaleProducts[5]}
                     sm={6}
                     md={6}
                     lg={3}
