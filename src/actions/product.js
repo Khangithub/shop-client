@@ -1,19 +1,19 @@
 const Types = {
-  GET_SALE_OFF_PRODUCTS_REQUEST: 'products/get_sale_off_products_request',
-  GET_SALE_OFF_PRODUCTS_SUCCESS: 'products/get_sale_off_products_success',
+  GET_MOST_DISCOUNTS_PRODUCTS_REQUEST: 'products/get_most_discounts_products_request',
+  GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: 'products/get_most_discounts_products_success',
   GET_ALL_PRODUCT: 'products/get_all_product',
   FAILED_REQUEST: 'products/failed_request',
 };
 
 const getSaleOffProductsSuccess = ({products}) => ({
-  type: Types.GET_SALE_OFF_PRODUCTS_SUCCESS,
+  type: Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getSaleOffProductsRequest = ({pageIndex, limit}) => ({
-  type: Types.GET_SALE_OFF_PRODUCTS_REQUEST,
+const getMostDiscountsProductsRequest = ({pageIndex, limit}) => ({
+  type: Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
   payload: {
     pageIndex,
     limit,
@@ -30,6 +30,6 @@ const getFailedRequest = ({err}) => ({
 export {
   Types,
   getSaleOffProductsSuccess,
-  getSaleOffProductsRequest,
+  getMostDiscountsProductsRequest,
   getFailedRequest,
 };

@@ -4,11 +4,11 @@ import {
   getFailedRequest,
   Types,
 } from '../actions/product';
-import {getSaleOffProductsRequest} from '../api/product';
+import {getMostDiscoutsProductsCall} from '../api/product';
 
-function* getSaleOffProductsGenerator({payload: {pageIndex, limit}}) {
+function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   try {
-    const products = yield call (getSaleOffProductsRequest, {pageIndex, limit});
+    const products = yield call (getMostDiscoutsProductsCall, {pageIndex, limit});
     yield put (
       getSaleOffProductsSuccess ({
         products,
@@ -23,13 +23,13 @@ function* getSaleOffProductsGenerator({payload: {pageIndex, limit}}) {
   }
 }
 
-function* watchGetSaleOffProductsRequest () {
+function* getMostDiscountsProductsRequestWatcher () {
   yield takeLatest (
-    Types.GET_SALE_OFF_PRODUCTS_REQUEST,
-    getSaleOffProductsGenerator
+    Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
+    getMostDiscountsProductsGenerator
   );
 }
 
-const productSaga = [fork (watchGetSaleOffProductsRequest)];
+const productSaga = [fork (getMostDiscountsProductsRequestWatcher)];
 
 export default productSaga;

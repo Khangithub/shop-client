@@ -1,7 +1,7 @@
-const getSaleOffProductsRequest = async args => {
+const getMostDiscoutsProductsCall = async args => {
   try {
     const saleOffProductsRequest = await fetch (
-      process.env.REACT_APP_SALE_OFF_PRODUCT + args.pageIndex + '/6'
+      process.env.REACT_APP_SALE_OFF_PRODUCT + args.pageIndex + '/'+args.limit
     );
     const saleOffProductsJson = await saleOffProductsRequest.json ();
 
@@ -11,4 +11,4 @@ const getSaleOffProductsRequest = async args => {
   }
 };
 
-export {getSaleOffProductsRequest};
+export {getMostDiscoutsProductsCall};

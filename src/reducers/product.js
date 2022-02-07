@@ -1,18 +1,18 @@
 import {Types} from '../actions/product';
 
 const INTIAL_STATE = {
-  saleOffProducts: [],
+  mostDiscountsProducts: [],
   loading: true,
   err: {}
 };
 
 export default function products (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_SALE_OFF_PRODUCTS_SUCCESS: {
+    case Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: {
       return {
         ...state,
         loading: false,
-        saleOffProducts: action.payload.products
+        mostDiscountsProducts: action.payload.products
       };
     }
 

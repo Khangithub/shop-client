@@ -4,7 +4,7 @@ import { Spinner, Row, Col, Carousel } from "react-bootstrap";
 import ProductCard from "../components/ProductCard/";
 
 import { useSelector, useDispatch } from "react-redux";
-import { getSaleOffProductsRequest } from "../actions/product";
+import { getMostDiscountsProductsRequest } from "../actions/product";
 import _ from "lodash";
 
 import Banner from "../components/Banner";
@@ -23,15 +23,15 @@ function Home() {
   const dispatch = useDispatch();
   const [pageIndex] = useState(1);
   const [limit] = useState(6);
-  const { saleOffProducts, loading, err } = useSelector(
+  const { mostDiscountsProducts, loading, err } = useSelector(
     (state) => state.product
   );
 
   useEffect(() => {
-    dispatch(getSaleOffProductsRequest({ pageIndex, limit }));
+    dispatch(getMostDiscountsProductsRequest({ pageIndex, limit }));
   }, [dispatch, pageIndex, limit]);
 
-  if (!saleOffProducts) return <Spinner animation="grow" variant="danger" />;
+  if (!mostDiscountsProducts) return <Spinner animation="grow" variant="danger" />;
 
   if (loading) return <Spinner animation="grow" variant="danger" />;
 
@@ -66,14 +66,14 @@ function Home() {
               <div>
                 <Row>
                   <ProductCard
-                    product={saleOffProducts[0]}
+                    product={mostDiscountsProducts[0]}
                     sm={6}
                     md={6}
                     lg={6}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={saleOffProducts[1]}
+                    product={mostDiscountsProducts[1]}
                     sm={6}
                     md={6}
                     lg={6}
@@ -83,28 +83,28 @@ function Home() {
 
                 <Row>
                   <ProductCard
-                    product={saleOffProducts[0]}
+                    product={mostDiscountsProducts[0]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={saleOffProducts[1]}
+                    product={mostDiscountsProducts[1]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={saleOffProducts[0]}
+                    product={mostDiscountsProducts[0]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={saleOffProducts[1]}
+                    product={mostDiscountsProducts[1]}
                     sm={6}
                     md={6}
                     lg={3}
@@ -120,7 +120,7 @@ function Home() {
 
         <div className="layout-1-product-list">
           <Row>
-            {saleOffProducts.map((product, index) => (
+            {mostDiscountsProducts.map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}
           </Row>
