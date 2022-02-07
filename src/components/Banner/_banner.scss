@@ -1,0 +1,18 @@
+@import '../../styles/layout';
+@import '../../styles/_colors';
+
+.banner {
+    width: 100%;
+    display: flex;
+
+    .carousel-indicators {
+        visibility: hidden;
+    }
+
+    .banner-img {
+        height: 100%;
+        min-height: 400px;
+        mask-image: $bottomBlur;
+    }
+
+}

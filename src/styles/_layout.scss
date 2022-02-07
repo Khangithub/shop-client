@@ -1,3 +1,6 @@
+// sizes
+$small: 576px;
+
 // layouts
 @mixin parentLayout {
   max-width: 1600px;
@@ -5,8 +8,4 @@
   margin-right: auto;
   padding-right: 10px;
   padding-left: 10px;
-}
-
-@mixin itemLayout {
-  border-radius: 5px;
 }

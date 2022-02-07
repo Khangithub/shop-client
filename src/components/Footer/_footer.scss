@@ -1,0 +1,43 @@
+@import '../../styles/layout';
+@import '../../styles/_colors';
+
+.back-to-top-btn {
+    margin-top: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: $darkBlue;
+    opacity: 0.7;
+    color: $white;
+    font-size: larger;
+
+    &>:hover {
+        opacity: 0.5;
+    }
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    color: $white;
+    background-color: $darkBlue;
+    margin: 0 !important;
+
+    .footer-layout {
+        @include parentLayout;
+        background-color: $darkBlue;
+
+        .footer-section {
+            padding-top: 40px;
+            padding-bottom: 20px;
+
+            h4 {
+                min-height: 80px;
+                font-weight: 700;
+            }
+
+        }
+    }
+}

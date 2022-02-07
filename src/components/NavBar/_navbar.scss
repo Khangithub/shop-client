@@ -1,0 +1,70 @@
+@import '../../styles/layout';
+@import '../../styles/_colors';
+
+
+.navbar-container {
+    background-color: $lightGrey;
+    padding: 10px 0;
+
+    .navbar-layout {
+        @include parentLayout;
+
+        .navbar-brand {
+            margin: 0 !important;
+        }
+
+        .navbar-logo {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+
+
+        .navbar-searchbox {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            max-width: 400px;
+            margin: 10px 0;
+            border: 1px solid $lightGrey;
+            border-radius: 5px;
+            padding: 10px;
+            background: $white;
+        }
+
+        .navbar-searchbox {
+            input {
+                border: none;
+                display: flex;
+                padding: 5px 0;
+                line-height: 25px;
+                width: 100%;
+            }
+        }
+
+        .navbar-searchbox {
+            input:focus {
+                outline: none;
+                border: none;
+            }
+        }
+
+        .navbar-searchbox {
+            button {
+                background: transparent;
+                border: none;
+            }
+        }
+
+        .navbar-searchbox {
+            button:focus {
+                outline: none;
+                border: none;
+            }
+        }
+    }
+}

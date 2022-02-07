@@ -4,12 +4,12 @@
 .home {
     @include parentLayout;
     background-color: $grey;
-    
+
     .layout-1-product-list {
         display: "flex";
         position: "relative";
         bottom: 100px;
-     
+
     }
 
     .best-selling-product-list {
@@ -27,6 +27,12 @@
                 background-repeat: no-repeat !important;
                 background-position: center !important;
                 border-radius: 5px;
+            }
+        }
+
+        @media screen and (max-width: $small) {
+            .col-sm-8 {
+                padding: 0;
             }
         }
 

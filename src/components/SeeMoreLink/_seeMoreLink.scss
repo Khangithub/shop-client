@@ -1,0 +1,13 @@
+@import '../../styles/layout';
+@import '../../styles/_colors';
+
+.see-more-link {
+    cursor: pointer;
+    color: $greenLink;
+    margin: 5px;
+    padding: 5px 0;
+
+    &:hover {
+        opacity: 0.4;
+    }
+}

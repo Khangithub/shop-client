@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import "../_components.scss";
+import "./_navbar.scss";
 import { Navbar, Nav, Image, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { OrderContext } from "../../ContextProvider/OrderContextProvider";

@@ -1,5 +1,5 @@
 import React from "react";
-import "./_components.scss";
+import "./_seeMoreLink.scss";
 import { useHistory } from "react-router-dom";
 
 function SeeMoreLink({ btnText, link, align = "left" }) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Col, Badge } from "react-bootstrap";
-import "../_components.scss";
+import "./_productCard.scss";
 import { returnPrice } from "../../helpers";
 import EditProductButton from "./EditProductButton";
 import DeleteProductButton from "./DeleteProductButton";

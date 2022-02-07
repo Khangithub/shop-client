@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/NavBar/";
 import { Spinner, Row, Col, Carousel } from "react-bootstrap";
 import ProductCard from "../components/ProductCard/";
 
@@ -10,17 +9,18 @@ import {
 } from "../actions/product";
 import _ from "lodash";
 
+import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import CategoryList from "../components/CategoryList";
-import "./_pages.scss";
+import "./_home.scss";
 
 import foodBanner3 from "../assets/banners/food-3.jpg";
 import foodBanner4 from "../assets/banners/food-4.jpg";
 import foodBanner5 from "../assets/banners/food-5.jpg";
 import foodBanner6 from "../assets/banners/food-6.jpg";
 
-import HorizontalDevider from "../components/HorizontalDevider";
+import HorizontalDevider from "../components/HorizontalDivider";
 
 function Home() {
   const dispatch = useDispatch();
