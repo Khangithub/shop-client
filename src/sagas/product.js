@@ -4,10 +4,12 @@ import {
   getBestSaleProductsSuccess,
   getFailedRequest,
   Types,
+  getNewArrivalProductsSuccess,
 } from '../actions/product';
 import {
   getMostDiscoutsProductsCall,
   getBestSaleProductsCall,
+  getNewArrivalProductsCall,
 } from '../api/product';
 
 // generator functions
@@ -47,6 +49,22 @@ function* getBestSaleProductsGenerator({payload: {pageIndex, limit}}) {
   }
 }
 
+function* getNewArrivalProductsGenerator({payload: {pageIndex, limit}}) {
+  try {
+    const products = yield call (getNewArrivalProductsCall, {
+      pageIndex,
+      limit,
+    });
+    yield put (getNewArrivalProductsSuccess ({products}));
+  } catch (err) {
+    yield put (
+      getFailedRequest ({
+        err,
+      })
+    );
+  }
+}
+
 // watcher functions
 function* getMostDiscountsProductsRequestWatcher () {
   yield takeLatest (
@@ -62,9 +80,16 @@ function* getBestSaleProductsWatcher () {
   );
 }
 
+function* getNewArrivalProductsWatcher () {
+  yield takeLatest (
+    Types.GET_NEW_ARRIVAL_PRODUCTS_REQUEST,
+    getNewArrivalProductsGenerator
+  );
+}
 const productSaga = [
   fork (getMostDiscountsProductsRequestWatcher),
   fork (getBestSaleProductsWatcher),
+  fork (getNewArrivalProductsWatcher),
 ];
 
 export default productSaga;

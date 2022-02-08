@@ -1,11 +1,11 @@
 const getMostDiscoutsProductsCall = async ({pageIndex, limit}) => {
   try {
-    const saleOffProductsRequest = await fetch (
+    const mostDiscountsProductsReq = await fetch (
       process.env.REACT_APP_MOST_DISCOUNTS_PRODUCT + pageIndex + '/' + limit
     );
-    const saleOffProductsJson = await saleOffProductsRequest.json ();
+    const mostDiscountsProductsJson = await mostDiscountsProductsReq.json ();
 
-    return saleOffProductsJson.discountList;
+    return mostDiscountsProductsJson.discountList;
   } catch (err) {
     return err;
   }
@@ -13,12 +13,25 @@ const getMostDiscoutsProductsCall = async ({pageIndex, limit}) => {
 
 const getBestSaleProductsCall = async ({pageIndex, limit}) => {
   try {
-    const bestSaleProductsRequest = await fetch (
+    const bestSaleProductsReq = await fetch (
       process.env.REACT_APP_BEST_SALE_PRODUCTS + pageIndex + '/' + limit
     );
-    const bestSaleProductsJson = await bestSaleProductsRequest.json ();
+    const bestSaleProductsJson = await bestSaleProductsReq.json ();
     return bestSaleProductsJson.bestSaleList;
-  } catch (err) {}
+  } catch (err) {
+    return err;
+  }
 };
 
-export {getMostDiscoutsProductsCall, getBestSaleProductsCall};
+const getNewArrivalProductsCall = async ({pageIndex, limit}) => {
+  try {
+    const newArrProductsReq = await fetch (
+      process.env.REACT_APP_NEW_ARRIVAL_PRODUCTS + pageIndex + '/' + limit
+    );
+    const newArrProductJson = await newArrProductsReq.json ();
+    return newArrProductJson.newArrivalList;
+  } catch (err) {
+    
+  }
+}
+export {getMostDiscoutsProductsCall, getBestSaleProductsCall, getNewArrivalProductsCall};

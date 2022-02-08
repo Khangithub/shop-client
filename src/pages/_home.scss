@@ -5,14 +5,14 @@
     @include parentLayout;
     background-color: $grey;
 
-    .layout-1-product-list {
+    .most-discounts-product-list {
         display: "flex";
         position: "relative";
         bottom: 100px;
 
     }
 
-    .best-selling-product-list {
+    .best-sale-product-list, .new-arrival-product-list {
 
         .carousel-item {
             background: $white;

@@ -3,6 +3,7 @@ import {Types} from '../actions/product';
 const INTIAL_STATE = {
   mostDiscountsProducts: [],
   bestSaleProducts: [],
+  newArrivalProducts: [],
   loading: true,
   err: {},
 };
@@ -25,6 +26,13 @@ export default function products (state = INTIAL_STATE, action) {
       };
     }
 
+    case Types.GET_NEW_ARRIVAL_PRODUCTS_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        newArrivalProducts: action.payload.products,
+      }
+    }
     case Types.FAILED_REQUEST: {
       return {
         ...state,
