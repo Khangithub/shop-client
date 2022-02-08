@@ -41,7 +41,6 @@ export default function CurrentUserContextProvider(props) {
     fetchCurrentUser();
   }, [token]);
 
-  console.log('currentUSer', currentUser);
   return (
     <CurrentUserContext.Provider
       value={{currentUser, setUser, getCurrentUserLoading, setUserLoading}}

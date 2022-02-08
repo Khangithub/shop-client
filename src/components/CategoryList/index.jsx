@@ -45,8 +45,9 @@ function CategoryList() {
                   { src: btsSamsungVideo, type: "video/webm" },
                   { src: btsSamsungVideo, type: "video/ogg" },
                 ]}
-                playing={true}
-                muted={true}
+                controls
+                playing
+                muted
                 loop
               />
               <SeeMoreLink
@@ -66,8 +67,8 @@ function CategoryList() {
                   { src: btsMcDonaldVideo, type: "video/webm" },
                   { src: btsMcDonaldVideo, type: "video/ogg" },
                 ]}
-                controls={true}
-                playing={true}
+                controls
+                playing
                 muted={false}
                 loop
               />

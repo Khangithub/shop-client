@@ -1,7 +1,9 @@
-import React, { useContext, useState } from "react";
-import "./_navbar.scss";
-import { Navbar, Nav, Image, Badge } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import _ from "lodash";
+import "./_navbar.scss";
+import { Navbar, Nav, Image, Badge, Spinner } from "react-bootstrap";
 import { OrderContext } from "../../ContextProvider/OrderContextProvider";
 import { BillContext } from "../../ContextProvider/BillContextProvider";
 import { CurrentUserContext } from "../../ContextProvider/CurrentUserContextProvider";
@@ -10,18 +12,36 @@ import SettingDropdown from "./SettingDropdown";
 
 import logoSvg from "../../assets/svgs/logo.svg";
 import cartSvg from "../../assets/svgs/cart.svg";
-import productSvg from "../../assets/svgs/products.svg";
+// import productSvg from "../../assets/svgs/products.svg";
+import searchSvg from "../../assets/svgs/search.svg";
 
 import { removeAscent } from "../../helpers";
+import { getCurrentUserRequest } from "../../actions/user";
 
 function NavBar() {
   const history = useHistory();
-  const { currentUser } = useContext(CurrentUserContext);
+  const dispatch = useDispatch();
+  // const { currentUser } = useContext(CurrentUserContext);
+
   let [input, setInput] = useState("");
 
   const { cart, getCartLoading } = useContext(OrderContext);
 
   const { billList } = useContext(BillContext);
+  const { currentUser, loading, err } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getCurrentUserRequest());
+  }, [dispatch]);
+
+
+  if (_.isEmpty(currentUser))
+    return <Spinner animation="grow" variant="danger" />;
+
+  if (loading) return <Spinner animation="grow" variant="danger" />;
+
+  if (!_.isEmpty(err, true))
+    return <Spinner animation="grow" variant="danger" />;
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -44,51 +64,44 @@ function NavBar() {
           <Navbar.Toggle />
           <Navbar.Collapse>
             <Nav className="mr-auto">
-              <Nav.Link href="/productList/1">
+              {/* <Nav.Link href="/productList/1">
                 <Image
                   className="navbar-logo"
                   src={productSvg}
                   alt="productSvg"
                 />
-              </Nav.Link>
+              </Nav.Link> */}
 
               {currentUser && currentUser.role !== "client" && (
                 <AddProductBtn />
               )}
-
-              {currentUser && (
-                <Nav.Link href="/orders">
-                  <Image
-                    src={cartSvg}
-                    className="navbar-logo"
-                    alt="cartSvg"
-                  />
-
-                  <Badge variant="danger">
-                    {getCartLoading ? "loading" : cart.length}
-                  </Badge>
-                </Nav.Link>
-              )}
-
-              <SettingDropdown currentUser={currentUser} billList={billList} />
             </Nav>
 
             <form className="navbar-searchbox" onSubmit={handleSearch}>
               <input
                 type="text"
-                placeholder="mì tôm, Iphone, ..."
+                placeholder="Tìm sản phẩm bạn mong muốn ..."
                 name="keyword"
                 onChange={(e) => {
                   setInput(e.target.value);
                 }}
+                autoFocus
               />
 
-              <button onClick={handleSearch}>
-                <span role="img" aria-label="">
-                  🔍
-                </span>
-              </button>
+              <img onClick={handleSearch} src={searchSvg} alt="search-icon" />
             </form>
+
+            <SettingDropdown currentUser={currentUser} billList={billList} />
+
+            {currentUser && (
+              <Nav.Link href="/orders">
+                <Image src={cartSvg} className="navbar-logo" alt="cartSvg" />
+
+                <Badge variant="danger">
+                  {getCartLoading ? "loading" : cart.length}
+                </Badge>
+              </Nav.Link>
+            )}
           </Navbar.Collapse>
         </Navbar>
       </div>
