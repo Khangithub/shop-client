@@ -56,6 +56,12 @@ const loginWithEmailNPwdCall = async ({email, password}) => {
 const loginWithGgCall = async () => {
   try {
     const {user: {email}} = await auth.signInWithPopup (provider);
+    console.log ('loginWithGgCall', email);
+
+    if (_.isEmpty (email)) {
+      throw new Error('unable to login with gg')
+    }
+
     const loginReq = await fetch (
       process.env.REACT_APP_USERS_LOGIN + 'google',
       {

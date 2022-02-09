@@ -20,17 +20,19 @@ function Login() {
       <div className="login-container">
         <h1>Login</h1>
 
-        <div className="login-form">
+        <form className="login-form">
           <input
             type="text"
             name="email"
             placeholder="Email"
+            autoComplete="email"
             onChange={(e) => setAccount({ ...account, email: e.target.value })}
           />
           <input
             type={visiblePwd ? "text" : "password"}
             name="password"
             placeholder="Password"
+            autoComplete="current-password"
             onChange={(e) =>
               setAccount({ ...account, password: e.target.value })
             }
@@ -60,7 +62,7 @@ function Login() {
           >
             Login
           </button>
-        </div>
+        </form>
 
         <div className="gg-login-container">
           <h4>
