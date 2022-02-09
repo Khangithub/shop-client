@@ -21,9 +21,6 @@
   font-weight: bold;
 }
 
-.signup__container > .role__radio {
-}
-
 .signup__container > .role__radio > input {
   margin-right: 10px;
 }

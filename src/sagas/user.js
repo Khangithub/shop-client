@@ -5,7 +5,7 @@ import {
   getFailedUserRequest,
   Types,
 } from '../actions/user';
-import {getCurrentUserCall, loginWithEmailNPwdCall} from '../api/user';
+import {getCurrentUserCall, loginWithEmailNPwdCall, loginWithGgCall} from '../api/user';
 
 const cookies = new Cookies ();
 const token = cookies.get ('token');
@@ -31,7 +31,7 @@ function* getCurrentUserGenerator () {
   }
 }
 
-function* loginWithPwdGenerator({payload: {email, password}}) {
+function* loginWithEmailNPwdGenerator({payload: {email, password}}) {
   try {
     const {token, currentUser} = yield call (loginWithEmailNPwdCall, {
       email,
@@ -52,15 +52,41 @@ function* loginWithPwdGenerator({payload: {email, password}}) {
   }
 }
 
+function* loginWithGgGenerator () {
+  try {
+    const {token, currentUser} = yield call (loginWithGgCall);
+    cookies.set ('token', token);
+    yield put (
+      getCurrentUserSuccess ({
+        currentUser,
+      })
+    );
+  } catch (err) {
+    yield put (
+      getFailedUserRequest ({
+        err,
+      })
+    );
+  }
+}
+
 // wacher functions
 function* getCurrentUserWatcher () {
   yield takeLatest (Types.GET_CURRENT_USER_REQUEST, getCurrentUserGenerator);
 }
 
-function* loginWithPwdWatcher () {
-  yield takeEvery (Types.LOGIN_WITH_PWD_REQUEST, loginWithPwdGenerator);
+function* loginWithEmailNPwdWatcher () {
+  yield takeEvery (Types.LOGIN_WITH_PWD_REQUEST, loginWithEmailNPwdGenerator);
 }
 
-const userSaga = [fork (getCurrentUserWatcher), fork (loginWithPwdWatcher)];
+function* loginWithGgWatcher () {
+  yield takeEvery (Types.LOGIN_WITH_GG_REQUEST, loginWithGgGenerator);
+}
+
+const userSaga = [
+  fork (getCurrentUserWatcher),
+  fork (loginWithEmailNPwdWatcher),
+  fork (loginWithGgWatcher),
+];
 
 export default userSaga;

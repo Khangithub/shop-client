@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {auth, provider} from '../firebase';
 
 const loginStatus = {
   UNAUTHORIZED: 'loginStatus/unauthorized',
@@ -52,4 +53,29 @@ const loginWithEmailNPwdCall = async ({email, password}) => {
   }
 };
 
-export {getCurrentUserCall, loginWithEmailNPwdCall};
+const loginWithGgCall = async () => {
+  try {
+    const {user: {email}} = await auth.signInWithPopup (provider);
+    const loginReq = await fetch (
+      process.env.REACT_APP_USERS_LOGIN + 'google',
+      {
+        method: 'POST',
+        body: JSON.stringify ({
+          email,
+        }),
+        headers: {
+          'content-type': 'application/json; charset=UTF-8',
+        },
+      }
+    );
+
+    const loginJson = await loginReq.json ();
+    return {
+      token: loginJson.token,
+      currentUser: {...loginJson.currentUser, staus: loginStatus.LOGGEDIN},
+    };
+  } catch (err) {
+    return err;
+  }
+};
+export {getCurrentUserCall, loginWithEmailNPwdCall, loginWithGgCall};
