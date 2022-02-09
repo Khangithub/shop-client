@@ -1,5 +1,10 @@
+@import './colors';
+
 // sizes
-$small: 576px;
+$small: 540px;
+$medium: 720px;
+$large: 990px;
+$extraLarge: 1140px;
 
 // layouts
 @mixin parentLayout {
@@ -8,4 +13,14 @@ $small: 576px;
   margin-right: auto;
   padding-right: 10px;
   padding-left: 10px;
+}
+
+// common styles
+@mixin goldenBtn {
+  background: $gold;
+  border-radius: 2px;
+  width: 100%;
+  border-color: $darkGold $lightCopperBrown $darkCopperBrown;
+  border-style: solid;
+  border-width: 1px;
 }

@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
 import Cookies from 'universal-cookie';
-import './Login.css';
+import './_login.scss';
 import {IconButton} from '@material-ui/core';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -98,27 +98,25 @@ export default function Login() {
 
   return (
     <div className="login">
-      <div className="login__container">
+      <div className="login-container">
         <h1>Login</h1>
 
-        <div className="login__form">
+        <div className="login-form">
           <input
             type="text"
             name="email"
             placeholder="Email"
-            className="vertical__spacing"
             onChange={(e) => setAccount({...account, email: e.target.value})}
           />
           <input
             type={visiblePwd ? 'text' : 'password'}
             name="password"
             placeholder="Password"
-            className="vertical__spacing"
             onChange={(e) => setAccount({...account, password: e.target.value})}
           />
 
           <IconButton
-            className="visible__password__btn"
+            className="visible-pwd-btn"
             onClick={() => setVisiblePwd(!visiblePwd)}
           >
             {visiblePwd ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -128,14 +126,14 @@ export default function Login() {
 
           <button
             type="submit"
-            className="login__btn"
+            className="login-btn"
             onClick={handleLoginWithPwd}
           >
             Login
           </button>
         </div>
 
-        <div className="login__google__container">
+        <div className="gg-login-container">
           <p>Or</p>
           <button onClick={handleLoginWithGoogle}>
             <img src={googleIcon} alt="google" />
@@ -143,7 +141,7 @@ export default function Login() {
           </button>
         </div>
 
-        <div className="signup__btn__container ">
+        <div className="signup-btn-container ">
           <div className="term">
             <span>By continuing with Shopeeholic, you agreed with </span>
             <span>Terms of Service, Privacy Policy</span>

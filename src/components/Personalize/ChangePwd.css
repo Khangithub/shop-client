@@ -33,7 +33,7 @@
   border: none;
 }
 
-.change__pwd > form > .input__container > .visible__password__btn:focus {
+.change__pwd > form > .input__container > .visible-pwd-btn:focus {
   outline: none;
   border: none;
 }

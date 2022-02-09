@@ -95,7 +95,7 @@ function ChangePwd() {
             onChange={(e) => setNewPwd({...newPwd, pwd: e.target.value})}
           />
           <IconButton
-            className="visible__password__btn"
+            className="visible-pwd-btn"
             onClick={() => setVisiblePwd({...visiblePwd, pwd: !visiblePwd.pwd})}
           >
             {visiblePwd.pwd ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -112,7 +112,7 @@ function ChangePwd() {
             }
           />
           <IconButton
-            className="visible__password__btn"
+            className="visible-pwd-btn"
             onClick={() =>
               setVisiblePwd({
                 ...visiblePwd,

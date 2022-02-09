@@ -88,7 +88,7 @@ export default function Signup() {
           Signup with Google
         </button>
 
-        <div className="signup__btn__container ">
+        <div className="signup-btn-container ">
           <div className="term">
             <span>By continuing with Shopeeholic, you agreed with </span>
             <span>Terms of Service, Privacy Policy</span>

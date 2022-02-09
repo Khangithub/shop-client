@@ -3,16 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import _ from "lodash";
 import "./_navbar.scss";
-import { Navbar, Nav, Image, Badge, Spinner } from "react-bootstrap";
-import { OrderContext } from "../../ContextProvider/OrderContextProvider";
+import { Navbar, Nav, Image } from "react-bootstrap";
 import { BillContext } from "../../ContextProvider/BillContextProvider";
-import { CurrentUserContext } from "../../ContextProvider/CurrentUserContextProvider";
-import AddProductBtn from "./AddProductBtn";
+
 import SettingDropdown from "./SettingDropdown";
+import Loading from "../Loading";
 
 import logoSvg from "../../assets/svgs/logo.svg";
-import cartSvg from "../../assets/svgs/cart.svg";
-// import productSvg from "../../assets/svgs/products.svg";
 import searchSvg from "../../assets/svgs/search.svg";
 
 import { removeAscent } from "../../helpers";
@@ -25,8 +22,6 @@ function NavBar() {
 
   let [input, setInput] = useState("");
 
-  const { cart, getCartLoading } = useContext(OrderContext);
-
   const { billList } = useContext(BillContext);
   const { currentUser, loading, err } = useSelector((state) => state.user);
 
@@ -34,14 +29,11 @@ function NavBar() {
     dispatch(getCurrentUserRequest());
   }, [dispatch]);
 
+  if (_.isEmpty(currentUser)) return <Loading />;
 
-  if (_.isEmpty(currentUser))
-    return <Spinner animation="grow" variant="danger" />;
+  if (loading) return <Loading />;
 
-  if (loading) return <Spinner animation="grow" variant="danger" />;
-
-  if (!_.isEmpty(err, true))
-    return <Spinner animation="grow" variant="danger" />;
+  if (!_.isEmpty(err, true)) return <Loading />;
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -72,9 +64,9 @@ function NavBar() {
                 />
               </Nav.Link> */}
 
-              {currentUser && currentUser.role !== "client" && (
+              {/* {currentUser && currentUser.role !== "client" && (
                 <AddProductBtn />
-              )}
+              )} */}
             </Nav>
 
             <form className="navbar-searchbox" onSubmit={handleSearch}>
@@ -91,9 +83,9 @@ function NavBar() {
               <img onClick={handleSearch} src={searchSvg} alt="search-icon" />
             </form>
 
-            <SettingDropdown currentUser={currentUser} billList={billList} />
+            <SettingDropdown billList={billList} />
 
-            {currentUser && (
+            {/* {currentUser && (
               <Nav.Link href="/orders">
                 <Image src={cartSvg} className="navbar-logo" alt="cartSvg" />
 
@@ -101,7 +93,7 @@ function NavBar() {
                   {getCartLoading ? "loading" : cart.length}
                 </Badge>
               </Nav.Link>
-            )}
+            )} */}
           </Navbar.Collapse>
         </Navbar>
       </div>
