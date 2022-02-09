@@ -7,7 +7,7 @@ const loginStatus = {
 
 const getCurrentUserCall = async ({token}) => {
   try {
-    if (_.isEmpty(token)) {
+    if (_.isEmpty (token)) {
       return {
         status: loginStatus.UNAUTHORIZED,
       };
@@ -29,4 +29,27 @@ const getCurrentUserCall = async ({token}) => {
   }
 };
 
-export {getCurrentUserCall};
+const loginWithEmailNPwdCall = async ({email, password}) => {
+  try {
+    const loginReq = await fetch (process.env.REACT_APP_USERS_LOGIN + 'pwd', {
+      method: 'POST',
+      body: JSON.stringify ({
+        email,
+        password,
+      }),
+      headers: {
+        'content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    const loginJson = await loginReq.json ();
+    return {
+      token: loginJson.token,
+      currentUser: {...loginJson.currentUser, staus: loginStatus.LOGGEDIN},
+    };
+  } catch (err) {
+    return err;
+  }
+};
+
+export {getCurrentUserCall, loginWithEmailNPwdCall};

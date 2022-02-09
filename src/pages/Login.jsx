@@ -1,95 +1,60 @@
-import React, {useState, useContext} from 'react';
-import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
-import Cookies from 'universal-cookie';
-import './_login.scss';
-import {IconButton} from '@material-ui/core';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import googleIcon from '../images/common/google.jpg';
-import {useHistory} from 'react-router-dom';
-import {auth, provider} from '../firebase';
+import React, { useState, useContext } from "react";
+import { CurrentUserContext } from "../ContextProvider/CurrentUserContextProvider";
+import Cookies from "universal-cookie";
+import "./_login.scss";
+import { IconButton } from "@material-ui/core";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import googleIcon from "../images/common/google.jpg";
+import { useHistory } from "react-router-dom";
+import { auth, provider } from "../firebase";
+import { useDispatch } from "react-redux";
+import { loginWithEmailNPwdRequest } from "../actions/user";
 
-export default function Login() {
-  let [account, setAccount] = useState({email: '', password: ''});
+function Login() {
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  let [account, setAccount] = useState({ email: "", password: "" });
   let [visiblePwd, setVisiblePwd] = useState(false);
 
-  const history = useHistory();
-  const {setUser, setUserLoading} = useContext(CurrentUserContext);
+  const { setUser, setUserLoading } = useContext(CurrentUserContext);
 
-  const cookies = new Cookies();
-
-  const handleLoginWithPwd = async (event) => {
-    event.preventDefault();
-    cookies.remove('token');
-    const {email, password} = account;
-
-    try {
-      const loginResponse = await fetch(
-        'https://shopeeholic-server.herokuapp.com/users/login/pwd',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-          headers: {
-            'content-type': 'application/json; charset=UTF-8',
-          },
-        }
-      );
-
-      const loginJson = await loginResponse.json();
-      const {token, currentUser} = await loginJson;
-
-      if (token && currentUser) {
-        setUserLoading(false);
-        setUser(currentUser);
-        cookies.set('token', token);
-        history.push('/');
-      } else {
-        setUserLoading(true);
-        alert('Login.jsx with password' + JSON.stringify(loginJson));
-      }
-    } catch (err) {
-      setUserLoading(true);
-      alert('Login.jsx with password' + JSON.stringify(err));
-    }
-  };
-
-  const handleLoginWithGoogle = () => {
+  const loginWithGg = () => {
     auth
       .signInWithPopup(provider)
       .then(async (result) => {
         if (result.user) {
           try {
             const loginResponse = await fetch(
-              'https://shopeeholic-server.herokuapp.com/users/login/google',
+              "https://shopeeholic-server.herokuapp.com/users/login/google",
               {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify({
                   email: result.user.email,
                 }),
                 headers: {
-                  'content-type': 'application/json; charset=UTF-8',
+                  "content-type": "application/json; charset=UTF-8",
                 },
               }
             );
 
             const loginJson = await loginResponse.json();
-            const {token, currentUser} = await loginJson;
+            const { token, currentUser } = await loginJson;
 
             if (token && currentUser) {
               setUserLoading(false);
               setUser(currentUser);
-              cookies.set('token', token);
-              history.push('/');
+              cookies.set("token", token);
+              history.push("/");
             } else {
               setUserLoading(true);
-              alert('Login.jsx with google', JSON.stringify(loginJson));
+              alert("Login.jsx with google", JSON.stringify(loginJson));
             }
           } catch (err) {
             setUserLoading(true);
-            alert('Login.jsx with google' + JSON.stringify(err));
+            alert("Login.jsx with google" + JSON.stringify(err));
           }
         }
       })
@@ -106,13 +71,15 @@ export default function Login() {
             type="text"
             name="email"
             placeholder="Email"
-            onChange={(e) => setAccount({...account, email: e.target.value})}
+            onChange={(e) => setAccount({ ...account, email: e.target.value })}
           />
           <input
-            type={visiblePwd ? 'text' : 'password'}
+            type={visiblePwd ? "text" : "password"}
             name="password"
             placeholder="Password"
-            onChange={(e) => setAccount({...account, password: e.target.value})}
+            onChange={(e) =>
+              setAccount({ ...account, password: e.target.value })
+            }
           />
 
           <IconButton
@@ -127,7 +94,15 @@ export default function Login() {
           <button
             type="submit"
             className="login-btn"
-            onClick={handleLoginWithPwd}
+            onClick={() => {
+              dispatch(
+                loginWithEmailNPwdRequest({
+                  email: account.email,
+                  password: account.password,
+                })
+              );
+              history.push("/");
+            }}
           >
             Login
           </button>
@@ -135,7 +110,7 @@ export default function Login() {
 
         <div className="gg-login-container">
           <p>Or</p>
-          <button onClick={handleLoginWithGoogle}>
+          <button onClick={loginWithGg}>
             <img src={googleIcon} alt="google" />
             Continue with Google
           </button>
@@ -147,7 +122,7 @@ export default function Login() {
             <span>Terms of Service, Privacy Policy</span>
           </div>
 
-          <p onClick={() => history.push('/signup')}>
+          <p onClick={() => history.push("/signup")}>
             Not on Shopeeholic yet? Sign up
           </p>
         </div>
@@ -155,3 +130,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default Login;
