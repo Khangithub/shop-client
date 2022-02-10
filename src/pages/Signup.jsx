@@ -1,58 +1,15 @@
-import React, { useState, useContext } from "react";
-import { CurrentUserContext } from "../ContextProvider/CurrentUserContextProvider";
-import Cookies from "universal-cookie";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signupRequest } from "../actions/user";
 
 import googleIcon from "../assets/svgs/google.svg";
-import { useHistory } from "react-router-dom";
-import { auth, provider } from "../firebase";
 import "./_signup.scss";
 
-export default function Signup() {
-  const { setUser, setUserLoading } = useContext(CurrentUserContext);
+function Signup() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [role, setRole] = useState("client");
-  const cookies = new Cookies();
-
-  const handleSignup = () => {
-    auth
-      .signInWithPopup(provider)
-      .then(async (result) => {
-        if (result.user) {
-          console.log(result);
-          const signupResponse = await fetch(
-            "https://shopeeholic-server.herokuapp.com/users/signup",
-            {
-              method: "POST",
-              body: JSON.stringify({
-                email: result.user.email,
-                role,
-                avatar: result.user.photoURL,
-                username: result.user.displayName,
-              }),
-              headers: {
-                "content-type": "application/json; charset=UTF-8",
-              },
-            }
-          );
-
-          const signupJson = await signupResponse.json();
-          const { token, currentUser } = await signupJson;
-          if (token && currentUser) {
-            setUserLoading(false);
-            setUser(currentUser);
-            cookies.set("token", token);
-            console.log(token, currentUser, "signup res");
-            history.push("/");
-          } else {
-            setUserLoading(true);
-            alert("Signup.jsx " + JSON.stringify(signupJson));
-          }
-        }
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  };
 
   return (
     <div className="signup">
@@ -61,7 +18,7 @@ export default function Signup() {
           <strong>Sign up</strong>
         </h1>
 
-        <form className="role__radio">
+        <form>
           <input
             type="radio"
             name="role"
@@ -85,7 +42,12 @@ export default function Signup() {
           <br />
         </form>
 
-        <button onClick={handleSignup}>
+        <button
+          onClick={() => {
+            dispatch(signupRequest({ role }));
+            history.push("/");
+          }}
+        >
           <img src={googleIcon} alt="google" />
           Signup with Google
         </button>
@@ -104,3 +66,5 @@ export default function Signup() {
     </div>
   );
 }
+
+export default Signup;

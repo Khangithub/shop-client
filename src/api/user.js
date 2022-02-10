@@ -59,7 +59,7 @@ const loginWithGgCall = async () => {
     console.log ('loginWithGgCall', email);
 
     if (_.isEmpty (email)) {
-      throw new Error('unable to login with gg')
+      throw new Error ('unable to login with gg');
     }
 
     const loginReq = await fetch (
@@ -84,4 +84,62 @@ const loginWithGgCall = async () => {
     return err;
   }
 };
-export {getCurrentUserCall, loginWithEmailNPwdCall, loginWithGgCall};
+
+const signupCall = async ({role}) => {
+  try {
+    const {user: {email, photoURL, displayName}} = await auth.signInWithPopup (
+      provider
+    );
+    console.log ('call', email, photoURL, displayName);
+
+    if (_.isEmpty (email)) {
+      throw new Error ('unable to signup with gg');
+    }
+
+    const signupReq = await fetch (process.env.REACT_APP_USERS_SIGNUP, {
+      method: 'POST',
+      body: JSON.stringify ({
+        email,
+        role,
+        avatar: photoURL,
+        username: displayName,
+      }),
+      headers: {
+        'content-type': 'application/json; charset=UTF-8',
+      },
+    });
+
+    const signupJson = await signupReq.json ();
+    return {
+      token: signupJson.token,
+      currentUser: {...signupJson.currentUser, staus: loginStatus.LOGGEDIN},
+    };
+
+    // .then(async (result) => {
+    //   if (result.user) {
+    //     const signupResponse = await fetch(
+    //       "https://shopeeholic-server.herokuapp.com/users/signup",
+    //       {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //           email: result.user.email,
+    //           role,
+    //           avatar: result.user.photoURL,
+    //           username: result.user.displayName,
+    //         }),
+    //         headers: {
+    //           "content-type": "application/json; charset=UTF-8",
+    //         },
+    //       }
+    //     );
+  } catch (err) {
+    return err;
+  }
+};
+
+export {
+  getCurrentUserCall,
+  loginWithEmailNPwdCall,
+  loginWithGgCall,
+  signupCall,
+};

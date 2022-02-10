@@ -5,7 +5,12 @@ import {
   getFailedUserRequest,
   Types,
 } from '../actions/user';
-import {getCurrentUserCall, loginWithEmailNPwdCall, loginWithGgCall} from '../api/user';
+import {
+  getCurrentUserCall,
+  loginWithEmailNPwdCall,
+  loginWithGgCall,
+  signupCall,
+} from '../api/user';
 
 const cookies = new Cookies ();
 const token = cookies.get ('token');
@@ -70,6 +75,30 @@ function* loginWithGgGenerator () {
   }
 }
 
+function* signupGenerator({payload: {email, role, avatar, username}}) {
+  try {
+    const {token, currentUser} = yield call (signupCall, {
+      email,
+      role,
+      avatar,
+      username,
+    });
+
+    cookies.set ('token', token);
+    yield put (
+      getCurrentUserSuccess ({
+        currentUser,
+      })
+    );
+  } catch (err) {
+    yield put (
+      getFailedUserRequest ({
+        err,
+      })
+    );
+  }
+}
+
 // wacher functions
 function* getCurrentUserWatcher () {
   yield takeLatest (Types.GET_CURRENT_USER_REQUEST, getCurrentUserGenerator);
@@ -82,11 +111,15 @@ function* loginWithEmailNPwdWatcher () {
 function* loginWithGgWatcher () {
   yield takeEvery (Types.LOGIN_WITH_GG_REQUEST, loginWithGgGenerator);
 }
+function* signupWatcher () {
+  yield takeEvery (Types.SIGNUP_REQUEST, signupGenerator);
+}
 
 const userSaga = [
   fork (getCurrentUserWatcher),
   fork (loginWithEmailNPwdWatcher),
   fork (loginWithGgWatcher),
+  fork (signupWatcher),
 ];
 
 export default userSaga;
