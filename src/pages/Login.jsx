@@ -45,8 +45,6 @@ function Login() {
             {visiblePwd ? <VisibilityIcon /> : <VisibilityOffIcon />}
           </IconButton>
 
-          <p>Forget your password</p>
-
           <button
             type="submit"
             className="login-btn"
@@ -79,7 +77,7 @@ function Login() {
           </button>
         </div>
 
-        <div className="signup-btn-container ">
+        <div className="login-term-container">
           <div className="term">
             <span>By continuing with Shopeeholic, you agreed with </span>
             <span>Terms of Service, Privacy Policy</span>

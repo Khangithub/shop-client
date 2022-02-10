@@ -1,78 +1,33 @@
 @import '../styles/_layout';
 @import '../styles/_colors';
 
-.login {
+.signup {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: $grey;
+    background-color: rgb(234, 237, 237);
     height: 100vh;
 
-    .login-container {
+    .signup-container {
         width: 100%;
         max-width: 360px;
         display: flex;
         flex-direction: column;
         margin: 5px;
-        border: 1px solid $lightGrey;
+        border: 1px solid lightgray;
         padding: 20px;
-        background: $white;
-
-        h1 {
-            font-weight: bold;
-        }
-    }
-
-    .login-form {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
+        background: white;
 
         input {
-            display: flex;
-            flex: 1;
-            width: 100%;
-            padding: 5px;
-            line-height: 25px;
-            border-width: 2px;
-            margin: 5px 0;
-
-            &:focus {
-                outline: none;
-                border: 2px solid $goldenRod;
-                border-radius: 5px;
-            }
+            margin-right: 10px;
         }
 
-        .visible-pwd-btn {
-            position: relative;
-            top: -35px;
-            right: -280px;
-            height: 20px;
-            margin-bottom: -25px;
-            color: $darkGrey;
-            width: 30px;
-
-            &:focus {
-                outline: none;
-            }
+        label {
+            font-size: larger;
         }
-
-        .login-btn {
-            margin-top: 10px;
-            @include goldenBtn;
-            height: 30px;
-        }
-    }
-
-    .gg-login-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
 
         button {
+            margin: 10px 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -93,7 +48,7 @@
         }
     }
 
-    .login-term-container {
+    .signup-term-container {
         display: flex;
         align-items: center;
         flex-direction: column;

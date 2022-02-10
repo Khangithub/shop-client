@@ -1,16 +1,16 @@
-import React, {useState, useContext} from 'react';
-import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
-import Cookies from 'universal-cookie';
+import React, { useState, useContext } from "react";
+import { CurrentUserContext } from "../ContextProvider/CurrentUserContextProvider";
+import Cookies from "universal-cookie";
 
-import googleIcon from '../images/common/google.jpg';
-import {useHistory} from 'react-router-dom';
-import {auth, provider} from '../firebase';
-import './Signup.css';
+import googleIcon from "../assets/svgs/google.svg";
+import { useHistory } from "react-router-dom";
+import { auth, provider } from "../firebase";
+import "./_signup.scss";
 
 export default function Signup() {
-  const {setUser, setUserLoading} = useContext(CurrentUserContext);
+  const { setUser, setUserLoading } = useContext(CurrentUserContext);
   const history = useHistory();
-  const [role, setRole] = useState('client');
+  const [role, setRole] = useState("client");
   const cookies = new Cookies();
 
   const handleSignup = () => {
@@ -20,9 +20,9 @@ export default function Signup() {
         if (result.user) {
           console.log(result);
           const signupResponse = await fetch(
-            'https://shopeeholic-server.herokuapp.com/users/signup',
+            "https://shopeeholic-server.herokuapp.com/users/signup",
             {
-              method: 'POST',
+              method: "POST",
               body: JSON.stringify({
                 email: result.user.email,
                 role,
@@ -30,22 +30,22 @@ export default function Signup() {
                 username: result.user.displayName,
               }),
               headers: {
-                'content-type': 'application/json; charset=UTF-8',
+                "content-type": "application/json; charset=UTF-8",
               },
             }
           );
 
           const signupJson = await signupResponse.json();
-          const {token, currentUser} = await signupJson;
+          const { token, currentUser } = await signupJson;
           if (token && currentUser) {
             setUserLoading(false);
             setUser(currentUser);
-            cookies.set('token', token);
-            console.log(token, currentUser, 'signup res');
-            history.push('/');
+            cookies.set("token", token);
+            console.log(token, currentUser, "signup res");
+            history.push("/");
           } else {
             setUserLoading(true);
-            alert('Signup.jsx ' + JSON.stringify(signupJson));
+            alert("Signup.jsx " + JSON.stringify(signupJson));
           }
         }
       })
@@ -56,8 +56,10 @@ export default function Signup() {
 
   return (
     <div className="signup">
-      <div className="signup__container">
-        <h1>Sign up</h1>
+      <div className="signup-container">
+        <h1>
+          <strong>Sign up</strong>
+        </h1>
 
         <form className="role__radio">
           <input
@@ -69,7 +71,7 @@ export default function Signup() {
               setRole(e.target.value);
             }}
           />
-          <label htmlFor="client">i want to be a client</label>
+          <label htmlFor="client">I want to be a client</label>
           <br />
           <input
             type="radio"
@@ -79,7 +81,7 @@ export default function Signup() {
               setRole(e.target.value);
             }}
           />
-          <label htmlFor="saler">i want to be a saleman</label>
+          <label htmlFor="saler">I want to be a saleman</label>
           <br />
         </form>
 
@@ -88,13 +90,13 @@ export default function Signup() {
           Signup with Google
         </button>
 
-        <div className="signup-btn-container ">
+        <div className="signup-term-container ">
           <div className="term">
             <span>By continuing with Shopeeholic, you agreed with </span>
             <span>Terms of Service, Privacy Policy</span>
           </div>
 
-          <p onClick={() => history.push('/login')}>
+          <p onClick={() => history.push("/login")}>
             Already have an account? Login
           </p>
         </div>
