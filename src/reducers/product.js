@@ -4,6 +4,7 @@ const INTIAL_STATE = {
   mostDiscountsProducts: [],
   bestSaleProducts: [],
   newArrivalProducts: [],
+  product: {},
   loading: true,
   err: {},
 };
@@ -31,8 +32,17 @@ export default function products (state = INTIAL_STATE, action) {
         ...state,
         loading: false,
         newArrivalProducts: action.payload.products,
-      }
+      };
     }
+
+    case Types.GET_PRODUCT_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        product: action.payload.product,
+      };
+    }
+
     case Types.FAILED_REQUEST: {
       return {
         ...state,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Spinner, Row, Col, Carousel } from "react-bootstrap";
+import { Row, Col, Carousel } from "react-bootstrap";
 import ProductCard from "../components/ProductCard/";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +13,7 @@ import _ from "lodash";
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 import CategoryList from "../components/CategoryList";
 import "./_home.scss";
 
@@ -52,12 +53,11 @@ function Home() {
     _.isEmpty(bestSaleProducts) ||
     _.isEmpty(newArrivalProducts)
   )
-    return <Spinner animation="grow" variant="danger" />;
+    return <Loading />;
 
-  if (loading) return <Spinner animation="grow" variant="danger" />;
+  if (loading) return <Loading />;
 
-  if (!_.isEmpty(err, true))
-    return <Spinner animation="grow" variant="danger" />;
+  if (!_.isEmpty(err, true)) return <Loading />;
 
   return (
     <>

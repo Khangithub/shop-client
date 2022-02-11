@@ -31,7 +31,24 @@ const getNewArrivalProductsCall = async ({pageIndex, limit}) => {
     const newArrProductJson = await newArrProductsReq.json ();
     return newArrProductJson.newArrivalList;
   } catch (err) {
-    
+    return err;
   }
-}
-export {getMostDiscoutsProductsCall, getBestSaleProductsCall, getNewArrivalProductsCall};
+};
+
+const getProductCall = async ({productId}) => {
+  try {
+    const productReq = await fetch (process.env.REACT_APP_PRODUCTS + productId);
+
+    const productJson = await productReq.json ();
+    return productJson;
+  } catch (err) {
+    return err;
+  }
+};
+
+export {
+  getMostDiscoutsProductsCall,
+  getBestSaleProductsCall,
+  getNewArrivalProductsCall,
+  getProductCall,
+};
