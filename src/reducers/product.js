@@ -5,8 +5,8 @@ const INTIAL_STATE = {
   bestSaleProducts: [],
   newArrivalProducts: [],
   product: {},
-  loading: true,
-  err: {},
+  productLoading: true,
+  productErr: {},
 };
 
 export default function products (state = INTIAL_STATE, action) {
@@ -14,7 +14,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        productLoading: false,
         mostDiscountsProducts: action.payload.products,
       };
     }
@@ -22,7 +22,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_BEST_SALE_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        productLoading: false,
         bestSaleProducts: action.payload.products,
       };
     }
@@ -30,7 +30,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_NEW_ARRIVAL_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        productLoading: false,
         newArrivalProducts: action.payload.products,
       };
     }
@@ -38,7 +38,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_PRODUCT_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        productLoading: false,
         product: action.payload.product,
       };
     }
@@ -46,8 +46,8 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.FAILED_REQUEST: {
       return {
         ...state,
-        loading: true,
-        err: action.payload.err,
+        productLoading: true,
+        productErr: action.payload.productErr,
       };
     }
 

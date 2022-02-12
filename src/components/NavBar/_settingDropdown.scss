@@ -16,7 +16,7 @@
 
 .setting-dropdown {
   >a {
-    @media screen and (max-width: $extraLarge) {
+    @media screen and (max-width: $large) {
       padding-left: 0;
     }
   }
@@ -27,54 +27,5 @@
     border-radius: 50%;
     padding: 5px;
     border: 2px solid $grey;
-  }
-
-  .setting-dropdown-item {
-    height: 50px;
-    display: flex;
-    align-items: center;
-
-    .setting-dropdown-item--title {
-      font-size: 14px;
-      line-height: 14px;
-      height: 14px;
-      font-weight: 400;
-      text-transform: capitalize;
-      padding: 0 10px;
-    }
-
-    .setting-dropdown-item--length {
-      background-color: $scarlet;
-      color: white;
-      padding: 2px 4px;
-      border-radius: 5px;
-    }
-
-    .setting-dropdown-item-img {
-      width: 30px;
-      height: 30px;
-    }
-
-
-    .setting-dropdown-item-badge {
-      height: 20px;
-      line-height: 20px;
-    }
-  }
-
-  .setting-dropdown-user-btn {
-    display: flex;
-    justify-content: center;
-    background: $gold;
-    height: fit-content;
-    margin: 5px 0;
-    padding: 5px;
-    border: 1px solid $goldBrown;
-    border-radius: 2px;
-
-    &:hover {
-      background: $gold !important;
-      opacity: 0.8;
-    }
   }
 }

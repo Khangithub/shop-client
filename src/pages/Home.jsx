@@ -8,14 +8,13 @@ import {
   getMostDiscountsProductsRequest,
   getNewArrivalProductsRequest,
 } from "../actions/product";
-import _ from "lodash";
+import { isEmpty } from "lodash";
 
 import NavBar from "../components/NavBar";
 import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
 import CategoryList from "../components/CategoryList";
-import "./_home.scss";
 
 import foodBanner3 from "../assets/banners/food-3.jpg";
 import foodBanner4 from "../assets/banners/food-4.jpg";
@@ -28,6 +27,7 @@ import bookBanner3 from "../assets/banners/book-3.jpg";
 import bookBanner4 from "../assets/banners/book-4.jpg";
 
 import HorizontalDivider from "../components/HorizontalDivider";
+import "./_home.scss";
 
 function Home() {
   const dispatch = useDispatch();
@@ -38,8 +38,8 @@ function Home() {
     mostDiscountsProducts,
     bestSaleProducts,
     newArrivalProducts,
-    loading,
-    err,
+    productLoading,
+    productErr,
   } = useSelector((state) => state.product);
 
   useEffect(() => {
@@ -49,15 +49,15 @@ function Home() {
   }, [dispatch, pageIndex, limit]);
 
   if (
-    _.isEmpty(mostDiscountsProducts) ||
-    _.isEmpty(bestSaleProducts) ||
-    _.isEmpty(newArrivalProducts)
+    isEmpty(mostDiscountsProducts) ||
+    isEmpty(bestSaleProducts) ||
+    isEmpty(newArrivalProducts)
   )
     return <Loading />;
 
-  if (loading) return <Loading />;
+  if (productLoading) return <Loading />;
 
-  if (!_.isEmpty(err, true)) return <Loading />;
+  if (!isEmpty(productErr)) return <Loading />;
 
   return (
     <>

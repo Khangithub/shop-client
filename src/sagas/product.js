@@ -29,7 +29,7 @@ function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        err,
+        productErr: err,
       })
     );
   }
@@ -61,7 +61,7 @@ function* getNewArrivalProductsGenerator({payload: {pageIndex, limit}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        err,
+        productErr: err,
       })
     );
   }
@@ -76,7 +76,7 @@ function* getProductGenerator({payload: {productId}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        err,
+        productErr: err,
       })
     );
   }

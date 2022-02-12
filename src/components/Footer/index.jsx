@@ -10,7 +10,7 @@ export default function Index() {
         <span>Back to top</span>
       </div>
 
-      <Row className="footer-container container-fluid">
+      <Row className="footer-container">
         <Row className="footer-layout">
           <Col xs={12} sm={6} md={3} className="footer-section">
             <h4>Get to Know Us</h4>

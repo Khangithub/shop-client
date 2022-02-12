@@ -25,12 +25,13 @@ function* getCurrentUserGenerator () {
     yield put (
       getCurrentUserSuccess ({
         currentUser,
+        token,
       })
     );
   } catch (err) {
     yield put (
       getFailedUserRequest ({
-        err,
+        userErr: err,
       })
     );
   }
@@ -46,12 +47,13 @@ function* loginWithEmailNPwdGenerator({payload: {email, password}}) {
     yield put (
       getCurrentUserSuccess ({
         currentUser,
+        token
       })
     );
   } catch (err) {
     yield put (
       getFailedUserRequest ({
-        err,
+        userErr: err,
       })
     );
   }
@@ -60,16 +62,17 @@ function* loginWithEmailNPwdGenerator({payload: {email, password}}) {
 function* loginWithGgGenerator () {
   try {
     const {token, currentUser} = yield call (loginWithGgCall);
-    cookies.set ('token', token);
+    cookies.set ('token', token, currentUser);
     yield put (
       getCurrentUserSuccess ({
         currentUser,
+        token
       })
     );
   } catch (err) {
     yield put (
       getFailedUserRequest ({
-        err,
+        userErr: err,
       })
     );
   }
@@ -83,17 +86,17 @@ function* signupGenerator({payload: {email, role, avatar, username}}) {
       avatar,
       username,
     });
-
     cookies.set ('token', token);
     yield put (
       getCurrentUserSuccess ({
         currentUser,
+        token
       })
     );
   } catch (err) {
     yield put (
       getFailedUserRequest ({
-        err,
+        userErr: err,
       })
     );
   }

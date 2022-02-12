@@ -2,8 +2,9 @@ import {Types} from '../actions/user';
 
 const INTIAL_STATE = {
   currentUser: {},
-  loading: true,
-  err: {},
+  token: '',
+  userLoading: true,
+  userErr: {},
 };
 
 export default function user (state = INTIAL_STATE, action) {
@@ -11,7 +12,8 @@ export default function user (state = INTIAL_STATE, action) {
     case Types.GET_CURRENT_USER_SUCCESS: {
       return {
         ...state,
-        loading: false,
+        userLoading: false,
+        token: action.payload.token,
         currentUser: action.payload.currentUser,
       };
     }
@@ -19,8 +21,8 @@ export default function user (state = INTIAL_STATE, action) {
     case Types.FAILED_USER_REQUEST: {
       return {
         ...state,
-        loading: true,
-        err: action.payload.err,
+        userLoading: true,
+        userErr: action.payload.userErr,
       };
     }
 

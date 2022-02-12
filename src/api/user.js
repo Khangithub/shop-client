@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import {isEmpty} from 'lodash';
 import {auth, provider} from '../firebase';
 
 const loginStatus = {
@@ -8,7 +8,7 @@ const loginStatus = {
 
 const getCurrentUserCall = async ({token}) => {
   try {
-    if (_.isEmpty (token)) {
+    if (isEmpty (token)) {
       return {
         status: loginStatus.UNAUTHORIZED,
       };
@@ -56,9 +56,8 @@ const loginWithEmailNPwdCall = async ({email, password}) => {
 const loginWithGgCall = async () => {
   try {
     const {user: {email}} = await auth.signInWithPopup (provider);
-    console.log ('loginWithGgCall', email);
 
-    if (_.isEmpty (email)) {
+    if (isEmpty (email)) {
       throw new Error ('unable to login with gg');
     }
 
@@ -92,7 +91,7 @@ const signupCall = async ({role}) => {
     );
     console.log ('call', email, photoURL, displayName);
 
-    if (_.isEmpty (email)) {
+    if (isEmpty (email)) {
       throw new Error ('unable to signup with gg');
     }
 
@@ -114,24 +113,6 @@ const signupCall = async ({role}) => {
       token: signupJson.token,
       currentUser: {...signupJson.currentUser, staus: loginStatus.LOGGEDIN},
     };
-
-    // .then(async (result) => {
-    //   if (result.user) {
-    //     const signupResponse = await fetch(
-    //       "https://shopeeholic-server.herokuapp.com/users/signup",
-    //       {
-    //         method: "POST",
-    //         body: JSON.stringify({
-    //           email: result.user.email,
-    //           role,
-    //           avatar: result.user.photoURL,
-    //           username: result.user.displayName,
-    //         }),
-    //         headers: {
-    //           "content-type": "application/json; charset=UTF-8",
-    //         },
-    //       }
-    //     );
   } catch (err) {
     return err;
   }

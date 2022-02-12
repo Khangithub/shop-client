@@ -33,17 +33,18 @@ const signupRequest = ({email, role, avatar, username}) => ({
   },
 });
 
-const getCurrentUserSuccess = ({currentUser}) => ({
+const getCurrentUserSuccess = ({currentUser, token}) => ({
   type: Types.GET_CURRENT_USER_SUCCESS,
   payload: {
     currentUser,
+    token
   },
 });
 
-const getFailedUserRequest = ({err}) => ({
+const getFailedUserRequest = ({userErr}) => ({
   type: Types.FAILED_USER_REQUEST,
   payload: {
-    err,
+    userErr,
   },
 });
 

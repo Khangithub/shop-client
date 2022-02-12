@@ -1,20 +1,41 @@
-import React, {useContext} from 'react';
-import './Orders.css';
-import NavBar from '../components/NavBar';
-import Footer from '../components/Footer';
-import {OrderContext} from '../ContextProvider/OrderContextProvider';
-import OrderCard from '../components/OrderCard/';
-import {Image, Spinner, Row, Col} from 'react-bootstrap';
-import {returnTotalPrice} from '../helpers';
-import orderAd from '../images/common/order-ad.jpg';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Image, Row, Col } from "react-bootstrap";
+import { getOrdersRequest } from "../actions/order";
+import { returnTotalPrice } from "../helpers";
 
-export default function Order() {
-  const {cart, getCartLoading} = useContext(OrderContext);
+import { isEmpty } from "lodash";
 
-  return getCartLoading ? (
-    <Spinner variant="danger" animation="grow" />
-  ) : (
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+import Loading from "../components/Loading";
+import OrderCard from "../components/OrderCard/";
+import orderAd from "../images/common/order-ad.jpg";
+
+import "./Orders.css";
+import { getCurrentUserRequest } from "../actions/user";
+
+function Order() {
+  const dispatch = useDispatch();
+  const { token, userLoading, userErr } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getCurrentUserRequest());
+  }, [dispatch]);
+
+  const { orders, orderLoading, orderErr } = useSelector(
+    (state) => state.order
+  );
+
+  useEffect(() => {
+    dispatch(getOrdersRequest({token}));
+  }, [dispatch, token]);
+
+  if (isEmpty(token)) return <Loading />;
+  if (orderLoading || userLoading) return <Loading />;
+  if (!isEmpty(orderErr) || !isEmpty(userErr)) return <Loading />;
+
+  return (
     <div className="order">
       <NavBar />
       <Row className="order__list__container">
@@ -24,21 +45,21 @@ export default function Order() {
             <h1>Your shopping cart</h1>
           </div>
 
-          {cart
+          {orders
             .map((order, index) => {
-              return <OrderCard order={order} key={index} forBuyer/>;
+              return <OrderCard order={order} key={index} forBuyer />;
             })
             .reverse()}
         </Col>
 
         <Col sm={12} md={3} className="order__checkout">
           <div className="order__checkout__total__price">
-            <span>Subtotals {cart?.length} items:</span>
-            <span>${returnTotalPrice(cart)}</span>
+            <span>Subtotals {orders?.length} items:</span>
+            <span>${returnTotalPrice(orders)}</span>
           </div>
           <div className="order__checkout__gift__checkbox">
             <input type="checkbox" />
-            <label for="gift"> This order contains a gift</label>
+            <label htmlFor="gift"> This order contains a gift</label>
           </div>
           <button>Proceed to Checkout</button>
         </Col>
@@ -48,7 +69,4 @@ export default function Order() {
   );
 }
 
-Order.prototype = {
-  cart: PropTypes.array,
-  getCartLoading: PropTypes.bool,
-};
+export default Order;
