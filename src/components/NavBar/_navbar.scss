@@ -10,7 +10,7 @@
         @include parentLayout;
 
         .navbar-brand {
-            margin: 0 !important;
+            margin: 0;
         }
 
         .navbar-icon {
@@ -38,7 +38,7 @@
             background: $white;
 
             @media screen and (min-width: $large) {
-                max-width: 500px;
+                max-width: 600px;
             }
 
             input {
@@ -56,6 +56,12 @@
 
             img {
                 width: 20px;
+            }
+        }
+
+        .nav-link {
+            @media screen and (max-width: $medium) {
+                padding-left: 0;
             }
         }
     }

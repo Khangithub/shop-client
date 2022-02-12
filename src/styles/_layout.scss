@@ -24,3 +24,20 @@ $extraLarge: 1140px;
   border-style: solid;
   border-width: 1px;
 }
+
+@mixin quantityGroupBtn {
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 50px;
+    margin: 10px;
+  }
+
+  button {
+    @include goldenBtn;
+    height: 30px;
+    font-size: larger;
+    font-weight: bolder;
+  }
+}

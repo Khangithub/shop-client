@@ -30,7 +30,7 @@
   text-transform: capitalize;
 }
 
-.order__checkout {
+.order-checkout-container {
   display: flex;
   flex-direction: column;
   background-color: rgb(234, 237, 237);
@@ -74,7 +74,7 @@
 
 }
 
-.order__checkout > button {
+.order-checkout-container > button {
   background: #f0c14b;
   border-radius: 2px;
   border: 1px solid;

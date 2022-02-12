@@ -77,7 +77,7 @@ function NavBar() {
             <form className="navbar-searchbox" onSubmit={handleSearch}>
               <input
                 type="text"
-                placeholder="Tìm sản phẩm bạn mong muốn ..."
+                placeholder="Find the product you want..."
                 name="keyword"
                 onChange={(e) => {
                   setInput(e.target.value);

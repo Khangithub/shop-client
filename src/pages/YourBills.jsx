@@ -2,8 +2,7 @@ import React, {useContext} from 'react';
 import './YourBills.css';
 import NavBar from '../components/NavBar';
 import {useHistory} from 'react-router-dom';
-import {Spinner, Row, Col, Image} from 'react-bootstrap';
-import orderAd from '../images/common/order-ad.jpg';
+import {Spinner, Row, Col} from 'react-bootstrap';
 import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
 import {BillContext} from '../ContextProvider/BillContextProvider';
 import OrderCard from '../components/OrderCard';
@@ -27,7 +26,6 @@ export default function YourBills() {
       <Row className="bill__list__container">
         <Col xs={12} sm={9} className="order__card__list">
           <div className="order__ad__image">
-            <Image src={orderAd} alt="orderAd" />
             <h1>Your bill list</h1>
           </div>
           {billList.reverse().map((billList, index) => {
@@ -35,7 +33,7 @@ export default function YourBills() {
           })}
         </Col>
 
-        <Col xs={12} sm={3} className="order__checkout">
+        <Col xs={12} sm={3} className="order-checkout-container">
           <div className="order__checkout__total__price">
             <span>Subtotals {billList?.length} bills:</span>
             <span>${returnTotalPrice(billList)}</span>

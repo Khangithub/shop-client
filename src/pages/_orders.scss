@@ -1,0 +1,45 @@
+@import '../styles/layout';
+@import '../styles/colors';
+
+.order {
+    @include parentLayout;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    
+    .order-list-container {
+        margin: 0 15px;
+
+        h1 {
+            font-weight: bold;
+            margin: 30px 0;
+            text-transform: capitalize;
+        }
+
+        .order-list-header {
+            background: $white;
+            text-transform: capitalize;
+            font-size: 14px;
+            border: 1px solid lightgray;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 0;
+            align-items: center;
+        }
+    }
+
+    @media screen and (max-width: $large) {
+        .order-list-container {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+    }
+
+    .order-checkout-container {
+        display: flex;
+        flex-direction: column;
+        background-color: rgb(234, 237, 237);
+        padding: 20px 30px;
+        height: fit-content;
+    }
+}

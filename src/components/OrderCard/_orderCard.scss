@@ -1,0 +1,58 @@
+@import '../../styles/colors';
+@import '../../styles/layout';
+
+.order-card {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: stretch;
+    border: 1px solid lightgray;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: $white;
+
+    .order-card-container {
+        margin: 15px 0 !important;
+        align-items: center;
+
+        .order-name {
+            display: flex;
+            align-items: center;
+            text-transform: capitalize;
+
+            img {
+                height: 70px;
+            }
+        }
+
+
+        .order-unit-price {
+            p {
+                color: gray;
+                text-decoration: line-through;
+            }
+        }
+
+        .order-quantity-btn {
+            @include quantityGroupBtn
+        }
+
+        .order-real-price {
+            color: $scarlet;
+        }
+
+        @media screen and (max-width: $large) {
+
+            .order-name,
+            .order-quantity-btn {
+                flex-direction: column;
+            }
+
+            .order-quantity-btn {
+                align-items: center;
+
+            }
+        }
+
+    }
+}
