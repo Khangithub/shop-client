@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import { getOrdersRequest } from "../actions/order";
@@ -29,6 +29,8 @@ function Order() {
     dispatch(getOrdersRequest({ token }));
   }, [dispatch, token]);
 
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  
   if (isEmpty(token)) return <Loading />;
   if (orderLoading || userLoading) return <Loading />;
   if (!isEmpty(orderErr) || !isEmpty(userErr)) return <Loading />;
@@ -47,6 +49,15 @@ function Order() {
                   type="checkbox"
                   name="selected-orders"
                   id="selected-orders"
+                  checked={selectedOrders.length === orders.length}
+                  onChange={() => {
+                    if (selectedOrders.length === orders.length) {
+                      setSelectedOrders([]);
+                    } else {
+                      const allOrders = orders.map((order) => order.product._id);
+                      setSelectedOrders(allOrders);
+                    }
+                  }}
                 />
               </Col>
               <Col xs={3} lg={3}>
@@ -72,7 +83,14 @@ function Order() {
 
             {orders
               .map((order, index) => {
-                return <OrderCard order={order} key={index} forBuyer />;
+                return (
+                  <OrderCard
+                    order={order}
+                    key={index}
+                    selectedOrders={selectedOrders}
+                    setSelectedOrders={setSelectedOrders}
+                  />
+                );
               })
               .reverse()}
           </Col>
