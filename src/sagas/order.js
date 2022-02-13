@@ -3,8 +3,9 @@ import {
   getOrdersFailedRequest,
   getOrdersSuccess,
   Types,
+  updateOrdersItemSuccess,
 } from '../actions/order';
-import {getOrdersCall} from '../api/order';
+import {getOrdersCall, updateOrdersItemCall} from '../api/order';
 
 function* getOrdersGenerator({payload: {token}}) {
   try {
@@ -26,11 +27,41 @@ function* getOrdersGenerator({payload: {token}}) {
   }
 }
 
+function* updateOrdersItemGenerator({payload: {orderId, quantity, token}}) {
+  try {
+    const {message} = yield call (updateOrdersItemCall, {
+      orderId,
+      quantity,
+      token,
+    });
+
+    if (message === 'updated') {
+      yield put (
+        updateOrdersItemSuccess ({
+          orderId,
+          quantity,
+        })
+      );
+    }
+  } catch (err) {
+    yield put (getOrdersFailedRequest ({err}));
+  }
+}
+
 // wacher functions
 function* getOrdersWatcher () {
   yield takeLatest (Types.GET_ORDERS_REQUEST, getOrdersGenerator);
 }
 
-const orderSaga = [fork (getOrdersWatcher)];
+function* updateOrdersItemRequestWatcher () {
+  yield takeLatest (
+    Types.UPDATE_ORDERS_ITEM_QUANTITY_REQUEST,
+    updateOrdersItemGenerator
+  );
+}
+const orderSaga = [
+  fork (getOrdersWatcher),
+  fork (updateOrdersItemRequestWatcher),
+];
 
 export default orderSaga;

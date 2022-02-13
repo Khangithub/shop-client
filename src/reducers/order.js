@@ -16,6 +16,20 @@ export default function order (state = INTIAL_STATE, action) {
       };
     }
 
+    case Types.UPDATE_ORDERS_ITEM_QUANTITY_SUCCESS: {
+      const {orderId, quantity} = action.payload;
+      const {orders} = state;
+      const orderIndex = orders.map(({_id}) => _id).indexOf(orderId);
+
+      const updatedOrders = orders
+      updatedOrders[orderIndex].quantity = quantity;
+
+      return {
+        ...state,
+        orders: updatedOrders
+      };
+    }
+
     case Types.FAILED_REQUEST: {
       return {
         ...state,
