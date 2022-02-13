@@ -9,9 +9,9 @@ import "./_settingDropdown.scss";
 function SettingDropdown({ currentUser, userErr, userLoading }) {
   const history = useHistory();
 
-  if (isEmpty(currentUser)) return <Loading />;
-  if (userLoading) return <Loading />;
-  if (!isEmpty(userErr)) return <Loading />;
+  if (isEmpty(currentUser)) return <Loading errMsg={currentUser} />;
+  if (userLoading) return <Loading errMsg={userLoading} />;
+  if (!isEmpty(userErr)) return <Loading errMsg={userErr} />;
 
   if (currentUser.status === "loginStatus/unauthorized")
     return (

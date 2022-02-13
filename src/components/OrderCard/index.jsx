@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
-import { returnPrice } from "../../helpers";
+import { getNetPrice } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty } from "lodash";
 import { updateOrdersItemRequest } from "../../actions/order";
 import { getCurrentUserRequest } from "../../actions/user";
-import Loading from "../Loading";
 
 import trashCanSvg from "../../assets/svgs/trashCan.svg";
 
@@ -17,9 +15,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
   const [quantity, setQuantity] = useState(order.quantity);
   var [timeoutPivot, setTimeoutPivot] = useState(null);
 
-  const { currentUser, token, userLoading, userErr } = useSelector(
-    (state) => state.user
-  );
+  const { token } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getCurrentUserRequest());
@@ -56,10 +52,6 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
     );
   };
 
-  if (isEmpty(currentUser)) return <Loading />;
-  if (userLoading) return <Loading />;
-  if (!isEmpty(userErr)) return <Loading />;
-
   return (
     <div className="order-card">
       <Row>
@@ -93,7 +85,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
         <Col xs={2} lg={2}>
           <div className="order-unit-price">
             <strong>
-              ${product.discount ? returnPrice(product) : ` ${product.price}`}
+              ${product.discount ? getNetPrice(product) : ` ${product.price}`}
             </strong>
             {product.discount && <p>${product.price}</p>}
           </div>
@@ -114,7 +106,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
         </Col>
         <Col xs={2} lg={2}>
           <strong className="order-real-price">
-            ${returnPrice(product) * quantity}
+            ${getNetPrice(product) * quantity}
           </strong>
         </Col>
         <Col xs={1} lg={1}>

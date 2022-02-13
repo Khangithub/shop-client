@@ -69,10 +69,6 @@ export function checkConfirmedPassword (password, confirmedPassword) {
   }
 }
 
-export function disappearWhen (condition) {
-  return condition ? {display: 'none'} : {};
-}
-
 export function convertTimestamp (timestamp) {
   const date = new Date (timestamp);
   return date.toLocaleString ();
@@ -81,8 +77,10 @@ export function convertTimestamp (timestamp) {
 const getRandomInRange = (min, max) =>
   Math.floor (Math.random () * (max - min + 1)) + min;
 
-const returnPrice = product =>
-  product.price - product.discount * product.price / 100;
+const getNetPrice = product =>
+  product.discount
+    ? product.price - product.discount * product.price / 100
+    : product.price;
 
 const sortAccordType = (sortType, results) => {
   switch (sortType) {
@@ -101,4 +99,4 @@ const sortAccordType = (sortType, results) => {
   }
 };
 
-export {getRandomInRange, returnPrice, sortAccordType};
+export {getRandomInRange, getNetPrice, sortAccordType};

@@ -1,3 +1,34 @@
+const getProductsByCategoryCall = async ({category, pageIndex, limit}) => {
+  try {
+    const productsByCategoryReq = await fetch (
+      process.env.REACT_APP_PRODUCTS_BY_CATEGORY +
+        category +
+        '/' +
+        pageIndex +
+        '/' +
+        limit
+    );
+    const productsByCategoryJson = await productsByCategoryReq.json ();
+
+    return productsByCategoryJson.docs;
+  } catch (err) {
+    return err;
+  }
+};
+
+const getAllProductsCall = async ({pageIndex, limit}) => {
+  try {
+    const allProductsReq = await fetch (
+      process.env.REACT_APP_PRODUCTS + pageIndex + '/' + limit
+    );
+    const allProductsJson = await allProductsReq.json ();
+
+    return allProductsJson.docs;
+  } catch (err) {
+    return err;
+  }
+};
+
 const getMostDiscoutsProductsCall = async ({pageIndex, limit}) => {
   try {
     const mostDiscountsProductsReq = await fetch (
@@ -47,6 +78,8 @@ const getProductCall = async ({productId}) => {
 };
 
 export {
+  getProductsByCategoryCall,
+  getAllProductsCall,
   getMostDiscoutsProductsCall,
   getBestSaleProductsCall,
   getNewArrivalProductsCall,

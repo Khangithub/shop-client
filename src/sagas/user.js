@@ -62,7 +62,7 @@ function* loginWithEmailNPwdGenerator({payload: {email, password}}) {
 function* loginWithGgGenerator () {
   try {
     const {token, currentUser} = yield call (loginWithGgCall);
-    cookies.set ('token', token, currentUser);
+    cookies.set ('token', token);
     yield put (
       getCurrentUserSuccess ({
         currentUser,

@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Col, Badge } from "react-bootstrap";
 import "./_productCard.scss";
-import { returnPrice } from "../../helpers";
+import { getNetPrice } from "../../helpers";
 import EditProductButton from "./EditProductButton";
 import DeleteProductButton from "./DeleteProductButton";
 
@@ -40,7 +40,7 @@ export default function ProductCard({
 
           <div className="product-card-price">
             <div className={!product.discount ? "net-price--hide" : undefined}>
-              <strong>{returnPrice(product)}$ &nbsp;&nbsp;</strong>
+              <strong>{getNetPrice(product)}$ &nbsp;&nbsp;</strong>
               <Badge variant="danger">-{product.discount}%</Badge>
             </div>
             <p

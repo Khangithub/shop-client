@@ -1,10 +1,13 @@
 import React from "react";
 
-function HorizontalDevider() {
+function HorizontalDevider({ line }) {
   return (
     <>
-      <br />
-      <br />
+      {Array(line ? line : 2)
+        .fill()
+        .map((_, index) => (
+          <br key={index} />
+        ))}
     </>
   );
 }

@@ -7,11 +7,31 @@ const Types = {
   GET_BEST_SALE_PRODUCTS_SUCCESS: 'products/get_best_sale_products_success',
   GET_PRODUCT_REQUEST: 'products/get_product_request',
   GET_PRODUCT_SUCCESS: 'products/get_product_success',
-  GET_ALL_PRODUCT: 'products/get_all_product',
+  GET_ALL_PRODUCTS_REQUEST: 'products/get_all_products_request',
+  GET_ALL_PRODUCTS_SUCCESS: 'products/get_all_products_success',
+  GET_PRODUCTS_BY_CATEGORY_REQUEST: 'products/get_products_by_category_request',
+  GET_PRODUCTS_BY_CATEGORY_SUCCESS: 'products/get_products_by_category_success',
   FAILED_REQUEST: 'products/failed_request',
 };
 
 // request actions
+const getAllProductsRequest = ({pageIndex, limit}) => ({
+  type: Types.GET_ALL_PRODUCTS_REQUEST,
+  payload: {
+    pageIndex,
+    limit,
+  },
+});
+
+const getProductsByCategoryRequest = ({category, pageIndex, limit}) => ({
+  type: Types.GET_PRODUCTS_BY_CATEGORY_REQUEST,
+  payload: {
+    category,
+    pageIndex,
+    limit,
+  },
+});
+
 const getMostDiscountsProductsRequest = ({pageIndex, limit}) => ({
   type: Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
   payload: {
@@ -44,6 +64,20 @@ const getProductRequest = ({productId}) => ({
 });
 
 // success actions
+const getAllProductsSuccess = ({products}) => ({
+  type: Types.GET_ALL_PRODUCTS_SUCCESS,
+  payload: {
+    products,
+  },
+});
+
+const getProductsByCategorySuccess = ({products}) => ({
+  type: Types.GET_PRODUCTS_BY_CATEGORY_SUCCESS,
+  payload: {
+    products,
+  },
+});
+
 const getMostDiscountsProductsSuccess = ({products}) => ({
   type: Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS,
   payload: {
@@ -68,9 +102,9 @@ const getNewArrivalProductsSuccess = ({products}) => ({
 const getProductSuccess = ({product}) => ({
   type: Types.GET_PRODUCT_SUCCESS,
   payload: {
-    product
-  }
-})
+    product,
+  },
+});
 
 // failed actions
 const getFailedRequest = ({err}) => ({
@@ -82,10 +116,14 @@ const getFailedRequest = ({err}) => ({
 
 export {
   Types,
+  getAllProductsRequest,
+  getProductsByCategoryRequest,
   getBestSaleProductsRequest,
   getMostDiscountsProductsRequest,
   getNewArrivalProductsRequest,
   getProductRequest,
+  getAllProductsSuccess,
+  getProductsByCategorySuccess,
   getBestSaleProductsSuccess,
   getMostDiscountsProductsSuccess,
   getNewArrivalProductsSuccess,

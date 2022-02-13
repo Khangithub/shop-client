@@ -53,11 +53,11 @@ function Home() {
     isEmpty(bestSaleProducts) ||
     isEmpty(newArrivalProducts)
   )
-    return <Loading />;
+    return <Loading errMsg={{...mostDiscountsProducts, ...bestSaleProducts, ...newArrivalProducts}} />;
 
-  if (productLoading) return <Loading />;
+  if (productLoading) return <Loading errMsg={productLoading}/>;
 
-  if (!isEmpty(productErr)) return <Loading />;
+  if (!isEmpty(productErr)) return <Loading errMsg={productErr}/>;
 
   return (
     <>

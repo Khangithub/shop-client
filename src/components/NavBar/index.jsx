@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { isEmpty } from "lodash";
 import { Navbar, Nav, Image, Badge } from "react-bootstrap";
 import { removeAscent } from "../../helpers";
 import { getCurrentUserRequest } from "../../actions/user";
 import { getOrdersRequest } from "../../actions/order";
+import { isEmpty } from "lodash";
 
 import logoSvg from "../../assets/svgs/logo.svg";
 import searchSvg from "../../assets/svgs/search.svg";
@@ -37,9 +37,9 @@ function NavBar() {
     }
   }, [dispatch, token]);
 
-  if (isEmpty(currentUser)) return <Loading />;
-  if (userLoading) return <Loading />;
-  if (!isEmpty(userErr)) return <Loading />;
+  if (isEmpty(currentUser)) return <Loading errMsg={currentUser} />;
+  if (userLoading) return <Loading errMsg={userLoading} />;
+  if (!isEmpty(userErr)) return <Loading errMsg={userErr} />;
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -94,10 +94,12 @@ function NavBar() {
               userLoading={userLoading}
             />
 
-            <Nav.Link href="/orders">
-              <Image src={cartSvg} className="navbar-icon" alt="cartSvg" />
-              <Badge variant="danger">{orders.length}</Badge>
-            </Nav.Link>
+            {!isEmpty(token) && (
+              <Nav.Link href="/orders">
+                <Image src={cartSvg} className="navbar-icon" alt="cartSvg" />
+                <Badge variant="danger">{orders.length}</Badge>
+              </Nav.Link>
+            )}
           </Navbar.Collapse>
         </Navbar>
       </div>

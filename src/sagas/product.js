@@ -6,15 +6,55 @@ import {
   Types,
   getNewArrivalProductsSuccess,
   getProductSuccess,
+  getAllProductsSuccess,
+  getProductsByCategorySuccess,
 } from '../actions/product';
 import {
+  getProductsByCategoryCall,
   getMostDiscoutsProductsCall,
   getBestSaleProductsCall,
   getNewArrivalProductsCall,
   getProductCall,
+  getAllProductsCall,
 } from '../api/product';
 
 // generator functions
+function* getAllProductsGenerator({payload: {pageIndex, limit}}) {
+  try {
+    const products = yield call (getAllProductsCall, {
+      pageIndex,
+      limit,
+    });
+
+    yield put (getAllProductsSuccess ({products}));
+  } catch (err) {
+    yield put (
+      getFailedRequest ({
+        productErr: err,
+      })
+    );
+  }
+}
+
+function* getProductsByCategoryGenerator({
+  payload: {category, pageIndex, limit},
+}) {
+  try {
+    const products = yield call (getProductsByCategoryCall, {
+      category,
+      pageIndex,
+      limit,
+    });
+    yield put (getProductsByCategorySuccess ({products}));
+  } catch (err) {
+    yield put (
+      getFailedRequest ({
+        productErr: err,
+      })
+    );
+  }
+}
+
 function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   try {
     const products = yield call (getMostDiscoutsProductsCall, {
@@ -108,11 +148,24 @@ function* getProductWatcher () {
   yield takeLatest (Types.GET_PRODUCT_REQUEST, getProductGenerator);
 }
 
+function* getAllProductsWatcher () {
+  yield takeLatest (Types.GET_ALL_PRODUCTS_REQUEST, getAllProductsGenerator);
+}
+
+function* getProductsByCategoryWatcher () {
+  yield takeLatest (
+    Types.GET_PRODUCTS_BY_CATEGORY_REQUEST,
+    getProductsByCategoryGenerator
+  );
+}
+
 const productSaga = [
+  fork (getAllProductsWatcher),
   fork (getMostDiscountsProductsRequestWatcher),
   fork (getBestSaleProductsWatcher),
   fork (getNewArrivalProductsWatcher),
   fork (getProductWatcher),
+  fork (getProductsByCategoryWatcher),
 ];
 
 export default productSaga;

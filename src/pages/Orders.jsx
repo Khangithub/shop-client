@@ -15,7 +15,7 @@ import "./_orders.scss";
 
 function Order() {
   const dispatch = useDispatch();
-  const { token, userLoading, userErr } = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getCurrentUserRequest());
@@ -30,10 +30,10 @@ function Order() {
   }, [dispatch, token]);
 
   const [selectedOrders, setSelectedOrders] = useState([]);
-  
-  if (isEmpty(token)) return <Loading />;
-  if (orderLoading || userLoading) return <Loading />;
-  if (!isEmpty(orderErr) || !isEmpty(userErr)) return <Loading />;
+
+  if (isEmpty(token)) return <Loading errMsg={token} />;
+  if (orderLoading) return <Loading errMsg={orderLoading} />;
+  if (!isEmpty(orderErr)) return <Loading errMsg={orderErr} />;
 
   return (
     <>
@@ -54,7 +54,9 @@ function Order() {
                     if (selectedOrders.length === orders.length) {
                       setSelectedOrders([]);
                     } else {
-                      const allOrders = orders.map((order) => order.product._id);
+                      const allOrders = orders.map(
+                        (order) => order.product._id
+                      );
                       setSelectedOrders(allOrders);
                     }
                   }}

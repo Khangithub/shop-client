@@ -1,0 +1,85 @@
+@import '../styles/layout';
+
+.product {
+  @include parentLayout;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  text-transform: capitalize;
+  background: $white;
+  margin-top: 40px;
+  border-radius: 20px;
+  // color: #565959;
+
+  .product-info-container {
+    .product-info-img {
+      width: 100%;
+      padding: 50px 0;
+      object-fit: cover;
+    }
+
+    .product-info-detail-container {
+      padding: 50px;
+
+      .product-manufacturer {
+        text-decoration: none;
+        color: #007185;
+      }
+
+      .product-price {
+        display: flex;
+        align-items: center;
+
+        span {
+          line-height: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .product-qty-container {
+    justify-content: center;
+    border-radius: 2px;
+    padding: 50px;
+    cursor: pointer;
+
+    .product-qty-input {
+      align-items: center;
+
+      div {
+        @include quantityGroupBtn;
+        flex: 1;
+
+        input {
+          width: 100px;
+        }
+      }
+    }
+
+    .add-to-cart-btn {
+      @include goldenBtn;
+    }
+  }
+
+  .product-signin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 50px 20px;
+    width: 100%;
+
+    button {
+      @include goldenBtn;
+    }
+
+  }
+
+  .section-title {
+    text-transform: uppercase;
+    color: gray;
+    font-size: 12px;
+    margin: 20px 0 !important;
+  }
+}

@@ -2,8 +2,6 @@ import React from "react";
 import { Row, Col, Carousel } from "react-bootstrap";
 import ReactPlayer from "react-player";
 
-import "./_categoryList.scss";
-
 import shippingBanner4 from "../../assets/banners/shipping-4.jpg";
 import shippingBanner3 from "../../assets/banners/shipping-3.jpg";
 import shippingBanner2 from "../../assets/banners/shipping-2.jpg";
@@ -15,6 +13,8 @@ import bookBanner from "../../assets/gifs/book-1.gif";
 
 import { useHistory } from "react-router-dom";
 import SeeMoreLink from "../SeeMoreLink";
+
+import "./_categoryList.scss";
 
 function CategoryList() {
   const history = useHistory();
