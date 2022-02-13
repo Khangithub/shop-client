@@ -5,7 +5,7 @@ function index({ errMsg }) {
   return (
     <>
       <Spinner animation="grow" variant="danger" />
-      {/* <h5>{JSON.stringify(errMsg)}</h5> */}
+      <h5>{JSON.stringify(errMsg)}</h5>
     </>
   );
 }

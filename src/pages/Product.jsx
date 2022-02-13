@@ -152,7 +152,7 @@ function Product() {
                       id="quantity"
                       name="quantity"
                       min={1}
-                      value={1}
+                      value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                     />
                     <button>+</button>
