@@ -10,9 +10,6 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Product from "./pages/Product";
-
-import ProtectedRoute from "./components/ProtectedRoute";
-
 // import routes from "./routes";
 
 function App() {
@@ -33,6 +30,13 @@ function App() {
       <div className="app">
         <Switch>
           <Route
+            path="/products/:productId"
+            render={(props) => (
+              <Product {...props} currentUser={currentUser} token={token} />
+            )}
+          />
+
+          <Route
             path="/"
             exact
             render={(props) => (
@@ -49,21 +53,12 @@ function App() {
           />
 
           <Route
-            path="/:productId"
+            path="/orders"
+            exact
             render={(props) => (
-              <Product {...props} currentUser={currentUser} token={token} />
+              <Orders {...props} currentUser={currentUser} token={token} />
             )}
           />
-
-          <ProtectedRoute token={token}>
-            <Route
-              path="/orders"
-              exact
-              render={(props) => (
-                <Orders {...props} currentUser={currentUser} token={token} />
-              )}
-            />
-          </ProtectedRoute>
 
           {/* {routes.map((route, index) => {
             return (

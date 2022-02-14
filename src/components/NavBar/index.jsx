@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers";
-import { getCurrentUserRequest } from "../../actions/user";
 import { getOrdersRequest } from "../../actions/order";
 import { isEmpty } from "lodash";
 
@@ -17,10 +16,6 @@ function NavBar({ currentUser, token }) {
   const history = useHistory();
   const dispatch = useDispatch();
   let [input, setInput] = useState("");
-
-  useEffect(() => {
-    dispatch(getCurrentUserRequest());
-  }, [dispatch]);
 
   const { orders } = useSelector((state) => state.order);
 
@@ -105,7 +100,7 @@ function NavBar({ currentUser, token }) {
                 Login
               </button>
             )}
-            {!isEmpty(token) && (
+            {token && (
               <Nav.Link href="/orders">
                 <Image src={cartSvg} className="navbar-icon" alt="cartSvg" />
                 <Badge variant="danger">{orders.length}</Badge>

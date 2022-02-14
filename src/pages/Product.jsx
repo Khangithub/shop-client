@@ -26,7 +26,6 @@ import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
 
 function Product({ currentUser, token }) {
-  console.log('curren', currentUser, token)
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;

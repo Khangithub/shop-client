@@ -27,7 +27,7 @@ export default function ProductCard({
       <div
         className="product-card-container"
         onClick={() => {
-          history.push(`/${product._id}`);
+          history.push(`/products/${product._id}`);
         }}
       >
         <div
