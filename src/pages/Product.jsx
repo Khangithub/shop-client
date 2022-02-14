@@ -13,7 +13,6 @@ import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard/";
-// import AddMainCommentForm from "../components/Product/AddMainCommentForm/";
 // import ProductCommentList from "../components/Product/ProductCommentList/";
 import HorizontalDivider from "../components/HorizontalDivider";
 
@@ -24,11 +23,13 @@ import shippingBanner1 from "../assets/banners/shipping-1.jpg";
 
 import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
+import { addCmtReq } from "../actions/comment";
 
 function Product({ currentUser, token }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;
+  let [mainComment, setMainComment] = useState("");
 
   const { product, productLoading, productErr } = useSelector(
     (state) => state.product
@@ -231,21 +232,42 @@ function Product({ currentUser, token }) {
             ))}
           </Row>
 
-          <HorizontalDevider line={3} />
-
-          {/* <p className="section-title">comments about this product</p>
-          {!isEmpty(token) && (
-            <AddMainCommentForm
-              productId={productId}
-              setProductCommentList={setProductCommentList}
-            />
-          )}
-          <ProductCommentList
+          {/*   <ProductCommentList
             productId={productId}
             productCommentList={productCommentList}
             setProductCommentList={setProductCommentList}
           /> */}
         </Row>
+
+        <HorizontalDevider />
+
+        {token && (
+          <div className="cmt-box-ct">
+            <p className="section-title">comments about this product</p>
+
+            <Row>
+              <img src={currentUser.avatar} alt="user-avatar" />
+
+              <textarea
+                type="text"
+                placeholder="What is your first impression about this product?"
+                value={mainComment}
+                onChange={(e) => {
+                  setMainComment(e.target.value);
+                }}
+                onKeyUp={(e) => {
+                  e.preventDefault();
+                  if (mainComment.trim() !== "" && e.keyCode === 13) {
+                    dispatch(addCmtReq({ productId, mainComment, token }));
+                    setMainComment("");
+                  }
+                }}
+              />
+            </Row>
+          </div>
+        )}
+
+        <HorizontalDevider />
       </div>
       <Footer />
     </>
