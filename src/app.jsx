@@ -8,11 +8,12 @@ import Loading from "./components/Loading";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";
-import Signup from './pages/Signup';
+import Signup from "./pages/Signup";
+import Product from "./pages/Product";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import routes from "./routes";
+// import routes from "./routes";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,16 +40,19 @@ function App() {
             )}
           />
 
-          <Route
-            path="/login"
-            exact
-            render={(props) => <Login {...props} />}
-          />
+          <Route path="/login" exact render={(props) => <Login {...props} />} />
 
           <Route
             path="/signup"
             exact
             render={(props) => <Signup {...props} />}
+          />
+
+          <Route
+            path="/:productId"
+            render={(props) => (
+              <Product {...props} currentUser={currentUser} token={token} />
+            )}
           />
 
           <ProtectedRoute token={token}>
@@ -61,7 +65,7 @@ function App() {
             />
           </ProtectedRoute>
 
-          {routes.map((route, index) => {
+          {/* {routes.map((route, index) => {
             return (
               <Route
                 key={index}
@@ -70,7 +74,7 @@ function App() {
                 component={route.main}
               />
             );
-          })}
+          })} */}
         </Switch>
       </div>
     </Router>

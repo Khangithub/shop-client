@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/:productId',
     exact: false,
-    main: ({match}) => <Product match={match} />,
+    main: ({props}) => <Product {...props} />,
   },
   {
     path: '/yourProducts',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Badge, Carousel } from "react-bootstrap";
+import { Row, Col, Badge, Carousel } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import {
@@ -23,18 +23,13 @@ import shippingBanner2 from "../assets/banners/shipping-2.jpg";
 import shippingBanner1 from "../assets/banners/shipping-1.jpg";
 
 import "./_product.scss";
-// import { getCurrentUserRequest } from "../actions/user";
 import HorizontalDevider from "../components/HorizontalDivider";
 
-function Product() {
+function Product({ currentUser, token }) {
+  console.log('curren', currentUser, token)
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;
-  const { token } = useSelector((state) => state.user);
-
-  // useEffect(() => {
-  //   dispatch(getCurrentUserRequest());
-  // }, [productId, dispatch]);
 
   const { product, productLoading, productErr } = useSelector(
     (state) => state.product
@@ -83,7 +78,7 @@ function Product() {
 
   return (
     <>
-      <NavBar />
+      <NavBar currentUser={currentUser} token={token} />
       <div className="product">
         <Row className="product-info-container">
           <Col sm={12} md={4} lg={4}>
@@ -229,7 +224,7 @@ function Product() {
           )}
         </Row>
 
-        <Container>
+        <Row>
           <p className="section-title">productList of the same category</p>
           <Row>
             {productsByCategory.map((product, index) => (
@@ -251,7 +246,7 @@ function Product() {
             productCommentList={productCommentList}
             setProductCommentList={setProductCommentList}
           /> */}
-        </Container>
+        </Row>
       </div>
       <Footer />
     </>
