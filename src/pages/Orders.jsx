@@ -2,24 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import { getOrdersRequest } from "../actions/order";
-import { getCurrentUserRequest } from "../actions/user";
 import { isEmpty } from "lodash";
 
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
-import OrderCard from "../components/OrderCard/";
+import OrderCard from "../components/OrderCard";
 
 import trashCanSvg from "../assets/svgs/trashCan.svg";
 import "./_orders.scss";
 
-function Order() {
+function Order({ currentUser, token }) {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(getCurrentUserRequest());
-  }, [dispatch]);
 
   const { orders, orderLoading, orderErr } = useSelector(
     (state) => state.order
@@ -31,13 +25,12 @@ function Order() {
 
   const [selectedOrders, setSelectedOrders] = useState([]);
 
-  if (isEmpty(token)) return <Loading errMsg={token} />;
   if (orderLoading) return <Loading errMsg={orderLoading} />;
   if (!isEmpty(orderErr)) return <Loading errMsg={orderErr} />;
 
   return (
     <>
-      <NavBar />
+      <NavBar currentUser={currentUser} token={token} />
       <div className="order">
         <Row className="order-list-container">
           <Col sm={12} md={9}>

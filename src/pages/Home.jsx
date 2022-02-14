@@ -29,7 +29,7 @@ import bookBanner4 from "../assets/banners/book-4.jpg";
 import HorizontalDivider from "../components/HorizontalDivider";
 import "./_home.scss";
 
-function Home() {
+function Home({ currentUser, token }) {
   const dispatch = useDispatch();
   const [pageIndex] = useState(1);
   const [limit] = useState(6);
@@ -53,15 +53,23 @@ function Home() {
     isEmpty(bestSaleProducts) ||
     isEmpty(newArrivalProducts)
   )
-    return <Loading errMsg={{...mostDiscountsProducts, ...bestSaleProducts, ...newArrivalProducts}} />;
+    return (
+      <Loading
+        errMsg={{
+          ...mostDiscountsProducts,
+          ...bestSaleProducts,
+          ...newArrivalProducts,
+        }}
+      />
+    );
 
-  if (productLoading) return <Loading errMsg={productLoading}/>;
+  if (productLoading) return <Loading errMsg={productLoading} />;
 
-  if (!isEmpty(productErr)) return <Loading errMsg={productErr}/>;
+  if (!isEmpty(productErr)) return <Loading errMsg={productErr} />;
 
   return (
     <>
-      <NavBar />
+      <NavBar currentUser={currentUser} token={token} />
       <div className="home">
         <Banner />
         <CategoryList />

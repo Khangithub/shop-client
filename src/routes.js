@@ -1,10 +1,6 @@
 import React from 'react';
-import Home from './pages/Home';
 import Product from './pages/Product';
-import Orders from './pages/Orders';
 import NotFound from './components/NotFound/NotFound';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
 import Products from './pages/Products';
 import ProductByCategory from './pages/ProductByCategory';
 import Search from './pages/Search';
@@ -14,9 +10,9 @@ import YourBills from './pages/YourBills';
 
 const routes = [
   {
-    path: '/',
-    exact: true,
-    main: () => <Home />,
+    path: '/:productId',
+    exact: false,
+    main: ({match}) => <Product match={match} />,
   },
   {
     path: '/yourProducts',
@@ -27,21 +23,6 @@ const routes = [
     path: '/yourBills',
     exact: true,
     main: () => <YourBills />,
-  },
-  {
-    path: '/login',
-    exact: true,
-    main: () => <Login />,
-  },
-  {
-    path: '/signup',
-    exact: true,
-    main: () => <Signup />,
-  },
-  {
-    path: '/orders',
-    exact: true,
-    main: () => <Orders />,
   },
   {
     path: '/search/:index',
@@ -63,11 +44,7 @@ const routes = [
     exact: false,
     main: ({match}) => <Products match={match} />,
   },
-  {
-    path: '/:productId',
-    exact: false,
-    main: ({match}) => <Product match={match} />,
-  },
+ 
   //    {---------------------------------------------------------------------------------------------------------------------------}
   {
     path: '',

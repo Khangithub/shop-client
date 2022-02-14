@@ -59,6 +59,36 @@
             }
         }
 
+
+        .login_btn {
+            @include goldenBtn;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            margin-left: 15px;
+
+            @media screen and (max-width: $extraLarge) {
+                margin-top: 15px;
+                margin-left: 0;
+            }
+        }
+
+        .setting-dropdown {
+            >a {
+                @media screen and (max-width: $large) {
+                    padding-left: 0;
+                }
+            }
+
+            .setting-user-avatar {
+                height: 60px;
+                width: 60px;
+                border-radius: 50%;
+                padding: 5px;
+                border: 2px solid $grey;
+            }
+        }
+        
         .nav-link {
             @media screen and (max-width: $medium) {
                 padding-left: 0;

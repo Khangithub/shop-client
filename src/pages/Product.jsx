@@ -27,11 +27,9 @@ import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
 
 function Product() {
-  const match = useRouteMatch();
-  const { productId } = match.params;
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const { productId } = useRouteMatch().params;
   const { token } = useSelector((state) => state.user);
 
   // useEffect(() => {

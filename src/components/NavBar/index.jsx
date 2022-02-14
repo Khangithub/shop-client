@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Navbar, Nav, Image, Badge } from "react-bootstrap";
+import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers";
 import { getCurrentUserRequest } from "../../actions/user";
 import { getOrdersRequest } from "../../actions/order";
@@ -11,19 +11,12 @@ import logoSvg from "../../assets/svgs/logo.svg";
 import searchSvg from "../../assets/svgs/search.svg";
 import cartSvg from "../../assets/svgs/cart.svg";
 
-import SettingDropdown from "./SettingDropdown";
-import Loading from "../Loading";
-
 import "./_navbar.scss";
 
-function NavBar() {
+function NavBar({ currentUser, token }) {
   const history = useHistory();
   const dispatch = useDispatch();
   let [input, setInput] = useState("");
-
-  const { currentUser, token, userLoading, userErr } = useSelector(
-    (state) => state.user
-  );
 
   useEffect(() => {
     dispatch(getCurrentUserRequest());
@@ -36,10 +29,6 @@ function NavBar() {
       dispatch(getOrdersRequest({ token }));
     }
   }, [dispatch, token]);
-
-  if (isEmpty(currentUser)) return <Loading errMsg={currentUser} />;
-  if (userLoading) return <Loading errMsg={userLoading} />;
-  if (!isEmpty(userErr)) return <Loading errMsg={userErr} />;
 
   const handleSearch = (event) => {
     event.preventDefault();
@@ -88,12 +77,34 @@ function NavBar() {
               <img onClick={handleSearch} src={searchSvg} alt="search-icon" />
             </form>
 
-            <SettingDropdown
-              currentUser={currentUser}
-              userErr={userErr}
-              userLoading={userLoading}
-            />
+            {token ? (
+              <NavDropdown
+                className="setting-dropdown"
+                title={
+                  <img
+                    className="setting-user-avatar"
+                    src={currentUser.avatar}
+                    alt="user-avatar"
+                  />
+                }
+              >
+                <NavDropdown.Item href="/personalize">Setting</NavDropdown.Item>
 
+                <NavDropdown.Item
+                  className="setting-dropdown-user-btn"
+                  href="/login"
+                >
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <button
+                className="login_btn"
+                onClick={() => history.push("/login")}
+              >
+                Login
+              </button>
+            )}
             {!isEmpty(token) && (
               <Nav.Link href="/orders">
                 <Image src={cartSvg} className="navbar-icon" alt="cartSvg" />

@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { getNetPrice } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { updateOrdersItemRequest } from "../../actions/order";
-import { getCurrentUserRequest } from "../../actions/user";
 
 import trashCanSvg from "../../assets/svgs/trashCan.svg";
 
@@ -16,11 +15,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
   var [timeoutPivot, setTimeoutPivot] = useState(null);
 
   const { token } = useSelector((state) => state.user);
-
-  useEffect(() => {
-    dispatch(getCurrentUserRequest());
-  }, [dispatch]);
-
+  
   const decreaseQuantity = () => {
     const newVal = quantity - 1 < 0 ? 0 : quantity - 1;
     setQuantity(newVal);
