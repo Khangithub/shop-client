@@ -41,3 +41,25 @@ $extraLarge: 1140px;
     font-weight: bolder;
   }
 }
+
+@mixin avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  padding: 5px;
+  border: 1px solid lightgray;
+  margin-right: 10px;
+}
+
+@mixin cmtTextBox {
+  flex: 1;
+  border: 0;
+  background-color: #ececec;
+  padding: 10px;
+  border-radius: 20px;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}

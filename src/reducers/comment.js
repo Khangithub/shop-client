@@ -16,6 +16,16 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
+    case Types.ADD_CMT_SUC: {
+      const {newCmt} = action.payload;
+      const {cmtList} = state;
+      return {
+        ...state,
+        cmtLoading: false,
+        cmtList: [...cmtList, newCmt],
+      };
+    }
+
     case Types.FAILED_CMT_REQ: {
       return {
         ...state,

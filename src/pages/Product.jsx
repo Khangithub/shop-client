@@ -23,7 +23,7 @@ import shippingBanner1 from "../assets/banners/shipping-1.jpg";
 import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
 import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
-import CommentCard from "../components/Product/ProductCommentList/CommentCard";
+import CommentCard from "../components/CommentCard";
 import Title from "../components/Title";
 
 function Product({ currentUser, token }) {
@@ -40,7 +40,7 @@ function Product({ currentUser, token }) {
 
   useEffect(() => {
     dispatch(getProductRequest({ productId }));
-    dispatch(getCmtListFromProductReq({ productId, batch: 1, limit: 6 }));
+    dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
   }, [productId, dispatch]);
 
   const { productsByCategory } = useSelector((state) => state.product);
@@ -263,21 +263,21 @@ function Product({ currentUser, token }) {
           </div>
         )}
 
-        <Col>
+        <div>
           {cmtList
             .map((comment, index) => (
-              <>
+              <div key={index}>
                 <CommentCard
-                  key={index}
                   comment={comment}
                   currentUser={currentUser}
                   productId={productId}
+                  token={token}
                 />
                 <HorizontalDivider line={1} />
-              </>
+              </div>
             ))
             .reverse()}
-        </Col>
+        </div>
         <HorizontalDevider />
       </div>
       <Footer />

@@ -1,18 +1,27 @@
 import {call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
-import {failedCmtReq, getCmtListSuc, Types} from '../actions/comment';
+import {
+  addCmtSuc,
+  failedCmtReq,
+  getCmtListSuc,
+  Types,
+} from '../actions/comment';
 import {addCmtCall, getProductCmtCall} from '../api/comment';
 
 // generator functions
 function* addCmtGenerator({payload: {productId, mainComment, token}}) {
   try {
-    const {message} = yield call (addCmtCall, {
+    const {message, doc} = yield call (addCmtCall, {
       productId,
       mainComment,
       token,
     });
 
     if (message === 'updated') {
-      console.log ('done');
+      yield put (
+        addCmtSuc ({
+          newCmt: doc,
+        })
+      );
     }
   } catch (err) {
     yield put (

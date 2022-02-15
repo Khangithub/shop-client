@@ -3,9 +3,9 @@ import Linkify from 'react-linkify';
 import './SubCommentCard.css';
 import {Image} from 'react-bootstrap';
 import AddSubCommentForm from './AddSubCommentForm';
-import EditSubCommentForm from './EditSubCommentForm/';
+import EditSubCommentForm from './EditSubCommentForm';
 import DeleteSubCommentButton from './DeleteSubCommentButton';
-import {convertTimestamp} from '../../../../helpers';
+import {convertTimestamp} from '../../helpers';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -17,7 +17,7 @@ export default function SubCommentCard({
   productId,
   setProductCommentList,
 }) {
-  let [showSubCommentForm, setShowSubCommentModal] = useState(false);
+  let [showRepModal, setShowRepModal] = useState(false);
 
   return (
     <div className="sub__comment__card align-left">
@@ -46,7 +46,7 @@ export default function SubCommentCard({
         {currentUser && (
           <small
             onClick={() => {
-              setShowSubCommentModal(!showSubCommentForm);
+              setShowRepModal(!showRepModal);
             }}
           >
             reply
@@ -72,13 +72,13 @@ export default function SubCommentCard({
         <small>{convertTimestamp(subcomment.published)}</small>
       </div>
 
-      {showSubCommentForm && (
+      {showRepModal && (
         <AddSubCommentForm
           commentId={commentId}
           receiver={subcomment.sender._id}
           setProductCommentList={setProductCommentList}
           productId={productId}
-          setShowSubCommentModal={setShowSubCommentModal}
+          setShowRepModal={setShowRepModal}
         />
       )}
     </div>

@@ -1,0 +1,60 @@
+@import '../../styles/layout';
+@import '../../styles/colors';
+
+.cmt-card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+
+  .cmt-card-content {
+    display: flex;
+
+    img {
+      @include avatar;
+    }
+
+    div {
+      background-color: #ececec;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      padding: 10px;
+      word-break: break-all;
+
+      span {
+        text-transform: none;
+      }
+    }
+  }
+
+  .cmt-action-btn-list {
+    span {
+      background-color: #ececec;
+      padding: 0 5px;
+      margin: 10px 5px;
+      border-radius: 10px;
+    }
+  }
+
+  .reply-modal {
+    margin-top: 20px;
+    margin-left: 50px;
+    display: flex;
+    flex: 1;
+
+    img {
+      @include avatar;
+
+    }
+    textarea {
+      @include cmtTextBox;
+    }
+  }
+}
+
+
+
+.cmt-action-btn-list>small:last-child {
+  font-size: x-small;
+  background-color: transparent;
+}
