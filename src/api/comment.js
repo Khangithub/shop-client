@@ -1,6 +1,6 @@
 const addCmtCall = async ({productId, mainComment, token}) => {
   try {
-    const addCmtReq = await fetch (process.env.REACT_APP_MAIN_COMMENT, {
+    const addCmtReq = await fetch (process.env.REACT_APP_MAIN_CMT, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer '.concat (token),
@@ -16,4 +16,21 @@ const addCmtCall = async ({productId, mainComment, token}) => {
   }
 };
 
-export {addCmtCall};
+const getProductCmtCall = async ({productId, batch, limit}) => {
+  try {
+    const productCmtListReq = await fetch (
+      process.env.REACT_APP_CMT_FR_PRODUCT +
+        productId +
+        '/' +
+        batch +
+        '/' +
+        limit
+    );
+    const productCmtListJson = await productCmtListReq.json ();
+    return productCmtListJson.cmtList;
+  } catch (err) {
+    return err;
+  }
+};
+
+export {addCmtCall, getProductCmtCall};

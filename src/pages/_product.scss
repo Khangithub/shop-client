@@ -9,18 +9,19 @@
   background: $white;
   margin-top: 40px;
   border-radius: 20px;
-  // color: #565959;
+  padding: 50px;
+
+  @media screen and (max-width: $large) {
+    padding: 15px;
+  }
 
   .product-info-container {
     .product-info-img {
       width: 100%;
-      padding: 50px 0;
       object-fit: cover;
     }
 
     .product-info-detail-container {
-      padding: 50px;
-
       .product-manufacturer {
         text-decoration: none;
         color: #007185;
@@ -41,7 +42,6 @@
   .product-qty-container {
     justify-content: center;
     border-radius: 2px;
-    padding: 50px;
     cursor: pointer;
 
     .product-qty-input {
@@ -67,7 +67,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 50px 20px;
     width: 100%;
 
     button {
@@ -93,12 +92,5 @@
       padding: 10px;
       border-radius: 20px;
     }
-  }
-
-  .section-title {
-    text-transform: uppercase;
-    color: gray;
-    font-size: 12px;
-    margin: 20px 0 !important;
   }
 }

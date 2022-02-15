@@ -13,7 +13,6 @@ import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
 import Footer from "../components/Footer";
 import ProductCard from "../components/ProductCard/";
-// import ProductCommentList from "../components/Product/ProductCommentList/";
 import HorizontalDivider from "../components/HorizontalDivider";
 
 import shippingBanner4 from "../assets/banners/shipping-4.jpg";
@@ -23,7 +22,9 @@ import shippingBanner1 from "../assets/banners/shipping-1.jpg";
 
 import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
-import { addCmtReq } from "../actions/comment";
+import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
+import CommentCard from "../components/Product/ProductCommentList/CommentCard";
+import Title from "../components/Title";
 
 function Product({ currentUser, token }) {
   const dispatch = useDispatch();
@@ -35,8 +36,11 @@ function Product({ currentUser, token }) {
     (state) => state.product
   );
 
+  const { cmtList, cmtLoading, cmtErr } = useSelector((state) => state.comment);
+
   useEffect(() => {
     dispatch(getProductRequest({ productId }));
+    dispatch(getCmtListFromProductReq({ productId, batch: 1, limit: 6 }));
   }, [productId, dispatch]);
 
   const { productsByCategory } = useSelector((state) => state.product);
@@ -58,8 +62,9 @@ function Product({ currentUser, token }) {
   let [seeMoreText, setSeeMore] = useState(true);
 
   if (isEmpty(product)) return <Loading errMsg={product} />;
-  if (productLoading) return <Loading errMsg={productLoading} />;
-  if (!isEmpty(productErr)) return <Loading errMsg={productErr} />;
+  if (productLoading || cmtLoading) return <Loading errMsg={productLoading} />;
+  if (!isEmpty(productErr) || !isEmpty(cmtErr))
+    return <Loading errMsg={productErr} />;
 
   const truncatDes = (des) => {
     let copiedDes = "".concat(des);
@@ -224,30 +229,21 @@ function Product({ currentUser, token }) {
           )}
         </Row>
 
+        {/* <p className="section-title">productList of the same category</p> */}
+        <Title>productList of the same category</Title>
         <Row>
-          <p className="section-title">productList of the same category</p>
-          <Row>
-            {productsByCategory.map((product, index) => (
-              <ProductCard key={index} product={product} />
-            ))}
-          </Row>
-
-          {/*   <ProductCommentList
-            productId={productId}
-            productCommentList={productCommentList}
-            setProductCommentList={setProductCommentList}
-          /> */}
+          {productsByCategory.map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
         </Row>
 
         <HorizontalDevider />
 
+        <Title>comments about this product</Title>
         {token && (
           <div className="cmt-box-ct">
-            <p className="section-title">comments about this product</p>
-
             <Row>
               <img src={currentUser.avatar} alt="user-avatar" />
-
               <textarea
                 type="text"
                 placeholder="What is your first impression about this product?"
@@ -267,6 +263,21 @@ function Product({ currentUser, token }) {
           </div>
         )}
 
+        <Col>
+          {cmtList
+            .map((comment, index) => (
+              <>
+                <CommentCard
+                  key={index}
+                  comment={comment}
+                  currentUser={currentUser}
+                  productId={productId}
+                />
+                <HorizontalDivider line={1} />
+              </>
+            ))
+            .reverse()}
+        </Col>
         <HorizontalDevider />
       </div>
       <Footer />

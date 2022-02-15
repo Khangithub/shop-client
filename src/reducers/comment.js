@@ -8,7 +8,7 @@ const INTIAL_STATE = {
 
 export default function cmt (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.ADD_CMT_SUC: {
+    case Types.GET_CMT_LIST_SUC: {
       return {
         ...state,
         cmtLoading: false,

@@ -78,9 +78,9 @@ const getRandomInRange = (min, max) =>
   Math.floor (Math.random () * (max - min + 1)) + min;
 
 const getNetPrice = product =>
-  product.discount
+  (product.discount
     ? product.price - product.discount * product.price / 100
-    : product.price;
+    : product.price).toFixed(1);
 
 const sortAccordType = (sortType, results) => {
   switch (sortType) {
