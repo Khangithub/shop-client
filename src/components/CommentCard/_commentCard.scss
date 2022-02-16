@@ -8,6 +8,7 @@
 
   .cmt-card-content {
     display: flex;
+    margin-bottom: 10px;
 
     img {
       @include avatar;
@@ -15,8 +16,6 @@
 
     div {
       background-color: #ececec;
-      display: flex;
-      flex-direction: column;
       border-radius: 20px;
       padding: 10px;
       word-break: break-all;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
+import { useDispatch } from "react-redux";
+import { repCmtReq } from "../../actions/comment";
 // import EditMainCommentButton from './EditMainCommentButton';
 // import DeleteMainCommentButton from './DeleteMainCommentButton';
 // import AddSubCommentForm from "./AddSubCommentForm";
@@ -15,15 +17,16 @@ function CommentCard({
   productId,
   token,
 }) {
+  const dispatch = useDispatch();
   const [showRepModal, setShowRepModal] = useState(false);
-  const [reply, setReply] = useState('');
+  const [content, setContent] = useState("");
 
   return (
     <div className="cmt-card">
       <div className="cmt-card-content">
-        <img src={comment.commentator.avatar} alt="user-avatar" />
+        <img src={comment.avatar} alt="user-avatar" />
         <div>
-          <strong>{comment.commentator.username}</strong>
+          <strong>{comment.username}</strong>
           <Linkify>
             <span>{comment.mainComment}</span>
           </Linkify>
@@ -42,20 +45,35 @@ function CommentCard({
 
           {showRepModal && (
             <div className="reply-modal">
-              <img src={currentUser.avatar} alt='user-avatar'/>
+              <img src={currentUser.avatar} alt="user-avatar" />
 
               <textarea
                 type="text"
                 placeholder="Reply this feedback"
                 onChange={(event) => {
-                  setReply(event.target.value);
+                  setContent(event.target.value);
                 }}
-                value={reply}
-                // onKeyUp={handleSubmit}
+                value={content}
+                onKeyUp={(e) => {
+                  e.preventDefault();
+                  if (content.trim() !== "" && e.keyCode === 13) {
+                    dispatch(
+                      repCmtReq({
+                        commentId: comment._id,
+                        content,
+                        token,
+                        sender: currentUser._id,
+                        receiver: comment.commentator._id,
+                      })
+                    );
+                    setContent("");
+                    setShowRepModal(false);
+                  }
+                }}
               />
             </div>
           )}
-          
+
           {/* {currentUser && currentUser._id === comment.commentator._id && (
           <EditMainCommentButton
             mainComment={comment.mainComment}
@@ -90,8 +108,6 @@ function CommentCard({
           />
         );
       })}*/}
-
-        
         </div>
       )}
     </div>

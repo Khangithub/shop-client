@@ -3,9 +3,10 @@ import {
   addCmtSuc,
   failedCmtReq,
   getCmtListSuc,
+  repCmtSuc,
   Types,
 } from '../actions/comment';
-import {addCmtCall, getProductCmtCall} from '../api/comment';
+import {addCmtCall, getProductCmtCall, repCmtCall} from '../api/comment';
 
 // generator functions
 function* addCmtGenerator({payload: {productId, mainComment, token}}) {
@@ -49,6 +50,20 @@ function* getProductCmtGenerator({payload: {productId, batch, limit}}) {
   }
 }
 
+function* replyCmtGenerator({payload: {commentId, receiver, content, sender, token}}) {
+  try {
+    const {doc} = yield call (repCmtCall, {commentId, receiver, content, sender, token});
+
+    yield put (
+      repCmtSuc ({
+        commentId,
+        newRep: doc,
+      })
+    );
+  } catch (err) {
+    yield put (failedCmtReq ({err}));
+  }
+}
 // wacher functions
 function* addCmtWatcher () {
   yield takeEvery (Types.ADD_CMT_REQ, addCmtGenerator);
@@ -58,6 +73,14 @@ function* getProductCmtWatcher () {
   yield takeLatest (Types.GET_CMT_LIST_FR_PRODUCT_REQ, getProductCmtGenerator);
 }
 
-const commentSaga = [fork (addCmtWatcher), fork (getProductCmtWatcher)];
+function* replyCmtWatcher () {
+  yield takeLatest (Types.REP_CMT_REQ, replyCmtGenerator);
+}
+
+const commentSaga = [
+  fork (addCmtWatcher),
+  fork (getProductCmtWatcher),
+  fork (replyCmtWatcher),
+];
 
 export default commentSaga;
