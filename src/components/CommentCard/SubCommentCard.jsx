@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
-import Linkify from 'react-linkify';
-import './SubCommentCard.css';
-import {Image} from 'react-bootstrap';
-import AddSubCommentForm from './AddSubCommentForm';
-import EditSubCommentForm from './EditSubCommentForm';
-import DeleteSubCommentButton from './DeleteSubCommentButton';
-import {convertTimestamp} from '../../helpers';
-import PropTypes from 'prop-types';
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
+import React, { useState } from "react";
+import Linkify from "react-linkify";
+import "./SubCommentCard.css";
+import { Image } from "react-bootstrap";
+// import AddSubCommentForm from './AddSubCommentForm';
+import EditSubCommentForm from "./EditSubCommentForm";
+import DeleteSubCommentButton from "./DeleteSubCommentButton";
+import { convertTimestamp } from "../../helpers";
 
 export default function SubCommentCard({
   currentUser,
@@ -20,21 +17,11 @@ export default function SubCommentCard({
   let [showRepModal, setShowRepModal] = useState(false);
 
   return (
-    <div className="sub__comment__card align-left">
-      <div className="sub__comment__card__comment">
-        <Tippy
-          placement="bottom"
-          content={
-            <p id="sub__comment__card__comment__sender__name">
-              {subcomment.sender.username}
-            </p>
-          }
-          arrow
-        >
-          <Image src={subcomment.sender.avatar} roundedCircle />
-        </Tippy>
+    <div className="sub-cmt-card align-left">
+      <div className="sub-cmt-ct">
+        <Image src={subcomment.sender.avatar} roundedCircle />
 
-        <div className="sub__comment__card__comment__content">
+        <div className="sub-cmt-content">
           <Linkify>
             <span>@{subcomment.receiver.username}&nbsp;&nbsp;&nbsp;</span>
             <span>{subcomment.content}</span>
@@ -42,7 +29,7 @@ export default function SubCommentCard({
         </div>
       </div>
 
-      <div className="sub__comment__card__button__list">
+      <div className="sub-cmt-action-btn-list">
         {currentUser && (
           <small
             onClick={() => {
@@ -72,7 +59,7 @@ export default function SubCommentCard({
         <small>{convertTimestamp(subcomment.published)}</small>
       </div>
 
-      {showRepModal && (
+      {/* {showRepModal && (
         <AddSubCommentForm
           commentId={commentId}
           receiver={subcomment.sender._id}
@@ -80,22 +67,7 @@ export default function SubCommentCard({
           productId={productId}
           setShowRepModal={setShowRepModal}
         />
-      )}
+      )} */}
     </div>
   );
 }
-
-SubCommentCard.prototype = {
-  sender: PropTypes.shape({
-    avatar: PropTypes.string,
-    username: PropTypes.username,
-    _id: PropTypes.string,
-  }),
-  content: PropTypes.string,
-  receiver: PropTypes.shape({
-    avatar: PropTypes.string,
-    username: PropTypes.string,
-    _id: PropTypes.string,
-  }),
-  published: PropTypes.string,
-};

@@ -29,8 +29,9 @@ export default function cmt (state = INTIAL_STATE, action) {
     case Types.REP_CMT_SUC: {
       const {newRep, commentId} = action.payload;
       const newCmtList = state.cmtList;
-      const cmtIndex = newCmtList.map ((cmt) => cmt._id).indexOf(commentId);
+      const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
       newCmtList[cmtIndex].subComment.push (newRep);
+      
       return {
         ...state,
         cmtLoading: false,

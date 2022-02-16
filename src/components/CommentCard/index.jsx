@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
 import { repCmtReq } from "../../actions/comment";
+import SubCommentCard from "./SubCommentCard";
 // import EditMainCommentButton from './EditMainCommentButton';
 // import DeleteMainCommentButton from './DeleteMainCommentButton';
 // import AddSubCommentForm from "./AddSubCommentForm";
@@ -24,9 +25,9 @@ function CommentCard({
   return (
     <div className="cmt-card">
       <div className="cmt-card-content">
-        <img src={comment.avatar} alt="user-avatar" />
+        <img src={comment.commentator.avatar} alt="user-avatar" />
         <div>
-          <strong>{comment.username}</strong>
+          <strong>{comment.commentator.username}</strong>
           <Linkify>
             <span>{comment.mainComment}</span>
           </Linkify>
@@ -94,20 +95,20 @@ function CommentCard({
           />
         )}
         <small>{convertTimestamp(comment.published)}</small>
-      </div>
+      </div>*/}
 
-      {comment.subComment.map((subcomment, index) => {
-        return (
-          <SubCommentCard
-            key={index}
-            currentUser={currentUser}
-            commentId={comment._id}
-            subcomment={subcomment}
-            productId={productId}
-            setProductCommentList={setProductCommentList}
-          />
-        );
-      })}*/}
+          {comment.subComment.map((subcomment, index) => {
+            return (
+              <SubCommentCard
+                key={index}
+                currentUser={currentUser}
+                commentId={comment._id}
+                subcomment={subcomment}
+                productId={productId}
+                setProductCommentList={setProductCommentList}
+              />
+            );
+          })}
         </div>
       )}
     </div>
