@@ -1,6 +1,7 @@
 import {call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {
   addCmtSuc,
+  delCmtSuc,
   failedCmtReq,
   getCmtListSuc,
   repCmtSuc,
@@ -8,9 +9,9 @@ import {
 } from '../actions/comment';
 import {
   addCmtCall,
+  delCmtCall,
   getProductCmtCall,
   repCmtCall,
-  uploadCmtMediaCall,
 } from '../api/comment';
 
 // generator functions
@@ -79,14 +80,20 @@ function* replyCmtGenerator({
   }
 }
 
-function* uploadCmtMediaGenerator({payload: {files, token}}) {
+function* delCmtGenerator({payload: {commentId, token}}) {
   try {
-    const result = yield call (uploadCmtMediaCall, {
-      files,
+    const res = yield call (delCmtCall, {
+      commentId,
       token,
     });
 
-    console.log ('result', result);
+    if (res.message === 'deleted') {
+      yield put (
+        delCmtSuc ({
+          commentId: res.commentId,
+        })
+      );
+    }
   } catch (err) {
     yield put (failedCmtReq ({err}));
   }
@@ -105,15 +112,15 @@ function* replyCmtWatcher () {
   yield takeLatest (Types.REP_CMT_REQ, replyCmtGenerator);
 }
 
-function* uploadCmtMediaWatcher () {
-  yield takeLatest (Types.UPLOAD_CMT_MEDIA_REQ, uploadCmtMediaGenerator);
+function* delCmtWatcher () {
+  yield takeLatest (Types.DEL_CMT_REQ, delCmtGenerator);
 }
 
 const commentSaga = [
   fork (addCmtWatcher),
   fork (getProductCmtWatcher),
   fork (replyCmtWatcher),
-  fork (uploadCmtMediaWatcher),
+  fork (delCmtWatcher),
 ];
 
 export default commentSaga;

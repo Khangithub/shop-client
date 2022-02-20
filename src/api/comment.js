@@ -59,26 +59,20 @@ const repCmtCall = async ({commentId, sender, receiver, content, token}) => {
   }
 };
 
-const uploadCmtMediaCall = async ({files, token}) => {
+const delCmtCall = async ({commentId, token}) => {
   try {
-    const formData = new FormData ();
-    for (let i = 0; i < files.length; i++) {
-      formData.append ('cmt-media', files[i]);
-    }
-
-    const uploadCmtMediaReq = await fetch (process.env.REACT_APP_CMT_MEDIA, {
-      method: 'POST',
+    const delCmtReq = await fetch (process.env.REACT_APP_CMT + commentId, {
+      method: 'DELETE',
       headers: {
         Authorization: 'Bearer '.concat (token),
+        'content-type': 'application/json; charset=UTF-8',
       },
-      body: formData,
     });
-
-    const uploadCmtMediaJson = await uploadCmtMediaReq.json ();
-    return uploadCmtMediaJson;
+    const delCmtJson = await delCmtReq.json ();
+    return delCmtJson;
   } catch (err) {
     throw err;
   }
 };
 
-export {addCmtCall, getProductCmtCall, repCmtCall, uploadCmtMediaCall};
+export {addCmtCall, getProductCmtCall, repCmtCall, delCmtCall};

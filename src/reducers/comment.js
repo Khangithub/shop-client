@@ -31,7 +31,20 @@ export default function cmt (state = INTIAL_STATE, action) {
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
       newCmtList[cmtIndex].subComment.push (newRep);
-      
+
+      return {
+        ...state,
+        cmtLoading: false,
+        cmtList: newCmtList,
+      };
+    }
+
+    case Types.DEL_CMT_SUC: {
+      const {commentId} = action.payload;
+      const newCmtList = state.cmtList;
+      const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
+      newCmtList.splice (cmtIndex, 1);
+
       return {
         ...state,
         cmtLoading: false,

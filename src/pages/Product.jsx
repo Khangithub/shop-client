@@ -130,7 +130,7 @@ function Product({ currentUser, token }) {
 
             <Row className="product-price">
               <h3>${getNetPrice(product)} &nbsp;</h3>
-              {product.discount && (
+              {product.discount > 0 && (
                 <Badge variant="danger" className="product-discount">
                   -{product.discount}%
                 </Badge>
@@ -411,7 +411,6 @@ function Product({ currentUser, token }) {
             </div>
           ))
           .reverse()}
-        <HorizontalDevider />
       </div>
       <Footer />
     </>

@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
-import { repCmtReq } from "../../actions/comment";
-import { Col, Row } from "react-bootstrap";
+import { delCmtReq, repCmtReq } from "../../actions/comment";
+import { Col, Row, Modal, Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 
 // import EditSubCommentForm from "./EditSubCommentForm";
 // import DeleteSubCommentButton from "./DeleteSubCommentButton";
 // import EditMainCommentButton from './EditMainCommentButton';
-import DeleteMainCommentButton from './DeleteMainCommentButton';
 // import AddSubCommentForm from "./AddSubCommentForm";
 
 import "./_commentCard.scss";
@@ -17,6 +16,8 @@ import { convertTimestamp } from "../../helpers";
 function CommentCard({ comment, currentUser, token }) {
   const dispatch = useDispatch();
   const [showRepModal, setShowRepModal] = useState(false);
+  const [delModalShow, setDelModalShow] = useState(false);
+
   const [content, setContent] = useState("");
 
   return (
@@ -33,7 +34,7 @@ function CommentCard({ comment, currentUser, token }) {
           <Col className="cmt-card-content">
             <b>{comment.commentator.username}</b>
             <Linkify>
-              <p>{comment.mainComment}</p>
+              <span>{comment.mainComment}</span>
             </Linkify>
             <Row>
               {comment.mediaList.map(({ mimetype, filename }, index) => {
@@ -58,8 +59,6 @@ function CommentCard({ comment, currentUser, token }) {
                       className="cmt-card-media"
                       key={index}
                       controls
-                      playing
-                      loop
                     />
                   );
                 }
@@ -70,7 +69,6 @@ function CommentCard({ comment, currentUser, token }) {
           </Col>
         </Col>
       </Row>
-
       {token && (
         <div className="cmt-action-btn-list">
           <span
@@ -80,6 +78,41 @@ function CommentCard({ comment, currentUser, token }) {
           >
             reply
           </span>
+
+          {currentUser._id === comment.commentator._id && (
+            <>
+              <span onClick={() => setDelModalShow(true)}>Delete</span>
+              <Modal
+                show={delModalShow}
+                onHide={() => setDelModalShow(false)}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header>
+                  <h3>Delete Comment</h3>
+                  <Modal.Header
+                    closeButton
+                    onClick={() => setDelModalShow(false)}
+                  />
+                </Modal.Header>
+                <Modal.Body>
+                  <p>Are you sure want to delete this comment?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      dispatch(delCmtReq({ commentId: comment._id, token }));
+                      setDelModalShow(false);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+          )}
 
           {showRepModal && (
             <div className="reply-modal">
@@ -110,14 +143,6 @@ function CommentCard({ comment, currentUser, token }) {
                 }}
               />
             </div>
-          )}
-
-          {currentUser._id === comment.commentator._id && (
-            <DeleteMainCommentButton
-              mainComment={comment.mainComment}
-              commentator={comment.commentator}
-              commentId={comment._id}
-            />
           )}
 
           {/* {currentUser && currentUser._id === comment.commentator._id && (
