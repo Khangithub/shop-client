@@ -97,7 +97,7 @@ const DeleteProductModal = (props) => {
           <p>
             This action can lead to data loss. To prevent accidental actions we
             ask you to confirm your intention. Please type
-            <strong>{product.name}</strong> to proceed or close this modal to
+            <b>{product.name}</b> to proceed or close this modal to
             cancel.
           </p>
         </Container>

@@ -64,7 +64,7 @@ function Login() {
 
         <div className="gg-login-container">
           <h4>
-            <strong>Or</strong>
+            <b>Or</b>
           </h4>
           <button
             onClick={() => {

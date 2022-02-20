@@ -79,9 +79,9 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
         </Col>
         <Col xs={2} lg={2}>
           <div className="order-unit-price">
-            <strong>
+            <b>
               ${product.discount ? getNetPrice(product) : ` ${product.price}`}
-            </strong>
+            </b>
             {product.discount && <p>${product.price}</p>}
           </div>
         </Col>
@@ -100,9 +100,9 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
           <small>{product.inStock} products in stock</small>
         </Col>
         <Col xs={2} lg={2}>
-          <strong className="order-real-price">
+          <b className="order-real-price">
             ${getNetPrice(product) * quantity}
-          </strong>
+          </b>
         </Col>
         <Col xs={1} lg={1}>
           <div>

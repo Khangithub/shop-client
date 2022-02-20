@@ -40,7 +40,7 @@ export default function ProductCard({
 
           <div className="product-card-price">
             <div className={!product.discount ? "net-price--hide" : undefined}>
-              <strong>{getNetPrice(product)}$ &nbsp;&nbsp;</strong>
+              <b>{getNetPrice(product)}$ &nbsp;&nbsp;</b>
               <Badge variant="danger">-{product.discount}%</Badge>
             </div>
             <p

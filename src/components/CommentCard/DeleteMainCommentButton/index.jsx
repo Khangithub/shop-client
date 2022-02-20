@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import DeleteMainCommentModal from './DeleteMainCommentModal';
-import PropTypes from 'prop-types';
 
 export default function DeleteMainCommentButton({
   mainComment,
@@ -26,12 +25,3 @@ export default function DeleteMainCommentButton({
     </>
   );
 }
-
-DeleteMainCommentButton.prototype = {
-  mainComment: PropTypes.string,
-  commentator: PropTypes.shape({
-    username: PropTypes.string,
-    avatar: PropTypes.string,
-  }),
-  commentId: PropTypes.string,
-};

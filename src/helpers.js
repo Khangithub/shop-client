@@ -1,3 +1,5 @@
+import prettyMs from 'pretty-ms';
+
 export function removeAscent (str) {
   if (str === null || str === undefined) return str;
   str = str.toLowerCase ();
@@ -29,10 +31,6 @@ export function getPrice (product) {
   } else {
     return product.price;
   }
-}
-
-export function disappear (stuff) {
-  return stuff ? {display: 'flex'} : {display: 'none'};
 }
 
 export function returnTotalPrice (cart) {
@@ -69,18 +67,15 @@ export function checkConfirmedPassword (password, confirmedPassword) {
   }
 }
 
-export function convertTimestamp (timestamp) {
-  const date = new Date (timestamp);
-  return date.toLocaleString ();
-}
-
-const getRandomInRange = (min, max) =>
-  Math.floor (Math.random () * (max - min + 1)) + min;
+const convertTimestamp = timestamp =>
+  prettyMs (Date.now () - new Date (timestamp), {
+    compact: true,
+  }) + ' ago';
 
 const getNetPrice = product =>
   (product.discount
     ? product.price - product.discount * product.price / 100
-    : product.price).toFixed(1);
+    : product.price).toFixed (1);
 
 const sortAccordType = (sortType, results) => {
   switch (sortType) {
@@ -99,4 +94,4 @@ const sortAccordType = (sortType, results) => {
   }
 };
 
-export {getRandomInRange, getNetPrice, sortAccordType};
+export {getNetPrice, sortAccordType, convertTimestamp};

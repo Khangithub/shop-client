@@ -5,15 +5,18 @@ const Types = {
   GET_CMT_LIST_SUC: 'cmt/get_cmt_list_suc',
   REP_CMT_REQ: 'cmt/rep_cmt_req',
   REP_CMT_SUC: 'cmt/rep_cmt_suc',
+  UPLOAD_CMT_MEDIA_REQ: 'cmt/upload_cmt_media_req',
+  UPLOAD_CMT_MEDIA_SUC: 'cmt/upload_cmt_media_suc',
   GET_CMT_LIST_FR_PRODUCT_REQ: 'cmt/get_cmt_list_fr_product_req',
   FAILED_CMT_REQ: 'cmt/failed_cmt_req',
 };
 
-const addCmtReq = ({productId, mainComment, token}) => ({
+const addCmtReq = ({productId, mainComment, media, token}) => ({
   type: Types.ADD_CMT_REQ,
   payload: {
     productId,
     mainComment,
+    media,
     token,
   },
 });
@@ -45,6 +48,14 @@ const repCmtReq = ({commentId, sender, content, receiver, token}) => ({
   },
 });
 
+const uploadCmtMediaReq = ({files, token}) => ({
+  type: Types.UPLOAD_CMT_MEDIA_REQ,
+  payload: {
+    files,
+    token,
+  },
+});
+
 const addCmtSuc = ({newCmt}) => ({
   type: Types.ADD_CMT_SUC,
   payload: {
@@ -63,7 +74,14 @@ const repCmtSuc = ({newRep, commentId}) => ({
   type: Types.REP_CMT_SUC,
   payload: {
     newRep,
-    commentId
+    commentId,
+  },
+});
+
+const uploadCmtMediaSuc = ({fileNames}) => ({
+  type: Types.UPLOAD_CMT_MEDIA_SUC,
+  payload: {
+    fileNames,
   },
 });
 
@@ -78,10 +96,12 @@ export {
   addCmtReq,
   getCmtListReq,
   repCmtReq,
+  getCmtListFromProductReq,
+  uploadCmtMediaReq,
   repCmtSuc,
   getCmtListSuc,
   addCmtSuc,
+  uploadCmtMediaSuc,
   failedCmtReq,
-  getCmtListFromProductReq,
   Types,
 };

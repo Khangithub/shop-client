@@ -6,14 +6,20 @@ import {
   repCmtSuc,
   Types,
 } from '../actions/comment';
-import {addCmtCall, getProductCmtCall, repCmtCall} from '../api/comment';
+import {
+  addCmtCall,
+  getProductCmtCall,
+  repCmtCall,
+  uploadCmtMediaCall,
+} from '../api/comment';
 
 // generator functions
-function* addCmtGenerator({payload: {productId, mainComment, token}}) {
+function* addCmtGenerator({payload: {productId, mainComment, media, token}}) {
   try {
     const {message, doc} = yield call (addCmtCall, {
       productId,
       mainComment,
+      media,
       token,
     });
 
@@ -50,9 +56,17 @@ function* getProductCmtGenerator({payload: {productId, batch, limit}}) {
   }
 }
 
-function* replyCmtGenerator({payload: {commentId, receiver, content, sender, token}}) {
+function* replyCmtGenerator({
+  payload: {commentId, receiver, content, sender, token},
+}) {
   try {
-    const {doc} = yield call (repCmtCall, {commentId, receiver, content, sender, token});
+    const {doc} = yield call (repCmtCall, {
+      commentId,
+      receiver,
+      content,
+      sender,
+      token,
+    });
 
     yield put (
       repCmtSuc ({
@@ -64,6 +78,20 @@ function* replyCmtGenerator({payload: {commentId, receiver, content, sender, tok
     yield put (failedCmtReq ({err}));
   }
 }
+
+function* uploadCmtMediaGenerator({payload: {files, token}}) {
+  try {
+    const result = yield call (uploadCmtMediaCall, {
+      files,
+      token,
+    });
+
+    console.log ('result', result);
+  } catch (err) {
+    yield put (failedCmtReq ({err}));
+  }
+}
+
 // wacher functions
 function* addCmtWatcher () {
   yield takeEvery (Types.ADD_CMT_REQ, addCmtGenerator);
@@ -77,10 +105,15 @@ function* replyCmtWatcher () {
   yield takeLatest (Types.REP_CMT_REQ, replyCmtGenerator);
 }
 
+function* uploadCmtMediaWatcher () {
+  yield takeLatest (Types.UPLOAD_CMT_MEDIA_REQ, uploadCmtMediaGenerator);
+}
+
 const commentSaga = [
   fork (addCmtWatcher),
   fork (getProductCmtWatcher),
   fork (replyCmtWatcher),
+  fork (uploadCmtMediaWatcher),
 ];
 
 export default commentSaga;

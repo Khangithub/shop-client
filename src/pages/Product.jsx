@@ -20,17 +20,27 @@ import shippingBanner3 from "../assets/banners/shipping-3.jpg";
 import shippingBanner2 from "../assets/banners/shipping-2.jpg";
 import shippingBanner1 from "../assets/banners/shipping-1.jpg";
 
+import mediaSvg from "../assets/svgs/media.svg";
+import sendSvg from "../assets/svgs/send.svg";
+import closeSvg from "../assets/svgs/close.svg";
+
 import "./_product.scss";
 import HorizontalDevider from "../components/HorizontalDivider";
 import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 import CommentCard from "../components/CommentCard";
 import Title from "../components/Title";
+import ReactPlayer from "react-player";
 
 function Product({ currentUser, token }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;
+
   let [mainComment, setMainComment] = useState("");
+  let [cmtMedia, setCmtMedia] = useState({
+    origin: [],
+    preview: [],
+  });
 
   const { product, productLoading, productErr } = useSelector(
     (state) => state.product
@@ -57,7 +67,6 @@ function Product({ currentUser, token }) {
     }
   }, [productId, dispatch, product]);
 
-  // let [productCommentList, setProductCommentList] = useState([]);
   let [quantity, setQuantity] = useState(1);
   let [seeMoreText, setSeeMore] = useState(true);
 
@@ -74,9 +83,9 @@ function Product({ currentUser, token }) {
     return (
       <>
         <span>{text}</span>
-        <strong onClick={() => setSeeMore(!seeMoreText)}>
-          &nbsp;&nbsp;...&nbsp;{seeMoreText ? "see more" : "see less"}
-        </strong>
+        <b onClick={() => setSeeMore(!seeMoreText)}>
+          &nbsp;...&nbsp;{seeMoreText ? "see more" : "see less"}
+        </b>
       </>
     );
   };
@@ -229,7 +238,6 @@ function Product({ currentUser, token }) {
           )}
         </Row>
 
-        {/* <p className="section-title">productList of the same category</p> */}
         <Title>productList of the same category</Title>
         <Row>
           {productsByCategory.map((product, index) => (
@@ -241,9 +249,91 @@ function Product({ currentUser, token }) {
 
         <Title>comments about this product</Title>
         {token && (
-          <div className="cmt-box-ct">
-            <Row>
-              <img src={currentUser.avatar} alt="user-avatar" />
+          <Row className="cmt-box-ct">
+            <Col>
+              <img
+                className="avatar"
+                src={currentUser.avatar}
+                alt="user-avatar"
+              />
+            </Col>
+            <Col className="cmt-box-content">
+              <Row className="cmt-box-header">
+                <b>{currentUser.username}</b>
+                <div>
+                  {cmtMedia.preview.length > 0 && (
+                    <img
+                      src={closeSvg}
+                      alt="close-icon"
+                      onClick={() => {
+                        setCmtMedia((media) => ({
+                          ...media,
+                          origin: [],
+                          preview: [],
+                        }));
+                      }}
+                    />
+                  )}
+                  {cmtMedia.preview.length === 0 && (
+                    <form encType="multipart/form-data">
+                      <input
+                        multiple
+                        name="cmt-media"
+                        id="cmt-media"
+                        type="file"
+                        accept="video/*,image/*"
+                        onChange={(e) => {
+                          const { files } = e.target;
+                          if (files && files.length > 0) {
+                            let previewList = [];
+                            for (let i = 0; i < files.length; i++) {
+                              const file = files[i];
+                              const url = URL.createObjectURL(file);
+                              const type = file.type;
+                              previewList.push({ url, type });
+                            }
+
+                            setCmtMedia((media) => ({
+                              ...media,
+                              preview: previewList,
+                              origin: files,
+                            }));
+                          }
+                        }}
+                      />
+                      <label htmlFor="cmt-media">
+                        <img
+                          src={mediaSvg}
+                          alt="media-icon"
+                          htmlFor="cmt-media"
+                        />
+                      </label>
+                    </form>
+                  )}
+                  {(mainComment || cmtMedia.origin.length > 0) && (
+                    <img
+                      src={sendSvg}
+                      alt="send-icon"
+                      onClick={() => {
+                        dispatch(
+                          addCmtReq({
+                            productId,
+                            mainComment,
+                            media: cmtMedia.origin,
+                            token,
+                          })
+                        );
+                        setCmtMedia((media) => ({
+                          ...media,
+                          origin: [],
+                          preview: [],
+                        }));
+                        setMainComment("");
+                      }}
+                    />
+                  )}
+                </div>
+              </Row>
               <textarea
                 type="text"
                 placeholder="What is your first impression about this product?"
@@ -253,31 +343,74 @@ function Product({ currentUser, token }) {
                 }}
                 onKeyUp={(e) => {
                   e.preventDefault();
+                  e.target.style.height = "auto";
+                  e.target.style.height = e.target.scrollHeight + "px";
                   if (mainComment.trim() !== "" && e.keyCode === 13) {
-                    dispatch(addCmtReq({ productId, mainComment, token }));
+                    dispatch(
+                      addCmtReq({
+                        productId,
+                        mainComment,
+                        media: cmtMedia.origin,
+                        token,
+                      })
+                    );
                     setMainComment("");
+                    setCmtMedia((media) => ({
+                      ...media,
+                      origin: [],
+                      preview: [],
+                    }));
                   }
                 }}
               />
-            </Row>
-          </div>
-        )}
+              <Row className="upload-media-btn">
+                {cmtMedia.preview.map((media, index) => {
+                  if (media.type.includes("image")) {
+                    return (
+                      <img
+                        src={media.url}
+                        alt="cmt-media-preview-img"
+                        key={index}
+                      />
+                    );
+                  }
 
-        <div>
-          {cmtList
-            .map((comment, index) => (
-              <div key={index}>
-                <CommentCard
-                  comment={comment}
-                  currentUser={currentUser}
-                  productId={productId}
-                  token={token}
-                />
-                <HorizontalDivider line={1} />
-              </div>
-            ))
-            .reverse()}
-        </div>
+                  if (media.type.includes("video")) {
+                    return (
+                      <ReactPlayer
+                        url={[
+                          { src: media.url, type: "video/webm" },
+                          { src: media.url, type: "video/ogg" },
+                        ]}
+                        key={index}
+                        controls
+                        playing
+                        loop
+                      />
+                    );
+                  }
+
+                  return undefined;
+                })}
+              </Row>
+            </Col>
+          </Row>
+        )}
+        <HorizontalDevider />
+
+        {cmtList
+          .map((comment, index) => (
+            <div key={index}>
+              <CommentCard
+                comment={comment}
+                currentUser={currentUser}
+                productId={productId}
+                token={token}
+              />
+              <HorizontalDivider line={1} />
+            </div>
+          ))
+          .reverse()}
         <HorizontalDevider />
       </div>
       <Footer />

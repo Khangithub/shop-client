@@ -5,35 +5,80 @@
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  padding: 0 !important;
 
-  .cmt-card-content {
-    display: flex;
+  .col {
+    padding: 0;
+  }
+
+  .cmt-card-ct {
     margin-bottom: 10px;
 
-    img {
-      @include avatar;
-    }
+    .col {
+      &:first-of-type {
+        flex-grow: 0;
 
-    div {
-      display: flex;
-      flex-direction: column;
-      background-color: #ececec;
-      border-radius: 20px;
-      padding: 10px;
-      word-break: break-all;
+        .cmt-cart-avatar {
+          @include avatar;
+        }
+      }
 
-      span {
-        text-transform: none;
+      &:last-of-type {
+        display: flex;
+        flex-direction: column;
+        word-break: break-all;
+
+        .cmt-card-content {
+          background-color: #ececec;
+          width: fit-content;
+          border-radius: 20px;
+          padding: 10px;
+
+          p {
+            text-transform: none;
+          }
+
+          .cmt-card-media {
+            width: 150px !important;
+            height: 100px !important;
+            object-fit: contain;
+            margin: 5px;
+          }
+        }
+
       }
     }
   }
 
   .cmt-action-btn-list {
-    span {
+    &>span {
       background-color: #ececec;
-      padding: 0 5px;
-      margin: 10px 5px;
+      margin: 10px;
+      padding: 5px;
       border-radius: 10px;
+    }
+
+    .rep-card {
+      margin: 15px 0 15px 50px;
+
+      .rep-ct {
+        display: flex;
+
+        img {
+          @include avatar;
+        }
+
+        .rep-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          background-color: #ececec;
+          text-transform: none;
+          padding: 0 10px;
+          border-radius: 15px;
+          word-break: break-all;
+        }
+      }
     }
   }
 
@@ -45,17 +90,10 @@
 
     img {
       @include avatar;
-
     }
+
     textarea {
       @include cmtTextBox;
     }
   }
-}
-
-
-
-.cmt-action-btn-list>small:last-child {
-  font-size: x-small;
-  background-color: transparent;
 }
