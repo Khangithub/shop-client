@@ -12,7 +12,6 @@ const addCmtCall = async ({productId, mainComment, media, token}) => {
       method: 'POST',
       headers: {
         Authorization: 'Bearer '.concat (token),
-        // 'content-type': 'application/json; charset=UTF-8',
       },
       body: formData,
     });
@@ -75,4 +74,27 @@ const delCmtCall = async ({commentId, token}) => {
   }
 };
 
-export {addCmtCall, getProductCmtCall, repCmtCall, delCmtCall};
+const editCmtCall = async ({commentId, mainComment, mediaList, token}) => {
+  try {
+    const formData = new FormData ();
+    for (let i = 0; i < mediaList.length; i++) {
+      formData.append ('edit-cmt-media', mediaList[i]);
+    }
+
+    formData.append ('mainComment', mainComment);
+
+    const editCmtReq = await fetch (process.env.REACT_APP_CMT + commentId, {
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Bearer '.concat (token),
+      },
+      body: formData
+    });
+    const editCmtJson = await editCmtReq.json ();
+    return editCmtJson;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export {addCmtCall, getProductCmtCall, repCmtCall, editCmtCall, delCmtCall};

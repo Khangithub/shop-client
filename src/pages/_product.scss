@@ -14,13 +14,13 @@
     padding: 15px;
   }
 
-  .product-info-container {
+  .product-info-ct {
     .product-info-img {
       width: 100%;
       object-fit: cover;
     }
 
-    .product-info-detail-container {
+    .product-info-content {
       .product-manufacturer {
         text-decoration: none;
         color: #007185;
@@ -61,7 +61,7 @@
     }
   }
 
-  .product-signin-container {
+  .product-signin-ct {
     display: flex;
     flex-direction: column;
     align-items: center;

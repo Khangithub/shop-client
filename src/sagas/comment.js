@@ -2,6 +2,7 @@ import {call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {
   addCmtSuc,
   delCmtSuc,
+  editCmtSuc,
   failedCmtReq,
   getCmtListSuc,
   repCmtSuc,
@@ -10,6 +11,7 @@ import {
 import {
   addCmtCall,
   delCmtCall,
+  editCmtCall,
   getProductCmtCall,
   repCmtCall,
 } from '../api/comment';
@@ -99,6 +101,29 @@ function* delCmtGenerator({payload: {commentId, token}}) {
   }
 }
 
+function* editCmtGenerator({
+  payload: {commentId, mainComment, mediaList, token},
+}) {
+  try {
+    const res = yield call (editCmtCall, {
+      commentId,
+      mainComment,
+      mediaList,
+      token,
+    });
+    if (res.message === 'edited') {
+      yield put (
+        editCmtSuc ({
+          commentId: commentId,
+          mainComment: res.mainComment,
+          mediaList: res.mediaList,
+        })
+      );
+    }
+  } catch (err) {
+    yield put (failedCmtReq ({err}));
+  }
+}
 // wacher functions
 function* addCmtWatcher () {
   yield takeEvery (Types.ADD_CMT_REQ, addCmtGenerator);
@@ -116,10 +141,15 @@ function* delCmtWatcher () {
   yield takeLatest (Types.DEL_CMT_REQ, delCmtGenerator);
 }
 
+function* editCmtWatcher () {
+  yield takeLatest (Types.EDIT_CMT_REQ, editCmtGenerator);
+}
+
 const commentSaga = [
   fork (addCmtWatcher),
   fork (getProductCmtWatcher),
   fork (replyCmtWatcher),
+  fork (editCmtWatcher),
   fork (delCmtWatcher),
 ];
 

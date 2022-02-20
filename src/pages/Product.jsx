@@ -94,7 +94,7 @@ function Product({ currentUser, token }) {
     <>
       <NavBar currentUser={currentUser} token={token} />
       <div className="product">
-        <Row className="product-info-container">
+        <Row className="product-info-ct">
           <Col sm={12} md={4} lg={4}>
             <img
               src={product.productImage}
@@ -103,7 +103,7 @@ function Product({ currentUser, token }) {
               className="product-info-img"
             />
           </Col>
-          <Col sm={12} md={4} lg={5} className="product-info-detail-container">
+          <Col sm={12} md={4} lg={5} className="product-info-content">
             {/* <Row>
             <EditProductButton product={product} />
 
@@ -207,7 +207,7 @@ function Product({ currentUser, token }) {
               </div>
             </Col>
           ) : (
-            <Col sm={12} md={4} lg={3} className="product-signin-container">
+            <Col sm={12} md={4} lg={3} className="product-signin-ct">
               <h5>Sign in for the best experience</h5>
               <HorizontalDivider line={1} />
               <button onClick={() => history.push("/login")}>
