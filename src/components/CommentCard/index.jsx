@@ -7,7 +7,6 @@ import ReactPlayer from "react-player";
 
 // import EditSubCommentForm from "./EditSubCommentForm";
 // import DeleteSubCommentButton from "./DeleteSubCommentButton";
-// import EditMainCommentButton from './EditMainCommentButton';
 // import AddSubCommentForm from "./AddSubCommentForm";
 import mediaSvg from "../../assets/svgs/media.svg";
 import tickSvg from "../../assets/svgs/tick.svg";
@@ -107,12 +106,6 @@ function CommentCard({ comment, currentUser, token }) {
                           token,
                         })
                       );
-                      setEditedCmt(comment.mainComment);
-                      setEditedCmtMedia((media) => ({
-                        ...media,
-                        origin: comment.mediaList,
-                        preview: comment.mediaList,
-                      }));
                       setIsEditCmt(false);
                     }}
                   />
@@ -175,12 +168,6 @@ function CommentCard({ comment, currentUser, token }) {
                             token,
                           })
                         );
-                        setEditedCmt(comment.mainComment);
-                        setEditedCmtMedia((media) => ({
-                          ...media,
-                          origin: comment.mediaList,
-                          preview: comment.mediaList,
-                        }));
                         setIsEditCmt(false);
                       }
                     }}
