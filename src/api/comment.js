@@ -26,7 +26,7 @@ const addCmtCall = async ({productId, mainComment, media, token}) => {
 const getProductCmtCall = async ({productId, batch, limit}) => {
   try {
     const productCmtListReq = await fetch (
-      process.env.REACT_APP_CMT_FR_PRODUCT +
+      process.env.REACT_APP_PRODUCT_CMT +
         productId +
         '/' +
         batch +

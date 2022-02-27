@@ -43,8 +43,11 @@ export default function cmt (state = INTIAL_STATE, action) {
       const {commentId, mediaList, mainComment} = action.payload;
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
-      newCmtList[cmtIndex].mediaList = mediaList;
+      if (mediaList) {
+        newCmtList[cmtIndex].mediaList = mediaList;
+      }
       newCmtList[cmtIndex].mainComment = mainComment;
+      newCmtList[cmtIndex].edited = true;
 
       return {
         ...state,

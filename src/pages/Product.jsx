@@ -238,6 +238,8 @@ function Product({ currentUser, token }) {
           )}
         </Row>
 
+        <HorizontalDivider />
+
         <Title>productList of the same category</Title>
         <Row>
           {productsByCategory.map((product, index) => (
@@ -396,8 +398,9 @@ function Product({ currentUser, token }) {
             </Col>
           </Row>
         )}
-        <HorizontalDevider />
 
+        {cmtList.length > 0 && <HorizontalDevider />}
+        
         {cmtList
           .map((comment, index) => (
             <div key={index}>
