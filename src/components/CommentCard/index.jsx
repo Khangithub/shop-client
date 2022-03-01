@@ -9,6 +9,7 @@ import ReactPlayer from "react-player";
 // import DeleteSubCommentButton from "./DeleteSubCommentButton";
 // import AddSubCommentForm from "./AddSubCommentForm";
 import tickSvg from "../../assets/svgs/tick.svg";
+import mediaSvg from "../../assets/svgs/media.svg";
 
 import "./_commentCard.scss";
 import { convertTimestamp } from "../../helpers";
@@ -27,14 +28,14 @@ function CommentCard({ comment, currentUser, token }) {
 
   return (
     <Col className="cmt-card">
-      <Row className="cmt-card-ct">
+      <div className="cmt-card-ct">
         <img
           src={comment.commentator.avatar}
           alt="user-avatar"
           className="cmt-card-avatar"
         />
-        <div className="cmt-card-content">
-          <Row className="cmt-card-header">
+        <div className="cmt-card-layout">
+          <div className="cmt-card-header">
             <b>{comment.commentator.username}</b>
 
             {isEditCmt && (
@@ -65,7 +66,9 @@ function CommentCard({ comment, currentUser, token }) {
                       }
                     }}
                   />
-                  <label htmlFor="edit-cmt-media">change images/videos</label>
+                  <label htmlFor="edit-cmt-media">
+                    <img src={mediaSvg} alt="media-btn" />
+                  </label>
                 </form>
 
                 <img
@@ -85,43 +88,35 @@ function CommentCard({ comment, currentUser, token }) {
                 />
               </Row>
             )}
-          </Row>
+          </div>
           {!isEditCmt && (
             <>
               <Linkify>
                 <span>{comment.mainComment}</span>
               </Linkify>
 
-              <Row>
-                {comment.mediaList.map(({ mimetype, filename }, index) => {
-                  if (mimetype.includes("image")) {
-                    return (
-                      <img
-                        src={filename}
-                        alt="cmt-media-preview-img"
-                        className="cmt-card-media"
-                        key={index}
-                      />
-                    );
-                  }
-
-                  if (mimetype.includes("video")) {
-                    return (
-                      <ReactPlayer
-                        url={[
-                          { src: filename, type: "video/webm" },
-                          { src: filename, type: "video/ogg" },
-                        ]}
-                        className="cmt-card-media"
-                        key={index}
-                        controls
-                      />
-                    );
-                  }
-
-                  return undefined;
-                })}
-              </Row>
+              <div className="cmt-media-ct">
+                {comment.mediaList.map(({ mimetype, filename }, index) =>
+                  mimetype.includes("image") ? (
+                    <img
+                      src={filename}
+                      alt="cmt-media-preview-img"
+                      className="cmt-card-media"
+                      key={index}
+                    />
+                  ) : (
+                    <ReactPlayer
+                      url={[
+                        { src: filename, type: "video/webm" },
+                        { src: filename, type: "video/ogg" },
+                      ]}
+                      className="cmt-card-media"
+                      key={index}
+                      controls
+                    />
+                  )
+                )}
+              </div>
 
               <Row className="cmt-card-footer">
                 {comment.edited && <small>Edited &nbsp;&nbsp;</small>}
@@ -131,61 +126,51 @@ function CommentCard({ comment, currentUser, token }) {
           )}
           {isEditCmt && (
             <Col className="edit-cmt-ct">
-              <Row>
-                <textarea
-                  value={editedCmt}
-                  onKeyUp={(e) => {
-                    e.preventDefault();
-                    e.target.style.height = "auto";
-                    e.target.style.height = e.target.scrollHeight + "px";
-                    if (editedCmt.trim() !== "" && e.keyCode === 13) {
-                      dispatch(
-                        editCmtReq({
-                          commentId: comment._id,
-                          mainComment: editedCmt,
-                          mediaList: editedCmtMedia.origin,
-                          token,
-                        })
-                      );
-                      setIsEditCmt(false);
-                    }
-                  }}
-                  onChange={(e) => {
-                    setEditedCmt(e.target.value);
-                  }}
-                  autoFocus
-                />
-              </Row>
-              <Row>
-                {editedCmtMedia.preview.map(({ mimetype, filename }, index) => {
-                  if (mimetype.includes("image")) {
-                    return (
-                      <img
-                        src={filename}
-                        alt="cmt-media-preview-img"
-                        className="cmt-card-media"
-                        key={index}
-                      />
+              <textarea
+                value={editedCmt}
+                onKeyUp={(e) => {
+                  e.preventDefault();
+                  e.target.style.height = "auto";
+                  e.target.style.height = e.target.scrollHeight + "px";
+                  if (editedCmt.trim() !== "" && e.keyCode === 13) {
+                    dispatch(
+                      editCmtReq({
+                        commentId: comment._id,
+                        mainComment: editedCmt,
+                        mediaList: editedCmtMedia.origin,
+                        token,
+                      })
                     );
+                    setIsEditCmt(false);
                   }
-
-                  if (mimetype.includes("video")) {
-                    return (
-                      <ReactPlayer
-                        url={[
-                          { src: filename, type: "video/webm" },
-                          { src: filename, type: "video/ogg" },
-                        ]}
-                        className="cmt-card-media"
-                        key={index}
-                        controls
-                      />
-                    );
-                  }
-
-                  return undefined;
-                })}
-              </Row>
+                }}
+                onChange={(e) => {
+                  setEditedCmt(e.target.value);
+                }}
+                autoFocus
+              />
+              <div>
+                {editedCmtMedia.preview.map(({ mimetype, filename }, index) =>
+                  mimetype.includes("image") ? (
+                    <img
+                      src={filename}
+                      alt="cmt-media-preview-img"
+                      className="cmt-card-media"
+                      key={index}
+                    />
+                  ) : (
+                    <ReactPlayer
+                      url={[
+                        { src: filename, type: "video/webm" },
+                        { src: filename, type: "video/ogg" },
+                      ]}
+                      className="cmt-card-media"
+                      key={index}
+                      controls
+                    />
+                  )
+                )}
+              </div>
             </Col>
           )}
         </div>
@@ -214,7 +199,7 @@ function CommentCard({ comment, currentUser, token }) {
             )}
           </Dropdown.Menu>
         </Dropdown>
-      </Row>
+      </div>
       {token && (
         <div className="cmt-card-modal-list">
           <Modal
@@ -247,103 +232,86 @@ function CommentCard({ comment, currentUser, token }) {
           </Modal>
 
           {showRepModal && (
-            <div className="reply-modal">
+            <div className="rep-modal">
               <img src={currentUser.avatar} alt="user-avatar" />
 
-              <textarea
-                type="text"
-                placeholder="Reply this feedback"
-                onChange={(event) => {
-                  setContent(event.target.value);
-                }}
-                value={content}
-                onKeyUp={(e) => {
-                  e.preventDefault();
-                  if (content.trim() !== "" && e.keyCode === 13) {
-                    dispatch(
-                      repCmtReq({
-                        commentId: comment._id,
-                        content,
-                        token,
-                        sender: currentUser._id,
-                        receiver: comment.commentator._id,
-                      })
-                    );
-                    setContent("");
-                    setShowRepModal(false);
-                  }
-                }}
-              />
+              <div className="rep-modal-ct">
+                <Row className="rep-modal-header">
+                  <small>
+                    <b>To {comment.commentator.username}</b>
+                  </small>
+
+                  <div></div>
+                </Row>
+                <textarea
+                  type="text"
+                  placeholder="reply this feedback"
+                  onChange={(event) => {
+                    setContent(event.target.value);
+                  }}
+                  value={content}
+                  onKeyUp={(e) => {
+                    e.preventDefault();
+                    e.target.style.height = "auto";
+                    e.target.style.height = e.target.scrollHeight + "px";
+                    if (content.trim() !== "" && e.keyCode === 13) {
+                      dispatch(
+                        repCmtReq({
+                          commentId: comment._id,
+                          content,
+                          token,
+                          sender: currentUser._id,
+                          receiver: comment.commentator._id,
+                        })
+                      );
+                      setContent("");
+                      setShowRepModal(false);
+                    }
+                  }}
+                />
+                <div className="rep-modal-footer">
+                  <small onClick={() => setShowRepModal(false)}>
+                    <b>Cancel</b>
+                  </small>
+                </div>
+              </div>
             </div>
           )}
-
-          {/* 
-
-        
-        <span>{convertTimestamp(comment.published)}</span>
-      </div>*/}
-
-          {comment.subComment.map((subcomment) => {
-            return (
-              <div className="rep-card" key={subcomment._id}>
-                <div className="rep-ct">
-                  <img src={subcomment.sender.avatar} alt="user-avatar" />
-
-                  <div className="rep-content">
-                    <b>{subcomment.sender.username}</b>
-                    <Linkify>
-                      <span>
-                        <b>@{subcomment.receiver.username}&nbsp;</b>
-                        {subcomment.content}
-                      </span>
-                    </Linkify>
-                  </div>
-                </div>
-
-                <div className="rep-action-btn-list">
-                  {currentUser && (
-                    <span
-                      onClick={() => {
-                        setShowRepModal(!showRepModal);
-                      }}
-                    >
-                      reply
-                    </span>
-                  )}
-
-                  {/* {currentUser && currentUser._id === subcomment.sender._id && (
-                    <EditSubCommentForm
-                      subcomment={subcomment}
-                      productId={productId}
-                      setProductCommentList={setProductCommentList}
-                    />
-                  )}
-
-                  {currentUser && currentUser._id === subcomment.sender._id && (
-                    <DeleteSubCommentButton
-                      subcomment={subcomment}
-                      commentId={comment._id}
-                      setProductCommentList={setProductCommentList}
-                      productId={productId}
-                    />
-                  )} */}
-                  <span>{convertTimestamp(subcomment.published)}</span>
-                </div>
-
-                {/* {showRepModal && (
-                <AddSubCommentForm
-                  commentId={commentId}
-                  receiver={subcomment.sender._id}
-                  setProductCommentList={setProductCommentList}
-                  productId={productId}
-                  setShowRepModal={setShowRepModal}
-                />
-              )} */}
-              </div>
-            );
-          })}
         </div>
       )}
+
+      {comment.subComment.map((subcomment) => {
+        return (
+          <div className="rep-card" key={subcomment._id}>
+            <div className="rep-ct">
+              <img src={subcomment.sender.avatar} alt="user-avatar" />
+
+              <div className="rep-content">
+                <b>{subcomment.sender.username}</b>
+                <Linkify>
+                  <span>
+                    <b>@{subcomment.receiver.username}&nbsp;</b>
+                    {subcomment.content}
+                  </span>
+                </Linkify>
+              </div>
+            </div>
+
+            <div className="rep-action-btn-list">
+              {currentUser && (
+                <span
+                  onClick={() => {
+                    setShowRepModal(!showRepModal);
+                  }}
+                >
+                  reply
+                </span>
+              )}
+              <span>{convertTimestamp(subcomment.published)}</span>
+            </div>
+          </div>
+        );
+      })}
     </Col>
   );
 }

@@ -18,14 +18,14 @@
       @include avatar;
     }
 
-    .cmt-card-content {
+    .cmt-card-layout {
       background-color: #ececec;
       border-radius: 20px;
       padding: 10px;
-      margin: 10px 0;
-      word-break: break-all;
+      word-break: break-word;
 
       .cmt-card-header {
+        display: flex;
         justify-content: space-between;
 
         img {
@@ -39,11 +39,20 @@
         }
       }
 
+      .cmt-media-ct {
+        display: flex;
+        align-items: center;
+
+        @media screen and (max-width: $small) {
+          flex-direction: column;
+        }
+      }
+
       .cmt-card-media {
-        width: 150px !important;
-        height: 100px !important;
+        width: 190px !important;
+        height: 150px !important;
         object-fit: contain;
-        margin: 5px;
+        margin: 10px;
       }
 
       .edit-cmt-ct {
@@ -63,6 +72,14 @@
           width: 100%;
         }
 
+        div {
+          display: flex;
+          align-items: center;
+
+          @media screen and (max-width: $small) {
+            flex-direction: column;
+          }
+        }
       }
     }
 
@@ -90,41 +107,62 @@
         margin-right: 10px;
       }
     }
+  }
 
-    .rep-card {
-      margin: 15px 0 15px 50px;
+  .rep-card {
+    margin: 15px 0 15px 50px;
 
-      .rep-ct {
+    .rep-ct {
+      display: flex;
+
+      img {
+        @include avatar;
+      }
+
+      .rep-content {
         display: flex;
-
-        img {
-          @include avatar;
-        }
-
-        .rep-content {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          background-color: #ececec;
-          padding: 0 10px;
-          border-radius: 15px;
-        }
+        flex-direction: column;
+        justify-content: center;
+        background-color: #ececec;
+        padding: 0 10px;
+        border-radius: 15px;
       }
     }
   }
 
-  .reply-modal {
+  .rep-modal {
     margin-top: 20px;
-    margin-left: 50px;
+    margin-left: 75px;
     display: flex;
-    flex: 1;
+    max-width: 600px;
 
     img {
       @include avatar;
     }
 
-    textarea {
-      @include cmtTextBox;
+    .rep-modal-ct {
+      flex: 1;
+      width: 100%;
+      background-color: #ececec;
+      border-radius: 30px;
+      border-top-left-radius: 0;
+      padding: 15px;
+
+      .rep-modal-header {}
+
+      textarea {
+        @include cmtTextBox;
+        border-radius: 0;
+        padding: 0;
+        margin-bottom: 10px;
+        resize: none;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .rep-modal-footer {
+        text-align: right;
+      }
     }
   }
 }
