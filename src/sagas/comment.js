@@ -59,15 +59,15 @@ function* getProductCmtGenerator({payload: {productId, batch, limit}}) {
   }
 }
 
-function* replyCmtGenerator({
-  payload: {commentId, receiver, content, sender, token},
+function* repCmtGenerator({
+  payload: {commentId, receiver, content, media, token},
 }) {
   try {
     const {doc} = yield call (repCmtCall, {
       commentId,
       receiver,
       content,
-      sender,
+      media,
       token,
     });
 
@@ -133,8 +133,8 @@ function* getProductCmtWatcher () {
   yield takeLatest (Types.GET_CMT_LIST_FR_PRODUCT_REQ, getProductCmtGenerator);
 }
 
-function* replyCmtWatcher () {
-  yield takeLatest (Types.REP_CMT_REQ, replyCmtGenerator);
+function* repCmtWatcher () {
+  yield takeLatest (Types.REP_CMT_REQ, repCmtGenerator);
 }
 
 function* delCmtWatcher () {
@@ -148,7 +148,7 @@ function* editCmtWatcher () {
 const commentSaga = [
   fork (addCmtWatcher),
   fork (getProductCmtWatcher),
-  fork (replyCmtWatcher),
+  fork (repCmtWatcher),
   fork (editCmtWatcher),
   fork (delCmtWatcher),
 ];

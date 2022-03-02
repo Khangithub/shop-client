@@ -9,6 +9,7 @@ import ReactPlayer from "react-player";
 // import DeleteSubCommentButton from "./DeleteSubCommentButton";
 // import AddSubCommentForm from "./AddSubCommentForm";
 import tickSvg from "../../assets/svgs/tick.svg";
+import sendSvg from "../../assets/svgs/send.svg";
 import mediaSvg from "../../assets/svgs/media.svg";
 
 import "./_commentCard.scss";
@@ -24,6 +25,10 @@ function CommentCard({ comment, currentUser, token }) {
     origin: comment.mediaList,
   });
   const [delModalShow, setDelModalShow] = useState(false);
+  const [repMedia, setRepMedia] = useState({
+    origin: [],
+    preview: [],
+  });
   const [content, setContent] = useState("");
 
   return (
@@ -174,7 +179,7 @@ function CommentCard({ comment, currentUser, token }) {
             </Col>
           )}
         </div>
-        <Dropdown variant="none">
+        <Dropdown>
           <Dropdown.Toggle>
             <b>...</b>
           </Dropdown.Toggle>
@@ -233,15 +238,70 @@ function CommentCard({ comment, currentUser, token }) {
 
           {showRepModal && (
             <div className="rep-modal">
-              <img src={currentUser.avatar} alt="user-avatar" />
+              <img
+                src={currentUser.avatar}
+                alt="user-avatar"
+                className="user-avatar"
+              />
 
               <div className="rep-modal-ct">
                 <Row className="rep-modal-header">
                   <small>
-                    <b>To {comment.commentator.username}</b>
+                    <b>@{comment.commentator.username}</b>
                   </small>
 
-                  <div></div>
+                  <Row>
+                    <form encType="multipart/form-data">
+                      <input
+                        multiple
+                        name="rep-media"
+                        id="rep-media"
+                        type="file"
+                        accept="video/*,image/*"
+                        onChange={(e) => {
+                          const { files } = e.target;
+                          if (files && files.length > 0) {
+                            let repPreviewList = [];
+                            for (let i = 0; i < files.length; i++) {
+                              const file = files[i];
+                              const filename = URL.createObjectURL(file);
+                              const mimetype = file.type;
+                              repPreviewList.push({ filename, mimetype });
+                            }
+
+                            setRepMedia((media) => ({
+                              ...media,
+                              preview: repPreviewList,
+                              origin: files,
+                            }));
+                          }
+                        }}
+                      />
+                      <label htmlFor="rep-media">
+                        <img src={mediaSvg} alt="media-btn" />
+                      </label>
+                    </form>
+
+                    {(content || repMedia.origin.length > 0) && (
+                      <img
+                        src={sendSvg}
+                        alt="send-icon"
+                        onClick={() => {
+                          dispatch(
+                            repCmtReq({
+                              commentId: comment._id,
+                              content,
+                              token,
+                              media: repMedia.origin,
+                              receiver: comment.commentator._id,
+                            })
+                          );
+                          setContent("");
+                          setShowRepModal(false);
+                        }}
+                      />
+                    )}
+                  </Row>
                 </Row>
                 <textarea
                   type="text"
@@ -260,7 +320,7 @@ function CommentCard({ comment, currentUser, token }) {
                           commentId: comment._id,
                           content,
                           token,
-                          sender: currentUser._id,
+                          media: repMedia.origin,
                           receiver: comment.commentator._id,
                         })
                       );
@@ -269,6 +329,28 @@ function CommentCard({ comment, currentUser, token }) {
                     }
                   }}
                 />
+                <div className="rep-media-list-ct">
+                  {repMedia.preview.map((media, index) =>
+                    media.mimetype.includes("image") ? (
+                      <img
+                        src={media.filename}
+                        alt="cmt-media-preview-img"
+                        key={index}
+                      />
+                    ) : (
+                      <ReactPlayer
+                        url={[
+                          { src: media.filename, type: "video/webm" },
+                          { src: media.filename, type: "video/ogg" },
+                        ]}
+                        key={index}
+                        controls
+                        playing
+                        loop
+                      />
+                    )
+                  )}
+                </div>
                 <div className="rep-modal-footer">
                   <small onClick={() => setShowRepModal(false)}>
                     <b>Cancel</b>
@@ -280,24 +362,78 @@ function CommentCard({ comment, currentUser, token }) {
         </div>
       )}
 
-      {comment.subComment.map((subcomment) => {
+      {comment.subComment.map((rep) => {
         return (
-          <div className="rep-card" key={subcomment._id}>
-            <div className="rep-ct">
-              <img src={subcomment.sender.avatar} alt="user-avatar" />
+          <div className="rep-card" key={rep._id}>
+            <div className="rep-card-layout">
+              <img
+                src={rep.sender.avatar}
+                alt="user-avatar"
+                className="user-avatar"
+              />
 
               <div className="rep-content">
-                <b>{subcomment.sender.username}</b>
+                <b>{rep.sender.username}</b>
                 <Linkify>
                   <span>
-                    <b>@{subcomment.receiver.username}&nbsp;</b>
-                    {subcomment.content}
+                    <small>
+                      <b>@{rep.receiver.username}&nbsp;&nbsp;</b>
+                    </small>
+                    {rep.content}
                   </span>
                 </Linkify>
+                <div className="rep-media-list-ct">
+                  {rep.mediaList.map(({ mimetype, filename }, index) =>
+                    mimetype.includes("image") ? (
+                      <img
+                        src={filename}
+                        alt="cmt-media-preview-img"
+                        className="cmt-card-media"
+                        key={index}
+                      />
+                    ) : (
+                      <ReactPlayer
+                        url={[
+                          { src: filename, type: "video/webm" },
+                          { src: filename, type: "video/ogg" },
+                        ]}
+                        className="cmt-card-media"
+                        key={index}
+                        controls
+                      />
+                    )
+                  )}
+                </div>
+                <Row className="rep-card-footer">
+                  {rep.edited && <small>Edited &nbsp;&nbsp;</small>}
+                  <small>{convertTimestamp(rep.published)}</small>
+                </Row>
               </div>
+
+              <Dropdown>
+                <Dropdown.Toggle>
+                  <b>...</b>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    onClick={() => {
+                      setShowRepModal(!showRepModal);
+                    }}
+                  >
+                    Reply
+                  </Dropdown.Item>
+                  {currentUser._id === comment.commentator._id && (
+                    <>
+                      <Dropdown.Item>Edit</Dropdown.Item>
+                      <Dropdown.Item>Delete</Dropdown.Item>
+                    </>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
 
-            <div className="rep-action-btn-list">
+            {/* <div className="rep-action-btn-list">
               {currentUser && (
                 <span
                   onClick={() => {
@@ -307,8 +443,7 @@ function CommentCard({ comment, currentUser, token }) {
                   reply
                 </span>
               )}
-              <span>{convertTimestamp(subcomment.published)}</span>
-            </div>
+            </div> */}
           </div>
         );
       })}

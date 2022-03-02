@@ -365,42 +365,34 @@ function Product({ currentUser, token }) {
                   }
                 }}
               />
-              <Row className="upload-media-btn">
-                {cmtMedia.preview.map((media, index) => {
-                  if (media.type.includes("image")) {
-                    return (
-                      <img
-                        src={media.url}
-                        alt="cmt-media-preview-img"
-                        key={index}
-                      />
-                    );
-                  }
-
-                  if (media.type.includes("video")) {
-                    return (
-                      <ReactPlayer
-                        url={[
-                          { src: media.url, type: "video/webm" },
-                          { src: media.url, type: "video/ogg" },
-                        ]}
-                        key={index}
-                        controls
-                        playing
-                        loop
-                      />
-                    );
-                  }
-
-                  return undefined;
-                })}
+              <Row className="cmt-media-list-ct">
+                {cmtMedia.preview.map((media, index) =>
+                  media.type.includes("image") ? (
+                    <img
+                      src={media.url}
+                      alt="cmt-media-preview-img"
+                      key={index}
+                    />
+                  ) : (
+                    <ReactPlayer
+                      url={[
+                        { src: media.url, type: "video/webm" },
+                        { src: media.url, type: "video/ogg" },
+                      ]}
+                      key={index}
+                      controls
+                      playing
+                      loop
+                    />
+                  )
+                )}
               </Row>
             </Col>
           </Row>
         )}
 
         {cmtList.length > 0 && <HorizontalDevider />}
-        
+
         {cmtList
           .map((comment, index) => (
             <div key={index}>

@@ -39,11 +39,11 @@ const getCmtListFromProductReq = ({productId, batch, limit}) => ({
   },
 });
 
-const repCmtReq = ({commentId, sender, content, receiver, token}) => ({
+const repCmtReq = ({commentId, media, content, receiver, token}) => ({
   type: Types.REP_CMT_REQ,
   payload: {
     commentId,
-    sender,
+    media,
     content,
     receiver,
     token,

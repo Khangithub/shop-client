@@ -26,12 +26,7 @@ const addCmtCall = async ({productId, mainComment, media, token}) => {
 const getProductCmtCall = async ({productId, batch, limit}) => {
   try {
     const productCmtListReq = await fetch (
-      process.env.REACT_APP_PRODUCT_CMT +
-        productId +
-        '/' +
-        batch +
-        '/' +
-        limit
+      process.env.REACT_APP_PRODUCT_CMT + productId + '/' + batch + '/' + limit
     );
     const productCmtListJson = await productCmtListReq.json ();
     return productCmtListJson.cmtList;
@@ -40,15 +35,22 @@ const getProductCmtCall = async ({productId, batch, limit}) => {
   }
 };
 
-const repCmtCall = async ({commentId, sender, receiver, content, token}) => {
+const repCmtCall = async ({commentId, media, receiver, content, token}) => {
   try {
+    const formData = new FormData ();
+    for (let i = 0; i < media.length; i++) {
+      formData.append ('rep-media', media[i]);
+    }
+
+    formData.append ('receiver', receiver);
+    formData.append ('content', content);
+
     const repCmtReq = await fetch (process.env.REACT_APP_REP_CMT + commentId, {
       method: 'POST',
       headers: {
         Authorization: 'Bearer '.concat (token),
-        'content-type': 'application/json; charset=UTF-8',
       },
-      body: JSON.stringify ({sender, receiver, content}),
+      body: formData,
     });
     const repCmtJson = await repCmtReq.json ();
 
@@ -88,7 +90,7 @@ const editCmtCall = async ({commentId, mainComment, mediaList, token}) => {
       headers: {
         Authorization: 'Bearer '.concat (token),
       },
-      body: formData
+      body: formData,
     });
     const editCmtJson = await editCmtReq.json ();
     return editCmtJson;
