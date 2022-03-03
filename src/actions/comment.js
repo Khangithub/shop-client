@@ -9,6 +9,8 @@ const Types = {
   DEL_CMT_SUC: 'cmt/del_cmt_suc',
   EDIT_CMT_REQ: 'cmt/edit_cmt_req',
   EDIT_CMT_SUC: 'cmt/edit_cmt_suc',
+  DEL_REP_REQ: 'cmt/del_rep_req',
+  DEL_REP_SUC: 'cmt/del_rep_suc',
   GET_CMT_LIST_FR_PRODUCT_REQ: 'cmt/get_cmt_list_fr_product_req',
   FAILED_CMT_REQ: 'cmt/failed_cmt_req',
 };
@@ -64,7 +66,16 @@ const editCmtReq = ({commentId, mainComment, mediaList, token}) => ({
     commentId,
     mainComment,
     mediaList,
-    token
+    token,
+  },
+});
+
+const delRepReq = ({commentId, repId, token}) => ({
+  type: Types.DEL_REP_REQ,
+  payload: {
+    commentId,
+    repId,
+    token,
   },
 });
 
@@ -100,7 +111,15 @@ const editCmtSuc = ({mediaList, mainComment, commentId}) => ({
   payload: {
     mediaList,
     mainComment,
-    commentId
+    commentId,
+  },
+});
+
+const delRepSuc = ({commentId, repId}) => ({
+  type: Types.DEL_REP_SUC,
+  payload: {
+    commentId,
+    repId,
   },
 });
 
@@ -118,11 +137,13 @@ export {
   getCmtListFromProductReq,
   delCmtReq,
   editCmtReq,
+  delRepReq,
   repCmtSuc,
   getCmtListSuc,
   addCmtSuc,
   delCmtSuc,
   editCmtSuc,
+  delRepSuc,
   failedCmtReq,
   Types,
 };

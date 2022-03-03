@@ -69,6 +69,23 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
+    case Types.DEL_REP_SUC: {
+      const {commentId, repId} = action.payload;
+      const newCmtList = state.cmtList;
+      const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
+      const repIndex = newCmtList[cmtIndex].subComment
+        .map (({_id}) => _id)
+        .indexOf (repId);
+      
+        newCmtList[cmtIndex].subComment.splice (repIndex, 1);
+
+      return {
+        ...state,
+        cmtLoading: false,
+        cmtList: newCmtList,
+      };
+    }
+
     case Types.FAILED_CMT_REQ: {
       return {
         ...state,

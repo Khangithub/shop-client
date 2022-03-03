@@ -99,4 +99,22 @@ const editCmtCall = async ({commentId, mainComment, mediaList, token}) => {
   }
 };
 
-export {addCmtCall, getProductCmtCall, repCmtCall, editCmtCall, delCmtCall};
+const delRepCall = async ({commentId, repId, token}) => {
+  try {
+    const delRepReq = await fetch (process.env.REACT_APP_REP_CMT + commentId, {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer '.concat (token),
+        'content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify ({repId}),
+    });
+
+    const delRepJson = await delRepReq.json ();
+    return delRepJson;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export {addCmtCall, getProductCmtCall, repCmtCall, editCmtCall, delCmtCall, delRepCall};

@@ -81,11 +81,9 @@
             }
 
             .setting-user-avatar {
-                height: 60px;
-                width: 60px;
-                border-radius: 50%;
+                @include avatar;
+                margin-left: 10px;
                 padding: 5px;
-                border: 2px solid $grey;
             }
         }
         

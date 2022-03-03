@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
-import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
+import {
+  delCmtReq,
+  delRepReq,
+  editCmtReq,
+  repCmtReq,
+} from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
 import ReactPlayer from "react-player";
 
-// import EditSubCommentForm from "./EditSubCommentForm";
-// import DeleteSubCommentButton from "./DeleteSubCommentButton";
-// import AddSubCommentForm from "./AddSubCommentForm";
 import tickSvg from "../../assets/svgs/tick.svg";
 import sendSvg from "../../assets/svgs/send.svg";
 import mediaSvg from "../../assets/svgs/media.svg";
@@ -24,12 +26,14 @@ function CommentCard({ comment, currentUser, token }) {
     preview: comment.mediaList,
     origin: comment.mediaList,
   });
-  const [delModalShow, setDelModalShow] = useState(false);
+  const [delCmtModalShow, setDelCmtModalShow] = useState(false);
   const [repMedia, setRepMedia] = useState({
     origin: [],
     preview: [],
   });
+  const [delRepModalShow, setDelRepModalShow] = useState(false);
   const [content, setContent] = useState("");
+  const [repId, setRepId] = useState(currentUser._id);
 
   return (
     <Col className="cmt-card">
@@ -187,6 +191,7 @@ function CommentCard({ comment, currentUser, token }) {
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => {
+                setRepId(comment.commentator._id)
                 setShowRepModal(!showRepModal);
               }}
             >
@@ -197,7 +202,7 @@ function CommentCard({ comment, currentUser, token }) {
                 <Dropdown.Item onClick={() => setIsEditCmt(!isEditCmt)}>
                   Edit
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => setDelModalShow(true)}>
+                <Dropdown.Item onClick={() => setDelCmtModalShow(true)}>
                   Delete
                 </Dropdown.Item>
               </>
@@ -208,8 +213,8 @@ function CommentCard({ comment, currentUser, token }) {
       {token && (
         <div className="cmt-card-modal-list">
           <Modal
-            show={delModalShow}
-            onHide={() => setDelModalShow(false)}
+            show={delCmtModalShow}
+            onHide={() => setDelCmtModalShow(false)}
             size="lg"
             centered
           >
@@ -217,7 +222,7 @@ function CommentCard({ comment, currentUser, token }) {
               <h3>Delete Comment</h3>
               <Modal.Header
                 closeButton
-                onClick={() => setDelModalShow(false)}
+                onClick={() => setDelCmtModalShow(false)}
               />
             </Modal.Header>
             <Modal.Body>
@@ -228,7 +233,7 @@ function CommentCard({ comment, currentUser, token }) {
                 variant="danger"
                 onClick={() => {
                   dispatch(delCmtReq({ commentId: comment._id, token }));
-                  setDelModalShow(false);
+                  setDelCmtModalShow(false);
                 }}
               >
                 Delete
@@ -293,10 +298,14 @@ function CommentCard({ comment, currentUser, token }) {
                               content,
                               token,
                               media: repMedia.origin,
-                              receiver: comment.commentator._id,
+                              receiver: repId,
                             })
                           );
                           setContent("");
+                          setRepMedia({
+                            origin: [],
+                            preview: [],
+                          });
                           setShowRepModal(false);
                         }}
                       />
@@ -321,10 +330,14 @@ function CommentCard({ comment, currentUser, token }) {
                           content,
                           token,
                           media: repMedia.origin,
-                          receiver: comment.commentator._id,
+                          receiver: repId,
                         })
                       );
                       setContent("");
+                      setRepMedia({
+                        origin: [],
+                        preview: [],
+                      });
                       setShowRepModal(false);
                     }
                   }}
@@ -418,32 +431,58 @@ function CommentCard({ comment, currentUser, token }) {
                 <Dropdown.Menu>
                   <Dropdown.Item
                     onClick={() => {
+                      setRepId(rep.sender._id)
                       setShowRepModal(!showRepModal);
                     }}
                   >
                     Reply
                   </Dropdown.Item>
-                  {currentUser._id === comment.commentator._id && (
+                  {currentUser._id === rep.sender._id && (
                     <>
                       <Dropdown.Item>Edit</Dropdown.Item>
-                      <Dropdown.Item>Delete</Dropdown.Item>
+                      <Dropdown.Item onClick={() => setDelRepModalShow(true)}>
+                        Delete
+                      </Dropdown.Item>
                     </>
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-            </div>
 
-            {/* <div className="rep-action-btn-list">
-              {currentUser && (
-                <span
-                  onClick={() => {
-                    setShowRepModal(!showRepModal);
-                  }}
-                >
-                  reply
-                </span>
-              )}
-            </div> */}
+              <Modal
+                show={delRepModalShow}
+                onHide={() => setDelRepModalShow(false)}
+                size="lg"
+                centered
+              >
+                <Modal.Header>
+                  <h3>Delete Reply</h3>
+                  <Modal.Header
+                    closeButton
+                    onClick={() => setDelRepModalShow(false)}
+                  />
+                </Modal.Header>
+                <Modal.Body>
+                  <p>Are you sure want to delete this reply?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      dispatch(
+                        delRepReq({
+                          commentId: comment._id,
+                          repId: rep._id,
+                          token,
+                        })
+                      );
+                      setDelRepModalShow(false);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
           </div>
         );
       })}
