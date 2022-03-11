@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
-import {
-  delCmtReq,
-  delRepReq,
-  editCmtReq,
-  repCmtReq,
-} from "../../actions/comment";
+import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
 import ReactPlayer from "react-player";
 
@@ -16,6 +11,7 @@ import mediaSvg from "../../assets/svgs/media.svg";
 
 import "./_commentCard.scss";
 import { convertTimestamp } from "../../helpers";
+import ReplyCard from "../ReplyCard";
 
 function CommentCard({ comment, currentUser, token }) {
   const dispatch = useDispatch();
@@ -31,12 +27,19 @@ function CommentCard({ comment, currentUser, token }) {
     origin: [],
     preview: [],
   });
-  const [delRepModalShow, setDelRepModalShow] = useState(false);
   const [content, setContent] = useState("");
-  const [repId, setRepId] = useState(currentUser._id);
 
   return (
-    <Col className="cmt-card">
+    <Col
+      className="cmt-card"
+      onClick={(e) => {
+        const ignoreClickOnMeElement = document.getElementById(
+          `modal-${comment._id}`
+        );
+        const isClickInsideElement = ignoreClickOnMeElement?.contains(e.target);
+        if (isClickInsideElement === false) setShowRepModal(false);
+      }}
+    >
       <div className="cmt-card-ct">
         <img
           src={comment.commentator.avatar}
@@ -191,7 +194,6 @@ function CommentCard({ comment, currentUser, token }) {
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => {
-                setRepId(comment.commentator._id)
                 setShowRepModal(!showRepModal);
               }}
             >
@@ -242,15 +244,15 @@ function CommentCard({ comment, currentUser, token }) {
           </Modal>
 
           {showRepModal && (
-            <div className="rep-modal">
+            <div className="cmt-modal" id={`modal-${comment._id}`}>
               <img
                 src={currentUser.avatar}
                 alt="user-avatar"
                 className="user-avatar"
               />
 
-              <div className="rep-modal-ct">
-                <Row className="rep-modal-header">
+              <div className="cmt-modal-ct">
+                <Row className="cmt-modal-header">
                   <small>
                     <b>@{comment.commentator.username}</b>
                   </small>
@@ -298,7 +300,7 @@ function CommentCard({ comment, currentUser, token }) {
                               content,
                               token,
                               media: repMedia.origin,
-                              receiver: repId,
+                              receiver: comment.commentator._id,
                             })
                           );
                           setContent("");
@@ -330,7 +332,7 @@ function CommentCard({ comment, currentUser, token }) {
                           content,
                           token,
                           media: repMedia.origin,
-                          receiver: repId,
+                          receiver: comment.commentator._id,
                         })
                       );
                       setContent("");
@@ -364,7 +366,7 @@ function CommentCard({ comment, currentUser, token }) {
                     )
                   )}
                 </div>
-                <div className="rep-modal-footer">
+                <div className="cmt-modal-footer">
                   <small onClick={() => setShowRepModal(false)}>
                     <b>Cancel</b>
                   </small>
@@ -377,113 +379,13 @@ function CommentCard({ comment, currentUser, token }) {
 
       {comment.subComment.map((rep) => {
         return (
-          <div className="rep-card" key={rep._id}>
-            <div className="rep-card-layout">
-              <img
-                src={rep.sender.avatar}
-                alt="user-avatar"
-                className="user-avatar"
-              />
-
-              <div className="rep-content">
-                <b>{rep.sender.username}</b>
-                <Linkify>
-                  <span>
-                    <small>
-                      <b>@{rep.receiver.username}&nbsp;&nbsp;</b>
-                    </small>
-                    {rep.content}
-                  </span>
-                </Linkify>
-                <div className="rep-media-list-ct">
-                  {rep.mediaList.map(({ mimetype, filename }, index) =>
-                    mimetype.includes("image") ? (
-                      <img
-                        src={filename}
-                        alt="cmt-media-preview-img"
-                        className="cmt-card-media"
-                        key={index}
-                      />
-                    ) : (
-                      <ReactPlayer
-                        url={[
-                          { src: filename, type: "video/webm" },
-                          { src: filename, type: "video/ogg" },
-                        ]}
-                        className="cmt-card-media"
-                        key={index}
-                        controls
-                      />
-                    )
-                  )}
-                </div>
-                <Row className="rep-card-footer">
-                  {rep.edited && <small>Edited &nbsp;&nbsp;</small>}
-                  <small>{convertTimestamp(rep.published)}</small>
-                </Row>
-              </div>
-
-              <Dropdown>
-                <Dropdown.Toggle>
-                  <b>...</b>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => {
-                      setRepId(rep.sender._id)
-                      setShowRepModal(!showRepModal);
-                    }}
-                  >
-                    Reply
-                  </Dropdown.Item>
-                  {currentUser._id === rep.sender._id && (
-                    <>
-                      <Dropdown.Item>Edit</Dropdown.Item>
-                      <Dropdown.Item onClick={() => setDelRepModalShow(true)}>
-                        Delete
-                      </Dropdown.Item>
-                    </>
-                  )}
-                </Dropdown.Menu>
-              </Dropdown>
-
-              <Modal
-                show={delRepModalShow}
-                onHide={() => setDelRepModalShow(false)}
-                size="lg"
-                centered
-              >
-                <Modal.Header>
-                  <h3>Delete Reply</h3>
-                  <Modal.Header
-                    closeButton
-                    onClick={() => setDelRepModalShow(false)}
-                  />
-                </Modal.Header>
-                <Modal.Body>
-                  <p>Are you sure want to delete this reply?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      dispatch(
-                        delRepReq({
-                          commentId: comment._id,
-                          repId: rep._id,
-                          token,
-                        })
-                      );
-                      setDelRepModalShow(false);
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
-          </div>
+          <ReplyCard
+            key={rep._id}
+            reply={rep}
+            token={token}
+            currentUser={currentUser}
+            comment={comment}
+          />
         );
       })}
     </Col>

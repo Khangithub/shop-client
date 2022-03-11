@@ -394,8 +394,8 @@ function Product({ currentUser, token }) {
         {cmtList.length > 0 && <HorizontalDevider />}
 
         {cmtList
-          .map((comment, index) => (
-            <div key={index}>
+          .map((comment) => (
+            <div key={comment._id}>
               <CommentCard
                 comment={comment}
                 currentUser={currentUser}

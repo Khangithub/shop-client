@@ -1,6 +1,6 @@
 import prettyMs from 'pretty-ms';
 
-export function removeAscent (str) {
+export const removeAscent = str => {
   if (str === null || str === undefined) return str;
   str = str.toLowerCase ();
   str = str.replace (/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -11,9 +11,9 @@ export function removeAscent (str) {
   str = str.replace (/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
   str = str.replace (/đ/g, 'd');
   return str;
-}
+};
 
-export function checkEmail (email) {
+export const checkEmail = email => {
   if (email === '' || email === undefined) {
     return true;
   } else {
@@ -23,17 +23,17 @@ export function checkEmail (email) {
     );
     return regex.test (email);
   }
-}
+};
 
-export function getPrice (product) {
+export const getPrice = product => {
   if (product.hasOwnProperty ('discount') && product.price > 0) {
     return product.price - product.discount * product.price / 100;
   } else {
     return product.price;
   }
-}
+};
 
-export function returnTotalPrice (cart) {
+export const returnTotalPrice = cart => {
   const priceList = cart
     .map (order => {
       return order.product;
@@ -56,16 +56,16 @@ export function returnTotalPrice (cart) {
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
   return priceList.reduce (reducer, 0).toFixed (2);
-}
+};
 
-export function checkConfirmedPassword (password, confirmedPassword) {
+const checkConfirmedPassword = (password, confirmedPassword) => {
   if (password.localeCompare (confirmedPassword) === 0) {
     return true;
   } else {
     console.log (password, confirmedPassword);
     return false;
   }
-}
+};
 
 const convertTimestamp = timestamp =>
   prettyMs (Date.now () - new Date (timestamp), {
@@ -94,4 +94,4 @@ const sortAccordType = (sortType, results) => {
   }
 };
 
-export {getNetPrice, sortAccordType, convertTimestamp};
+export {getNetPrice, sortAccordType, convertTimestamp, checkConfirmedPassword};

@@ -18,12 +18,11 @@
     }
 }
 
-.footer-container {
+.footer-ct {
     display: flex;
     justify-content: center;
     color: $white;
     background-color: $darkBlue;
-    margin: 0 !important;
 
     .footer-layout {
         @include parentLayout;

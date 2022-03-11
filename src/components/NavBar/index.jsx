@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers";
 import { getOrdersRequest } from "../../actions/order";
-import { isEmpty } from "lodash";
 
 import logoSvg from "../../assets/svgs/logo.svg";
 import searchSvg from "../../assets/svgs/search.svg";
@@ -20,7 +19,7 @@ function NavBar({ currentUser, token }) {
   const { orders } = useSelector((state) => state.order);
 
   useEffect(() => {
-    if (!isEmpty(token)) {
+    if (token) {
       dispatch(getOrdersRequest({ token }));
     }
   }, [dispatch, token]);
