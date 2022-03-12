@@ -1,11 +1,12 @@
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
 import {
+  delOrderSuc,
   getOrdersFailedRequest,
   getOrdersSuccess,
   Types,
   updateOrdersItemSuccess,
 } from '../actions/order';
-import {getOrdersCall, updateOrdersItemCall} from '../api/order';
+import {delOrderCall, getOrdersCall, updateOrdersItemCall} from '../api/order';
 
 function* getOrdersGenerator({payload: {token}}) {
   try {
@@ -48,6 +49,24 @@ function* updateOrdersItemGenerator({payload: {orderId, quantity, token}}) {
   }
 }
 
+function* delOrderGenerator({payload: {orderId, token}}) {
+  try {
+    const res = yield call (delOrderCall, {
+      orderId,
+      token,
+    });
+
+    if (res.message === 'deleted') {
+      yield put (
+        delOrderSuc ({
+          orderId: res.orderId,
+        })
+      );
+    }
+  } catch (err) {
+    yield put (getOrdersFailedRequest ({err}));
+  }
+}
 // wacher functions
 function* getOrdersWatcher () {
   yield takeLatest (Types.GET_ORDERS_REQUEST, getOrdersGenerator);
@@ -59,9 +78,14 @@ function* updateOrdersItemRequestWatcher () {
     updateOrdersItemGenerator
   );
 }
+
+function* delOrderWatcher () {
+  yield takeLatest (Types.DEL_ORDER_RQ, delOrderGenerator);
+}
 const orderSaga = [
   fork (getOrdersWatcher),
   fork (updateOrdersItemRequestWatcher),
+  fork (delOrderWatcher),
 ];
 
 export default orderSaga;

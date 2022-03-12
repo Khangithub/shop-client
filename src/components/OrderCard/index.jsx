@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { getNetPrice } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { updateOrdersItemRequest } from "../../actions/order";
+import { delOrderReq, updateOrdersItemRequest } from "../../actions/order";
 
 import trashCanSvg from "../../assets/svgs/trashCan.svg";
 
@@ -15,7 +15,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
   var [timeoutPivot, setTimeoutPivot] = useState(null);
 
   const { token } = useSelector((state) => state.user);
-  
+
   const decreaseQuantity = () => {
     const newVal = quantity - 1 < 0 ? 0 : quantity - 1;
     setQuantity(newVal);
@@ -49,9 +49,9 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
 
   return (
     <div className="order-card">
-      <Row>
+      <div>
         <small>See more products from shop "{product.saler.username}"</small>
-      </Row>
+      </div>
       <Row className="order-card-container">
         <Col xs={1} lg={1}>
           <input
@@ -100,14 +100,14 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
           <small>{product.inStock} products in stock</small>
         </Col>
         <Col xs={2} lg={2}>
-          <b className="order-real-price">
-            ${getNetPrice(product) * quantity}
-          </b>
+          <b className="order-real-price">${getNetPrice(product) * quantity}</b>
         </Col>
         <Col xs={1} lg={1}>
-          <div>
-            <img src={trashCanSvg} alt="del" />
-          </div>
+          <img
+            src={trashCanSvg}
+            alt="del"
+            onClick={() => dispatch(delOrderReq({ orderId: order._id, token }))}
+          />
         </Col>
       </Row>
     </div>
