@@ -1,22 +1,33 @@
 const Types = {
-  GET_ORDERS_REQUEST: 'orders/get_orders_request',
-  GET_ORDERS_SUCCESS: 'orders/get_orders_success',
-  UPDATE_ORDERS_ITEM_QUANTITY_REQUEST: 'orders/update_orders_item_quantity_request',
-  UPDATE_ORDERS_ITEM_QUANTITY_SUCCESS: 'orders/update_orders_item_quantity_success',
+  GET_ORDERS_RQ: 'orders/get_orders_rq',
+  GET_ORDERS_SC: 'orders/get_orders_sc',
+  ADD_ORDER_RQ: 'orders/add_order_rq',
+  ADD_ORDER_SC: 'orders/add_order_sc',
+  EDIT_ORDER_RQ: 'orders/edit_order_rq',
+  EDIT_ORDER_SC: 'orders/edit_order_sc',
   DEL_ORDER_RQ: 'orders/del_order_rq',
   DEL_ORDER_SC: 'orders/del_order_sc',
   FAILED_ORDERS_REQUEST: 'orders/get_failed_request',
 };
 
-const getOrdersRequest = ({token}) => ({
-  type: Types.GET_ORDERS_REQUEST,
+const getOrderReq = ({token}) => ({
+  type: Types.GET_ORDERS_RQ,
   payload: {
     token,
   },
 });
 
-const updateOrdersItemRequest = ({orderId, quantity, token}) => ({
-  type: Types.UPDATE_ORDERS_ITEM_QUANTITY_REQUEST,
+const addOrderReq = ({product, token, quantity}) => ({
+  type: Types.ADD_ORDER_RQ,
+  payload: {
+    product,
+    token,
+    quantity,
+  },
+});
+
+const editOrderReq = ({orderId, quantity, token}) => ({
+  type: Types.EDIT_ORDER_RQ,
   payload: {
     orderId,
     quantity,
@@ -33,14 +44,22 @@ const delOrderReq = ({orderId, token}) => ({
 });
 
 const getOrdersSuccess = ({orders}) => ({
-  type: Types.GET_ORDERS_SUCCESS,
+  type: Types.GET_ORDERS_SC,
   payload: {
     orders,
   },
 });
 
-const updateOrdersItemSuccess = ({orderId, quantity}) => ({
-  type: Types.UPDATE_ORDERS_ITEM_QUANTITY_SUCCESS,
+const addOrderSuc = ({order, message}) => ({
+  type: Types.ADD_ORDER_SC,
+  payload: {
+    order,
+    message
+  },
+});
+
+const editOrderSuc = ({orderId, quantity}) => ({
+  type: Types.EDIT_ORDER_SC,
   payload: {
     orderId,
     quantity,
@@ -63,11 +82,13 @@ const getOrdersFailedRequest = ({err}) => ({
 
 export {
   Types,
-  getOrdersRequest,
+  getOrderReq,
+  addOrderReq,
   getOrdersFailedRequest,
   delOrderReq,
   getOrdersSuccess,
-  updateOrdersItemSuccess,
+  addOrderSuc,
+  editOrderSuc,
   delOrderSuc,
-  updateOrdersItemRequest,
+  editOrderReq,
 };

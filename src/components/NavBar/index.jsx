@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers";
-import { getOrdersRequest } from "../../actions/order";
+import { getOrderReq } from "../../actions/order";
 
 import logoSvg from "../../assets/svgs/logo.svg";
 import searchSvg from "../../assets/svgs/search.svg";
@@ -20,7 +20,7 @@ function NavBar({ currentUser, token }) {
 
   useEffect(() => {
     if (token) {
-      dispatch(getOrdersRequest({ token }));
+      dispatch(getOrderReq({ token }));
     }
   }, [dispatch, token]);
 

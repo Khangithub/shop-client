@@ -1,11 +1,9 @@
-import {isEmpty} from 'lodash';
-
 const getOrdersCall = async ({token}) => {
-  if (isEmpty (token)) {
-    throw new Error ('token empty');
-  }
-
   try {
+    if (!token) {
+      throw new Error ('error token');
+    }
+
     const cartReq = await fetch (process.env.REACT_APP_ORDERS_OF_USER, {
       headers: {
         Authorization: 'Bearer '.concat (token),
@@ -19,12 +17,33 @@ const getOrdersCall = async ({token}) => {
   }
 };
 
-const updateOrdersItemCall = async ({orderId, quantity, token}) => {
-  if (isEmpty (token)) {
-    throw new Error ('token empty');
-  }
-
+const addOrderCall = async ({token, product, quantity}) => {
   try {
+    if (!token) {
+      throw new Error ('error token');
+    }
+
+    const addOrderReq = await fetch (process.env.REACT_APP_ORDERS, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer '.concat (token),
+        'content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify ({product, quantity}),
+    });
+    const addOrderJson = await addOrderReq.json ();
+    return addOrderJson;
+  } catch (err) {
+    return err;
+  }
+};
+
+const editOrderCall = async ({orderId, quantity, token}) => {
+  try {
+    if (!token) {
+      throw new Error ('error token');
+    }
+
     const cartReq = await fetch (
       process.env.REACT_APP_ORDERS_ITEM_IN_CART + orderId,
       {
@@ -44,11 +63,11 @@ const updateOrdersItemCall = async ({orderId, quantity, token}) => {
 };
 
 const delOrderCall = async ({orderId, token}) => {
-  if (isEmpty (token)) {
-    throw new Error ('token empty');
-  }
-
   try {
+    if (!token) {
+      throw new Error ('error token');
+    }
+
     const delOrderReq = await fetch (process.env.REACT_APP_ORDERS + orderId, {
       method: 'DELETE',
       headers: {
@@ -63,4 +82,4 @@ const delOrderCall = async ({orderId, token}) => {
   }
 };
 
-export {getOrdersCall, updateOrdersItemCall, delOrderCall};
+export {getOrdersCall, addOrderCall, editOrderCall, delOrderCall};

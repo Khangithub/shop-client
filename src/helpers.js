@@ -1,6 +1,6 @@
 import prettyMs from 'pretty-ms';
 
-export const removeAscent = str => {
+const removeAscent = str => {
   if (str === null || str === undefined) return str;
   str = str.toLowerCase ();
   str = str.replace (/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
@@ -13,7 +13,7 @@ export const removeAscent = str => {
   return str;
 };
 
-export const checkEmail = email => {
+const checkEmail = email => {
   if (email === '' || email === undefined) {
     return true;
   } else {
@@ -25,15 +25,7 @@ export const checkEmail = email => {
   }
 };
 
-export const getPrice = product => {
-  if (product.hasOwnProperty ('discount') && product.price > 0) {
-    return product.price - product.discount * product.price / 100;
-  } else {
-    return product.price;
-  }
-};
-
-export const returnTotalPrice = cart => {
+const returnTotalPrice = cart => {
   const priceList = cart
     .map (order => {
       return order.product;
@@ -62,7 +54,6 @@ const checkConfirmedPassword = (password, confirmedPassword) => {
   if (password.localeCompare (confirmedPassword) === 0) {
     return true;
   } else {
-    console.log (password, confirmedPassword);
     return false;
   }
 };
@@ -72,10 +63,11 @@ const convertTimestamp = timestamp =>
     compact: true,
   }) + ' ago';
 
-const getNetPrice = product =>
-  (product.discount
-    ? product.price - product.discount * product.price / 100
-    : product.price).toFixed (1);
+const getUnitPrice = ({price, discount}) =>
+  (discount ? price - discount * price / 100 : price).toFixed (1);
+
+const getPrice = ({price, discount}, quantity) =>
+  ((discount ? price - discount * price / 100 : price) * quantity).toFixed (1);
 
 const sortAccordType = (sortType, results) => {
   switch (sortType) {
@@ -94,4 +86,13 @@ const sortAccordType = (sortType, results) => {
   }
 };
 
-export {getNetPrice, sortAccordType, convertTimestamp, checkConfirmedPassword};
+export {
+  getUnitPrice,
+  sortAccordType,
+  convertTimestamp,
+  checkConfirmedPassword,
+  getPrice,
+  removeAscent,
+  checkEmail,
+  returnTotalPrice
+};

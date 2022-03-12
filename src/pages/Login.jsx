@@ -69,7 +69,6 @@ function Login() {
           <button
             onClick={() => {
               dispatch(loginWithGgRequest());
-              // dispatch(getOrdersRequest());
               history.push("/");
             }}
           >

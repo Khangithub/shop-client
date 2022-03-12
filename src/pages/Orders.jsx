@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-import { getOrdersRequest } from "../actions/order";
+import { getOrderReq } from "../actions/order";
 import { isEmpty } from "lodash";
 
 import NavBar from "../components/NavBar";
@@ -20,7 +20,7 @@ function Order({ currentUser, token }) {
   );
 
   useEffect(() => {
-    dispatch(getOrdersRequest({ token }));
+    dispatch(getOrderReq({ token }));
   }, [dispatch, token]);
 
   const [selectedOrders, setSelectedOrders] = useState([]);

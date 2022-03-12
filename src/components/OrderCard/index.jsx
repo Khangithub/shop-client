@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { getNetPrice } from "../../helpers";
+import { getUnitPrice, getPrice } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { delOrderReq, updateOrdersItemRequest } from "../../actions/order";
+import { delOrderReq, editOrderReq } from "../../actions/order";
 
 import trashCanSvg from "../../assets/svgs/trashCan.svg";
 
@@ -24,9 +24,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
 
     setTimeoutPivot(
       setTimeout(() => {
-        dispatch(
-          updateOrdersItemRequest({ orderId: _id, quantity: newVal, token })
-        );
+        dispatch(editOrderReq({ orderId: _id, quantity: newVal, token }));
       }, 2000)
     );
   };
@@ -40,9 +38,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
 
     setTimeoutPivot(
       setTimeout(() => {
-        dispatch(
-          updateOrdersItemRequest({ orderId: _id, quantity: newVal, token })
-        );
+        dispatch(editOrderReq({ orderId: _id, quantity: newVal, token }));
       }, 2000)
     );
   };
@@ -80,7 +76,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
         <Col xs={2} lg={2}>
           <div className="order-unit-price">
             <b>
-              ${product.discount ? getNetPrice(product) : ` ${product.price}`}
+              ${product.discount ? getUnitPrice(product) : ` ${product.price}`}
             </b>
             {product.discount && <p>${product.price}</p>}
           </div>
@@ -100,7 +96,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
           <small>{product.inStock} products in stock</small>
         </Col>
         <Col xs={2} lg={2}>
-          <b className="order-real-price">${getNetPrice(product) * quantity}</b>
+          <b className="order-real-price">${getPrice(product, quantity)}</b>
         </Col>
         <Col xs={1} lg={1}>
           <img

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Badge, Carousel } from "react-bootstrap";
+import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import {
@@ -7,7 +7,7 @@ import {
   getProductsByCategoryRequest,
 } from "../actions/product";
 import { isEmpty } from "lodash";
-import { getNetPrice } from "../helpers";
+import { getUnitPrice } from "../helpers";
 
 import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
@@ -30,11 +30,13 @@ import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 import CommentCard from "../components/CommentCard";
 import Title from "../components/Title";
 import ReactPlayer from "react-player";
+import { addOrderReq } from "../actions/order";
 
 function Product({ currentUser, token }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;
+  const [didAddOrder, setAddOrder] = useState(false);
 
   let [mainComment, setMainComment] = useState("");
   let [cmtMedia, setCmtMedia] = useState({
@@ -49,6 +51,7 @@ function Product({ currentUser, token }) {
   const { cmtList, cmtLoading, cmtErr } = useSelector((state) => state.comment);
 
   useEffect(() => {
+    setQuantity(1);
     dispatch(getProductRequest({ productId }));
     dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
   }, [productId, dispatch]);
@@ -104,11 +107,6 @@ function Product({ currentUser, token }) {
             />
           </Col>
           <Col sm={12} md={4} lg={5} className="product-info-content">
-            {/* <Row>
-            <EditProductButton product={product} />
-
-            <DeleteProductButton product={product} />
-          </Row> */}
             <h1>{product.name}</h1>
 
             <p className="product-manufacturer">
@@ -129,7 +127,7 @@ function Product({ currentUser, token }) {
             <HorizontalDivider line={1} />
 
             <Row className="product-price">
-              <h3>${getNetPrice(product)} &nbsp;</h3>
+              <h3>${getUnitPrice(product)} &nbsp;</h3>
               {product.discount > 0 && (
                 <Badge variant="danger" className="product-discount">
                   -{product.discount}%
@@ -153,7 +151,15 @@ function Product({ currentUser, token }) {
                 <Row className="product-qty-input">
                   <label htmlFor="quantity">Quantity: &nbsp;</label>
                   <div>
-                    <button>-</button>
+                    <button
+                      onClick={() =>
+                        setQuantity((preVal) =>
+                          preVal - 1 < 1 ? 1 : preVal - 1
+                        )
+                      }
+                    >
+                      -
+                    </button>
                     <input
                       type="number"
                       id="quantity"
@@ -162,10 +168,31 @@ function Product({ currentUser, token }) {
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                     />
-                    <button>+</button>
+                    <button
+                      onClick={() =>
+                        setQuantity((preVal) =>
+                          preVal + 1 > product.inStock
+                            ? product.inStock
+                            : preVal + 1
+                        )
+                      }
+                    >
+                      +
+                    </button>
                   </div>
                 </Row>
-                <button className="add-to-cart-btn" onClick={() => {}}>
+                <button
+                  className="add-to-cart-btn"
+                  onClick={() => {
+                    dispatch(
+                      addOrderReq({ product: productId, token, quantity })
+                    );
+                    setAddOrder(true);
+                    setTimeout(() => {
+                      setAddOrder(false);
+                    }, 3500);
+                  }}
+                >
                   Add to card
                 </button>
                 <HorizontalDivider />
@@ -407,6 +434,27 @@ function Product({ currentUser, token }) {
           ))
           .reverse()}
       </div>
+
+      <Toast
+        show={didAddOrder}
+        onClose={() => setAddOrder(!didAddOrder)}
+        style={{
+          position: "absolute",
+          top: 120,
+          right: 10,
+        }}
+      >
+        <Toast.Header>
+          <b>Just now</b>
+        </Toast.Header>
+        <Toast.Body>
+          Woohoo,
+          <b>
+            {quantity} x {product.name}&nbsp;
+          </b>
+          {quantity === 1 ? "was" : "were"} added to your cart
+        </Toast.Body>
+      </Toast>
       <Footer />
     </>
   );

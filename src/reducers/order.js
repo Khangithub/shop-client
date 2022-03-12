@@ -8,7 +8,7 @@ const INTIAL_STATE = {
 
 export default function order (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_ORDERS_SUCCESS: {
+    case Types.GET_ORDERS_SC: {
       return {
         ...state,
         orderLoading: false,
@@ -16,27 +16,51 @@ export default function order (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.UPDATE_ORDERS_ITEM_QUANTITY_SUCCESS: {
+    case Types.ADD_ORDER_SC: {
+      const {order, message} = action.payload;
+      const cpOrders = state.orders;
+      if (message === 'added') {
+        cpOrders.push (order);
+        return {
+          ...state,
+          orderLoading: false,
+          orders: cpOrders,
+        };
+      }
+
+      if (message === 'updated') {
+        const orderIndex = cpOrders.map (({_id}) => _id).indexOf (order._id);
+        cpOrders[orderIndex].quantity = order.quantity;
+        return {
+          ...state,
+          orders: cpOrders,
+        };
+      }
+
+      break;
+    }
+
+    case Types.EDIT_ORDER_SC: {
       const {orderId, quantity} = action.payload;
-      const updatedOrders = state.orders;
-      const orderIndex = updatedOrders.map (({_id}) => _id).indexOf (orderId);
-      updatedOrders[orderIndex].quantity = quantity;
+      const cpOrders = state.orders;
+      const orderIndex = cpOrders.map (({_id}) => _id).indexOf (orderId);
+      cpOrders[orderIndex].quantity = quantity;
 
       return {
         ...state,
-        orders: updatedOrders,
+        orders: cpOrders,
       };
     }
 
     case Types.DEL_ORDER_SC: {
       const {orderId} = action.payload;
-      const newOrderList = state.orders;
-      const orderIndex = newOrderList.map (({_id}) => _id).indexOf (orderId);
-      newOrderList.splice (orderIndex, 1);
+      const cpOrders = state.orders;
+      const orderIndex = cpOrders.map (({_id}) => _id).indexOf (orderId);
+      cpOrders.splice (orderIndex, 1);
 
       return {
         ...state,
-        orders: newOrderList,
+        orders: cpOrders,
       };
     }
 
