@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
-import { removeAscent } from "../../helpers";
+import { removeAscent } from "../../helpers/string";
 import { getOrderReq } from "../../actions/order";
 
 import logoSvg from "../../assets/svgs/logo.svg";

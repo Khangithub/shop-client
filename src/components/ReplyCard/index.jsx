@@ -9,7 +9,7 @@ import sendSvg from "../../assets/svgs/send.svg";
 import mediaSvg from "../../assets/svgs/media.svg";
 
 import { useDispatch } from "react-redux";
-import { convertTimestamp } from "../../helpers";
+import { convertTimestamp } from "../../helpers/date";
 
 function ReplyCard({ reply, token, currentUser, comment }) {
   const dispatch = useDispatch();

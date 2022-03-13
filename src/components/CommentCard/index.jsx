@@ -9,9 +9,9 @@ import tickSvg from "../../assets/svgs/tick.svg";
 import sendSvg from "../../assets/svgs/send.svg";
 import mediaSvg from "../../assets/svgs/media.svg";
 
-import "./_commentCard.scss";
-import { convertTimestamp } from "../../helpers";
+import { convertTimestamp } from "../../helpers/date";
 import ReplyCard from "../ReplyCard";
+import "./_commentCard.scss";
 
 function CommentCard({ comment, currentUser, token }) {
   const dispatch = useDispatch();

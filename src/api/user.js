@@ -1,5 +1,5 @@
 import {isEmpty} from 'lodash';
-import {auth, provider} from '../firebase';
+import {auth, provider} from '../config/firebase';
 
 const loginStatus = {
   UNAUTHORIZED: 'loginStatus/unauthorized',

@@ -4,7 +4,6 @@ import ProductCard from '../components/ProductCard/'
 import { ProductListContext } from '../ContextProvider/ProductListContextProvider'
 import Pagination from '../components/Pagination/Pagination'
 import NavBar from '../components/NavBar/'
-import PropTypes from 'prop-types'
 
 export default function ProductByCategory (match) {
   const { productList, getProductListLoading } = useContext(ProductListContext)
@@ -43,9 +42,4 @@ export default function ProductByCategory (match) {
       </Container>
     </div>
   )
-}
-
-ProductByCategory.prototype = {
-  productList: PropTypes.array,
-  getProductListLoading: PropTypes.bool
 }

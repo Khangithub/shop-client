@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import { getUnitPrice, getPrice } from "../../helpers";
+import { getUnitPrice, getPrice } from "../../helpers/number";
 import { useDispatch, useSelector } from "react-redux";
 import { delOrderReq, editOrderReq } from "../../actions/order";
 

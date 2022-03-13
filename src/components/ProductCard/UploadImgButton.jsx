@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {storage} from '../../firebase';
+import {storage} from '../../config/firebase';
 import './UploadImgButton.css';
 
 function UploadImgButton({editedProduct, setEditProduct}) {

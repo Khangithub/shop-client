@@ -7,7 +7,7 @@ import {
   getProductsByCategoryRequest,
 } from "../actions/product";
 import { isEmpty } from "lodash";
-import { getUnitPrice } from "../helpers";
+import { getUnitPrice } from "../helpers/number";
 
 import NavBar from "../components/NavBar";
 import Loading from "../components/Loading";
