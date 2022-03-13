@@ -1,5 +1,4 @@
 // import React, {useState, useContext} from 'react';
-// import PropTypes from 'prop-types';
 // import {ProductListContext} from '../../ContextProvider/ProductListContextProvider';
 // import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
 // import DeleteProductModal from './DeleteProductModal';
@@ -36,10 +35,3 @@
 //   );
 // }
 
-// DeleteOrderButton.prototype = {
-//   product: PropTypes.shape({
-//     productImage: PropTypes.string,
-//     category: PropTypes.string,
-//     name: PropTypes.string,
-//   }),
-// };

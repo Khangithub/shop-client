@@ -1,211 +1,210 @@
-import React, {useState} from 'react';
-import Cookies from 'universal-cookie';
-import {Modal, Form, Row, Col, Spinner} from 'react-bootstrap';
+// import React, {useState} from 'react';
+// import {Modal, Form, Row, Col, Spinner} from 'react-bootstrap';
 
-function AddProductMdal(props) {
-  const {
-    setProductList,
-    setYourProductList,
-    setProductListLoading,
-    currentUser,
-    onHide,
-  } = props;
-  const cookies = new Cookies();
-  const token = cookies.get('token');
+// function AddProductMdal(props) {
+//   const {
+//     setProductList,
+//     setYourProductList,
+//     setProductListLoading,
+//     currentUser,
+//     onHide,
+//   } = props;
+//   const cookies = new Cookies();
+//   const token = cookies.get('token');
 
-  const [newProduct, setNewProduct] = useState({
-    name: '',
-    price: 0,
-    productImage: '',
-    discount: 0,
-    category: '',
-    manufacturer: '',
-    description: '',
-  });
+//   const [newProduct, setNewProduct] = useState({
+//     name: '',
+//     price: 0,
+//     productImage: '',
+//     discount: 0,
+//     category: '',
+//     manufacturer: '',
+//     description: '',
+//   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
 
-    let removeEmptiedInfoProduct = Object.entries(newProduct).filter(
-      (keyValuePair) => {
-        return keyValuePair[1] !== '';
-      }
-    );
+//     let removeEmptiedInfoProduct = Object.entries(newProduct).filter(
+//       (keyValuePair) => {
+//         return keyValuePair[1] !== '';
+//       }
+//     );
 
-    let revertedProduct = Object.fromEntries(removeEmptiedInfoProduct);
+//     let revertedProduct = Object.fromEntries(removeEmptiedInfoProduct);
 
-    try {
-      const createProductResponse = await fetch(
-        'https://shopeeholic-server.herokuapp.com/products/',
-        {
-          method: 'POST',
-          body: JSON.stringify({...revertedProduct}),
-          headers: {
-            Authorization: 'Bearer '.concat(token),
-            'content-type': 'application/json; charset=UTF-8',
-          },
-        }
-      );
-      const createProductJson = await createProductResponse.json();
+//     try {
+//       const createProductResponse = await fetch(
+//         'https://shopeeholic-server.herokuapp.com/products/',
+//         {
+//           method: 'POST',
+//           body: JSON.stringify({...revertedProduct}),
+//           headers: {
+//             Authorization: 'Bearer '.concat(token),
+//             'content-type': 'application/json; charset=UTF-8',
+//           },
+//         }
+//       );
+//       const createProductJson = await createProductResponse.json();
 
-      if (createProductJson.doc) {
-        try {
-          const productListResponse = await fetch(
-            'https://shopeeholic-server.herokuapp.com/products/'
-          );
-          const productListJson = await productListResponse.json();
+//       if (createProductJson.doc) {
+//         try {
+//           const productListResponse = await fetch(
+//             'https://shopeeholic-server.herokuapp.com/products/'
+//           );
+//           const productListJson = await productListResponse.json();
 
-          if (productListJson.docs) {
-            setProductList(productListJson.docs);
+//           if (productListJson.docs) {
+//             setProductList(productListJson.docs);
 
-            setYourProductList(
-              productListJson.docs.filter((product) => {
-                return product.saler._id.localeCompare(currentUser._id) === 0;
-              })
-            );
+//             setYourProductList(
+//               productListJson.docs.filter((product) => {
+//                 return product.saler._id.localeCompare(currentUser._id) === 0;
+//               })
+//             );
 
-            setProductListLoading(false);
-            onHide();
-          } else {
-            console.error(
-              productListJson,
-              'err in productListJson CreateProductButton'
-            );
-          }
-        } catch (err) {
-          console.error(err, 'err in trycatch block CreateProductButton');
-        }
-      }
-    } catch (err) {
-      console.error(err, 'trycatch block CreateProductButton');
-    }
-  };
+//             setProductListLoading(false);
+//             onHide();
+//           } else {
+//             console.error(
+//               productListJson,
+//               'err in productListJson CreateProductButton'
+//             );
+//           }
+//         } catch (err) {
+//           console.error(err, 'err in trycatch block CreateProductButton');
+//         }
+//       }
+//     } catch (err) {
+//       console.error(err, 'trycatch block CreateProductButton');
+//     }
+//   };
 
-  return props.is_loading ? (
-    <Spinner animation="grow" variant="danger" />
-  ) : (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton />
-      <Modal.Body>
-        <Row className="add-product-modal">
-          <Col xs={12} sm={6} className="add-product-modal--col">
-            <Form.Group>
-              <Form.Label>Name: </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="3"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    name: event.target.value.toLowerCase(),
-                  })
-                }
-                required
-              />
-            </Form.Group>
+//   return props.is_loading ? (
+//     <Spinner animation="grow" variant="danger" />
+//   ) : (
+//     <Modal
+//       {...props}
+//       size="lg"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton />
+//       <Modal.Body>
+//         <Row className="add-product-modal">
+//           <Col xs={12} sm={6} className="add-product-modal--col">
+//             <Form.Group>
+//               <Form.Label>Name: </Form.Label>
+//               <Form.Control
+//                 as="textarea"
+//                 rows="3"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     name: event.target.value.toLowerCase(),
+//                   })
+//                 }
+//                 required
+//               />
+//             </Form.Group>
 
-            <Row></Row>
-            <Form.Group>
-              <Form.Label>Price: </Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    price: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
+//             <Row></Row>
+//             <Form.Group>
+//               <Form.Label>Price: </Form.Label>
+//               <Form.Control
+//                 type="number"
+//                 min="0"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     price: event.target.value,
+//                   })
+//                 }
+//               />
+//             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Discount (%): </Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                max="100"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    discount: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
+//             <Form.Group>
+//               <Form.Label>Discount (%): </Form.Label>
+//               <Form.Control
+//                 type="number"
+//                 min="0"
+//                 max="100"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     discount: event.target.value,
+//                   })
+//                 }
+//               />
+//             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Image url: </Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    productImage: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
-          <Col xs={12} sm={6} className="add-product-modal--col">
-            <Form.Group>
-              <Form.Label>Category: </Form.Label>
-              <Form.Control
-                as="select"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    category: event.target.value,
-                  })
-                }
-              >
-                <option value="book" defaultValue>
-                  book
-                </option>
-                <option value="technology">technology</option>
-                <option value="food">food</option>
-              </Form.Control>
-            </Form.Group>
+//             <Form.Group>
+//               <Form.Label>Image url: </Form.Label>
+//               <Form.Control
+//                 type="text"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     productImage: event.target.value,
+//                   })
+//                 }
+//               />
+//             </Form.Group>
+//           </Col>
+//           <Col xs={12} sm={6} className="add-product-modal--col">
+//             <Form.Group>
+//               <Form.Label>Category: </Form.Label>
+//               <Form.Control
+//                 as="select"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     category: event.target.value,
+//                   })
+//                 }
+//               >
+//                 <option value="book" defaultValue>
+//                   book
+//                 </option>
+//                 <option value="technology">technology</option>
+//                 <option value="food">food</option>
+//               </Form.Control>
+//             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Manufacturer: </Form.Label>
-              <Form.Control
-                type="text"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    manufacturer: event.target.value.toLowerCase(),
-                  })
-                }
-              />
-            </Form.Group>
+//             <Form.Group>
+//               <Form.Label>Manufacturer: </Form.Label>
+//               <Form.Control
+//                 type="text"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     manufacturer: event.target.value.toLowerCase(),
+//                   })
+//                 }
+//               />
+//             </Form.Group>
 
-            <Form.Group>
-              <Form.Label>Description: </Form.Label>
-              <Form.Control
-                as="textarea"
-                rows="7"
-                onChange={(event) =>
-                  setNewProduct({
-                    ...newProduct,
-                    description: event.target.value,
-                  })
-                }
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <button onClick={handleSubmit}>Add</button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+//             <Form.Group>
+//               <Form.Label>Description: </Form.Label>
+//               <Form.Control
+//                 as="textarea"
+//                 rows="7"
+//                 onChange={(event) =>
+//                   setNewProduct({
+//                     ...newProduct,
+//                     description: event.target.value,
+//                   })
+//                 }
+//               />
+//             </Form.Group>
+//           </Col>
+//         </Row>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <button onClick={handleSubmit}>Add</button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
-export default AddProductMdal;
+// export default AddProductMdal;

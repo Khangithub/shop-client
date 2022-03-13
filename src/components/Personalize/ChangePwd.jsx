@@ -1,9 +1,5 @@
 // import React, {useState, useContext} from 'react';
 // import './ChangePwd.css';
-// import {IconButton} from '@material-ui/core';
-// import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-// import VisibilityIcon from '@material-ui/icons/Visibility';
-// import Cookies from 'universal-cookie';
 // import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
 
 // function ChangePwd() {

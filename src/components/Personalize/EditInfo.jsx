@@ -1,7 +1,6 @@
 // import React, {useState, useEffect, useContext} from 'react';
 // import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
 // import './EditInfo.css';
-// import Cookies from 'universal-cookie';
 
 // function EditInfo({currentUser}) {
 //   const [newInfo, setNewInfo] = useState({});

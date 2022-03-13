@@ -1,9 +1,6 @@
 // import React, {useState, useContext} from 'react';
 // import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
-// import {IconButton} from '@material-ui/core';
-// import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import {storage} from '../../firebase';
-// import Cookies from 'universal-cookie';
 
 // import './EditAvatar.css';
 

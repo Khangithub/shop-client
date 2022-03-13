@@ -1,7 +1,6 @@
 import React from 'react';
 import {Col, Row} from 'react-bootstrap';
 import './VideoAd.css';
-import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
 
 import ad from '../../images/ads2/ad.mp4';
@@ -26,8 +25,3 @@ export default function VideoAd() {
     </div>
   );
 }
-
-VideoAd.prototype = {
-  productList: PropTypes.array,
-  getProductListLoading: PropTypes.bool,
-};
