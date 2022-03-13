@@ -1,13 +1,11 @@
 // import React, {useContext} from 'react';
-// import './YourBills.css';
-// import NavBar from '../components/NavBar';
+// import {NavBar, OrderCard, Footer} from '../components';
 // import {useHistory} from 'react-router-dom';
 // import {Spinner, Row, Col} from 'react-bootstrap';
 // import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
 // import {BillContext} from '../ContextProvider/BillContextProvider';
-// import OrderCard from '../components/OrderCard';
 // import {returnTotalPrice} from '../helpers';
-// import Footer from '../components/Footer';
+// import './YourBills.css';
 
 // export default function YourBills() {
 //   const {currentUser, getCurrentUserLoading} = useContext(CurrentUserContext);

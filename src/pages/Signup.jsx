@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signupRequest } from "../actions/user";
 
-import googleIcon from "../assets/svgs/google.svg";
+import { googleIcon } from "../assets";
 import "./_signup.scss";
 
 function Signup() {

@@ -4,7 +4,7 @@ import { getUnitPrice, getPrice } from "../../helpers/number";
 import { useDispatch, useSelector } from "react-redux";
 import { delOrderReq, editOrderReq } from "../../actions/order";
 
-import trashCanSvg from "../../assets/svgs/trashCan.svg";
+import { trashCanSvg } from "../../assets";
 
 import "./_orderCard.scss";
 

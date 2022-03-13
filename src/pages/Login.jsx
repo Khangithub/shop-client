@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import "./_login.scss";
-import { IconButton } from "@material-ui/core";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import googleIcon from "../assets/svgs/google.svg";
+import { googleIcon, visibleOffSvg, visibleSvg } from "../assets";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginWithEmailNPwdRequest, loginWithGgRequest } from "../actions/user";
+import { loginWithEmailNPwdRq, loginWithGgRq } from "../actions/user";
+import "./_login.scss";
 
 function Login() {
   const dispatch = useDispatch();
@@ -17,7 +14,7 @@ function Login() {
 
   return (
     <div className="login">
-      <div className="login-container">
+      <div className="login-ct">
         <h1>Login</h1>
 
         <form className="login-form">
@@ -38,19 +35,19 @@ function Login() {
             }
           />
 
-          <IconButton
+          <img
             className="visible-pwd-btn"
             onClick={() => setVisiblePwd(!visiblePwd)}
-          >
-            {visiblePwd ? <VisibilityIcon /> : <VisibilityOffIcon />}
-          </IconButton>
+            src={visiblePwd ? visibleSvg : visibleOffSvg}
+            alt=""
+          />
 
           <button
             type="submit"
             className="login-btn"
             onClick={() => {
               dispatch(
-                loginWithEmailNPwdRequest({
+                loginWithEmailNPwdRq({
                   email: account.email,
                   password: account.password,
                 })
@@ -62,13 +59,13 @@ function Login() {
           </button>
         </form>
 
-        <div className="gg-login-container">
+        <div className="gg-login-ct">
           <h4>
             <b>Or</b>
           </h4>
           <button
             onClick={() => {
-              dispatch(loginWithGgRequest());
+              dispatch(loginWithGgRq());
               history.push("/");
             }}
           >

@@ -8,7 +8,7 @@
     background-color: $grey;
     height: 100vh;
 
-    .login-container {
+    .login-ct {
         width: 100%;
         max-width: 360px;
         display: flex;
@@ -65,7 +65,7 @@
         }
     }
 
-    .gg-login-container {
+    .gg-login-ct {
         display: flex;
         flex-direction: column;
         justify-content: center;

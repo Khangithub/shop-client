@@ -4,7 +4,6 @@
 // import {Image} from 'react-bootstrap';
 // import {CurrentUserContext} from '../../ContextProvider/CurrentUserContextProvider';
 // import {ProductListContext} from '../../ContextProvider/ProductListContextProvider';
-// import addProductSvg from '../../assets/svgs/addProduct.svg';
 
 // function AddProductBtn() {
 //   const [showModal, setShowModal] = React.useState(false);

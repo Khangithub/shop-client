@@ -1,10 +1,8 @@
 // import React, {useContext} from 'react';
-// import ProductCard from '../components/ProductCard/';
+// import {ProductCard, NavBar, Footer} from '../components';
 // import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
 // import {ProductListContext} from '../ContextProvider/ProductListContextProvider';
 // import {useHistory} from 'react-router-dom';
-// import NavBar from '../components/NavBar';
-// import Footer from '../components/Footer';
 // import {Spinner, Row, Image} from 'react-bootstrap';
 // import './YourProducts.css';
 

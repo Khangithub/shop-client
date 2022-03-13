@@ -8,27 +8,28 @@ import {
 } from "../actions/product";
 import { isEmpty } from "lodash";
 import { getUnitPrice } from "../helpers/number";
-
-import NavBar from "../components/NavBar";
-import Loading from "../components/Loading";
-import Footer from "../components/Footer";
-import ProductCard from "../components/ProductCard/";
-import HorizontalDivider from "../components/HorizontalDivider";
-
-import shippingBanner4 from "../assets/banners/shipping-4.jpg";
-import shippingBanner3 from "../assets/banners/shipping-3.jpg";
-import shippingBanner2 from "../assets/banners/shipping-2.jpg";
-import shippingBanner1 from "../assets/banners/shipping-1.jpg";
-
-import mediaSvg from "../assets/svgs/media.svg";
-import sendSvg from "../assets/svgs/send.svg";
-import closeSvg from "../assets/svgs/close.svg";
+import {
+  NavBar,
+  Loading,
+  Footer,
+  HorizontalDivider,
+  ProductCard,
+  CommentCard,
+  Title,
+} from "../components";
+import {
+  shippingBanner4,
+  shippingBanner1,
+  shippingBanner2,
+  shippingBanner3,
+  mediaSvg,
+  sendSvg,
+  closeSvg,
+} from "../assets";
 
 import "./_product.scss";
-import HorizontalDevider from "../components/HorizontalDivider";
 import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
-import CommentCard from "../components/CommentCard";
-import Title from "../components/Title";
+
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
 
@@ -274,7 +275,7 @@ function Product({ currentUser, token }) {
           ))}
         </Row>
 
-        <HorizontalDevider />
+        <HorizontalDivider />
 
         <Title>comments about this product</Title>
         {token && (
@@ -418,7 +419,7 @@ function Product({ currentUser, token }) {
           </Row>
         )}
 
-        {cmtList.length > 0 && <HorizontalDevider />}
+        {cmtList.length > 0 && <HorizontalDivider />}
 
         {cmtList
           .map((comment) => (

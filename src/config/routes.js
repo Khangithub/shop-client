@@ -1,6 +1,6 @@
 import React from 'react';
 import Product from './pages/Product';
-import NotFound from './components/NotFound/NotFound';
+import NotFound from './pages/NotFound';
 import Products from './pages/Products';
 import ProductByCategory from './pages/ProductByCategory';
 import Search from './pages/Search';

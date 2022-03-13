@@ -5,9 +5,7 @@ import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
 import ReactPlayer from "react-player";
 
-import tickSvg from "../../assets/svgs/tick.svg";
-import sendSvg from "../../assets/svgs/send.svg";
-import mediaSvg from "../../assets/svgs/media.svg";
+import { tickSvg, sendSvg, mediaSvg } from "../../assets";
 
 import { convertTimestamp } from "../../helpers/date";
 import ReplyCard from "../ReplyCard";

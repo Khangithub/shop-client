@@ -11,7 +11,7 @@ const getCurrentUserRequest = () => ({
   type: Types.GET_CURRENT_USER_REQUEST,
 });
 
-const loginWithEmailNPwdRequest = ({email, password}) => ({
+const loginWithEmailNPwdRq = ({email, password}) => ({
   type: Types.LOGIN_WITH_PWD_REQUEST,
   payload: {
     email,
@@ -19,7 +19,7 @@ const loginWithEmailNPwdRequest = ({email, password}) => ({
   },
 });
 
-const loginWithGgRequest = () => ({
+const loginWithGgRq = () => ({
   type: Types.LOGIN_WITH_GG_REQUEST,
 });
 
@@ -51,9 +51,9 @@ const getFailedUserRequest = ({userErr}) => ({
 export {
   Types,
   getCurrentUserRequest,
-  loginWithGgRequest,
+  loginWithGgRq,
   signupRequest,
   getCurrentUserSuccess,
   getFailedUserRequest,
-  loginWithEmailNPwdRequest,
+  loginWithEmailNPwdRq,
 };

@@ -3,13 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
 import { getOrderReq } from "../actions/order";
 import { isEmpty } from "lodash";
-
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import Loading from "../components/Loading";
-import OrderCard from "../components/OrderCard";
-
-import trashCanSvg from "../assets/svgs/trashCan.svg";
+import { NavBar, Footer, Loading, OrderCard } from "../components";
+import { trashCanSvg } from "../assets";
 import "./_orders.scss";
 
 function Order({ currentUser, token }) {
@@ -91,13 +86,7 @@ function Order({ currentUser, token }) {
           </Col>
 
           <Col sm={12} md={3} className="order-checkout-container">
-            <h1>Subtotals {orders?.length} items: ________</h1>
-            {/* <span>${returnTotalPrice(orders)}</span>
-          <div className="order__checkout__gift__checkbox">
-            <input type="checkbox" />
-            <label htmlFor="gift"> This order contains a gift</label>
-          </div>
-          <button>Proceed to Checkout</button> */}
+            <h1>fdsafndjs</h1>
           </Col>
         </Row>
       </div>

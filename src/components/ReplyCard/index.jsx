@@ -5,9 +5,7 @@ import ReactPlayer from "react-player";
 import Linkify from "react-linkify";
 import "./_replyCard.scss";
 
-import sendSvg from "../../assets/svgs/send.svg";
-import mediaSvg from "../../assets/svgs/media.svg";
-
+import {sendSvg, mediaSvg} from "../../assets";
 import { useDispatch } from "react-redux";
 import { convertTimestamp } from "../../helpers/date";
 

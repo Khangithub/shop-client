@@ -1,0 +1,31 @@
+export {default as trashCanSvg} from './svgs/trashCan.svg';
+export {default as googleIcon} from './svgs/google.svg';
+export {default as mediaSvg} from './svgs/media.svg';
+export {default as sendSvg} from './svgs/send.svg';
+export {default as closeSvg} from './svgs/close.svg';
+export {default as tickSvg} from './svgs/tick.svg';
+export {default as logoSvg} from './svgs/logo.svg';
+export {default as searchSvg} from './svgs/search.svg';
+export {default as cartSvg} from './svgs/cart.svg';
+export {default as visibleOffSvg} from './svgs/visibility-off.svg';
+export {default as visibleSvg} from './svgs/visibility.svg';
+
+export {default as foodBanner3} from './banners/food-3.jpg';
+export {default as foodBanner4} from './banners/food-4.jpg';
+export {default as foodBanner5} from './banners/food-5.jpg';
+export {default as foodBanner6} from './banners/food-6.jpg';
+export {default as bookBanner1} from './banners/book-1.jpg';
+export {default as bookBanner2} from './banners/book-2.jpg';
+export {default as bookBanner3} from './banners/book-3.jpg';
+export {default as bookBanner4} from './banners/book-4.jpg';
+export {default as shippingBanner1} from './banners/shipping-1.jpg';
+export {default as shippingBanner2} from './banners/shipping-2.jpg';
+export {default as shippingBanner3} from './banners/shipping-3.jpg';
+export {default as shippingBanner4} from './banners/shipping-4.jpg';
+export {default as homeBanner1} from './banners/home-banner-1.jpg';
+export {default as homeBanner2} from './banners/home-banner-2.jpg';
+export {default as homeBanner3} from './banners/home-banner-3.jpg';
+
+export {default as btsSamsungVideo} from './videos/phone-1.mp4';
+export {default as btsMcDonaldVideo} from './videos/food-1.mp4';
+export {default as bookGif1} from './gifs/book-1.gif';

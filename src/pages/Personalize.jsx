@@ -1,13 +1,6 @@
 // import React, {useContext} from 'react';
 // import {Spinner, Row, Col} from 'react-bootstrap';
-// import NavBar from '../components/NavBar';
-// import {CurrentUserContext} from '../ContextProvider/CurrentUserContextProvider';
-// import EditAvatar from '../components/Personalize/EditAvatar';
-// import EditInfo from '../components/Personalize/EditInfo';
-// import ChangePwd from '../components/Personalize/ChangePwd';
-// import Footer from "../components/Footer";
 // import './Personalize.css';
-// import PropTypes from 'prop-types';
 
 // export default function Personalize() {
 //   const {currentUser, getCurrentUserLoading} = useContext(CurrentUserContext);
@@ -33,8 +26,3 @@
 //     </div>
 //   );
 // }
-
-// Personalize.proptype = {
-//   currentuser: PropTypes.object,
-//   getCurrentUserLoading: PropTypes.bool,
-// };

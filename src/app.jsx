@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { getCurrentUserRequest } from "./actions/user";
 import { isEmpty } from "lodash";
-import Loading from "./components/Loading";
+import { Loading } from "./components";
 import Home from "./pages/Home";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";

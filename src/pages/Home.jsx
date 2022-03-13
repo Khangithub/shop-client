@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Carousel } from "react-bootstrap";
-import ProductCard from "../components/ProductCard/";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   getBestSaleProductsRequest,
@@ -9,24 +7,26 @@ import {
   getNewArrivalProductsRequest,
 } from "../actions/product";
 import { isEmpty } from "lodash";
+import {
+  Banner,
+  NavBar,
+  Footer,
+  Loading,
+  CategoryList,
+  ProductCard,
+  HorizontalDivider,
+} from "../components";
+import {
+  foodBanner3,
+  foodBanner4,
+  foodBanner5,
+  foodBanner6,
+  bookBanner1,
+  bookBanner2,
+  bookBanner3,
+  bookBanner4,
+} from "../assets";
 
-import NavBar from "../components/NavBar";
-import Banner from "../components/Banner";
-import Footer from "../components/Footer";
-import Loading from "../components/Loading";
-import CategoryList from "../components/CategoryList";
-
-import foodBanner3 from "../assets/banners/food-3.jpg";
-import foodBanner4 from "../assets/banners/food-4.jpg";
-import foodBanner5 from "../assets/banners/food-5.jpg";
-import foodBanner6 from "../assets/banners/food-6.jpg";
-
-import bookBanner1 from "../assets/banners/book-1.jpg";
-import bookBanner2 from "../assets/banners/book-2.jpg";
-import bookBanner3 from "../assets/banners/book-3.jpg";
-import bookBanner4 from "../assets/banners/book-4.jpg";
-
-import HorizontalDivider from "../components/HorizontalDivider";
 import "./_home.scss";
 
 function Home({ currentUser, token }) {

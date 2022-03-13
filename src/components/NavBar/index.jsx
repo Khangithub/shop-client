@@ -5,9 +5,7 @@ import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers/string";
 import { getOrderReq } from "../../actions/order";
 
-import logoSvg from "../../assets/svgs/logo.svg";
-import searchSvg from "../../assets/svgs/search.svg";
-import cartSvg from "../../assets/svgs/cart.svg";
+import {logoSvg, searchSvg, cartSvg} from "../../assets";
 
 import "./_navbar.scss";
 

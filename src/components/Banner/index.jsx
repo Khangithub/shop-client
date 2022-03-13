@@ -2,9 +2,7 @@ import React from "react";
 import "./_banner.scss";
 import { Carousel } from "react-bootstrap";
 
-import homeBanner1 from "../../assets/banners/home-banner-1.jpg";
-import homeBanner2 from "../../assets/banners/home-banner-2.jpg";
-import homeBanner3 from "../../assets/banners/home-banner-3.jpg";
+import { homeBanner1, homeBanner2, homeBanner3 } from "../../assets";
 
 function Banner() {
   return (
