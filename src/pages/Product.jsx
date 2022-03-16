@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -32,15 +33,17 @@ import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
+import ChatModal from "../components/ChatModal";
+
+const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
 function Product({ currentUser, token }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { productId } = useRouteMatch().params;
   const [didAddOrder, setAddOrder] = useState(false);
-
-  let [mainComment, setMainComment] = useState("");
-  let [cmtMedia, setCmtMedia] = useState({
+  const [mainComment, setMainComment] = useState("");
+  const [cmtMedia, setCmtMedia] = useState({
     origin: [],
     preview: [],
   });
@@ -52,10 +55,11 @@ function Product({ currentUser, token }) {
   const { cmtList, cmtLoading, cmtErr } = useSelector((state) => state.comment);
 
   useEffect(() => {
+    socket.emit("join_room", `${currentUser._id}-${productId}-buying`);
     setQuantity(1);
     dispatch(getProductRequest({ productId }));
     dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
-  }, [productId, dispatch]);
+  }, [productId, currentUser, dispatch]);
 
   const { productsByCategory } = useSelector((state) => state.product);
 
@@ -435,7 +439,11 @@ function Product({ currentUser, token }) {
           ))
           .reverse()}
       </div>
-
+      <ChatModal
+        socket={socket}
+        currentUser={currentUser}
+        productId={productId}
+      />
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}

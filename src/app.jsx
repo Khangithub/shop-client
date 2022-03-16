@@ -10,7 +10,6 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Product from "./pages/Product";
-// import routes from "./routes";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,8 +21,8 @@ function App() {
     dispatch(getCurrentUserRequest());
   }, [dispatch]);
 
-  if (userLoading) return <Loading errMsg={userLoading} />;
-  if (!isEmpty(userErr)) return <Loading errMsg={userErr} />;
+  if (userLoading) return <Loading />;
+  if (!isEmpty(userErr)) return <Loading />;
 
   return (
     <Router>

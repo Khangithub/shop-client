@@ -1,0 +1,50 @@
+@import '../../styles/colors';
+@import '../../styles/layout';
+
+.chat-modal {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 9999;
+    cursor: pointer;
+  
+  
+  
+    .chat-modal-layout {
+      height: 500px;
+      width: 700px;
+      background: $white;
+      padding: 10px;
+      border: 1px solid $lightGrey;
+      border-radius: 20px;
+  
+      @media screen and (max-width: $medium) {
+        display: none;
+      }
+  
+      display: flex;
+      flex-direction: column;
+  
+      .chat-modal-header {
+        display: flex;
+  
+        img {
+          margin-left: auto;
+          width: 30px;
+          height: 30px;
+        }
+      }
+  
+      .chat-modal-ct {
+        display: flex;
+  
+        .current-chat {
+          flex-direction: column;
+          flex: 1;
+          height: 100%;
+  
+         
+        }
+      }
+    }
+  }

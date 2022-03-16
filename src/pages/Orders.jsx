@@ -20,8 +20,8 @@ function Order({ currentUser, token }) {
 
   const [selectedOrders, setSelectedOrders] = useState([]);
 
-  if (orderLoading) return <Loading errMsg={orderLoading} />;
-  if (!isEmpty(orderErr)) return <Loading errMsg={orderErr} />;
+  if (orderLoading) return <Loading />;
+  if (!isEmpty(orderErr)) return <Loading />;
 
   return (
     <>

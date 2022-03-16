@@ -63,9 +63,9 @@ function Home({ currentUser, token }) {
       />
     );
 
-  if (productLoading) return <Loading errMsg={productLoading} />;
+  if (productLoading) return <Loading />;
 
-  if (!isEmpty(productErr)) return <Loading errMsg={productErr} />;
+  if (!isEmpty(productErr)) return <Loading />;
 
   return (
     <>
