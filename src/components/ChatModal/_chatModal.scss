@@ -2,49 +2,115 @@
 @import '../../styles/layout';
 
 .chat-modal {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    z-index: 9999;
-    cursor: pointer;
-  
-  
-  
-    .chat-modal-layout {
-      height: 500px;
-      width: 700px;
-      background: $white;
-      padding: 10px;
-      border: 1px solid $lightGrey;
-      border-radius: 20px;
-  
-      @media screen and (max-width: $medium) {
-        display: none;
-      }
-  
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999;
+  cursor: pointer;
+
+
+
+  .chat-modal-layout {
+    width: 700px;
+    background: $white;
+    padding: 10px;
+    border: 1px solid $lightGrey;
+    border-radius: 20px;
+
+    @media screen and (max-width: $medium) {
+      display: none;
+    }
+
+    display: flex;
+    flex-direction: column;
+
+    .chat-modal-header {
       display: flex;
-      flex-direction: column;
-  
-      .chat-modal-header {
-        display: flex;
-  
-        img {
-          margin-left: auto;
-          width: 30px;
-          height: 30px;
-        }
-      }
-  
-      .chat-modal-ct {
-        display: flex;
-  
-        .current-chat {
-          flex-direction: column;
-          flex: 1;
-          height: 100%;
-  
-         
-        }
+
+      img {
+        margin-left: auto;
+        width: 30px;
+        height: 30px;
       }
     }
+
+    .chat-modal-ct {
+      display: flex;
+      height: 500px;
+
+      .current-chat {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        flex: 1;
+        height: 100%;
+
+        .chat-avatar {
+          display: flex;
+          align-items: center;
+          margin-bottom: auto;
+
+          img {
+            @include avatar;
+          }
+        }
+
+        .chat-box {
+          max-height: 400px;
+          overflow-y: scroll;
+          @include customedScrollbar;
+
+          .msg-ct {
+            display: flex;
+            align-items: flex-end;
+            margin: 5px;
+
+            span {
+              max-width: 200px;
+              padding: 10px;
+              border-radius: 10px;
+              word-break: break-word;
+            }
+          }
+
+          .msg-from {
+            flex-direction: row-reverse;
+            justify-content: flex-start;
+
+            span {
+              color: $white;
+              background: $greenChat;
+              border-top-right-radius: 0;
+            }
+          }
+
+          .msg-to {
+            span {
+              border: 1px solid gray;
+              border-top-left-radius: 0;
+            }
+          }
+        }
+
+        textarea {
+          width: 100%;
+          border: 0;
+          background-color: $grey;
+          padding: 10px;
+          border-radius: 20px;
+          @include customedScrollbar;
+
+          &:focus {
+            border: none;
+            outline: none;
+          }
+        }
+      }
+
+      .chat-list-ct {
+        flex: 1;
+      }
+    }
+
   }
+}

@@ -31,7 +31,7 @@
 //           })}
 //         </Col>
 
-//         <Col xs={12} sm={3} className="order-checkout-container">
+//         <Col xs={12} sm={3} className="order-checkout-ct">
 //           <div className="order__checkout__total__price">
 //             <span>Subtotals {billList?.length} bills:</span>
 //             <span>${returnTotalPrice(billList)}</span>

@@ -78,10 +78,10 @@ function Product({ currentUser, token }) {
   let [quantity, setQuantity] = useState(1);
   let [seeMoreText, setSeeMore] = useState(true);
 
-  if (isEmpty(product)) return <Loading errMsg={product} />;
-  if (productLoading || cmtLoading) return <Loading errMsg={productLoading} />;
+  if (isEmpty(product)) return <Loading />;
+  if (productLoading || cmtLoading) return <Loading />;
   if (!isEmpty(productErr) || !isEmpty(cmtErr))
-    return <Loading errMsg={productErr} />;
+    return <Loading />;
 
   const truncatDes = (des) => {
     let copiedDes = "".concat(des);
@@ -442,7 +442,7 @@ function Product({ currentUser, token }) {
       <ChatModal
         socket={socket}
         currentUser={currentUser}
-        productId={productId}
+        product={product}
       />
       <Toast
         show={didAddOrder}

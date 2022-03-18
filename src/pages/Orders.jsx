@@ -27,7 +27,7 @@ function Order({ currentUser, token }) {
     <>
       <NavBar currentUser={currentUser} token={token} />
       <div className="order">
-        <Row className="order-list-container">
+        <Row className="order-list-ct">
           <Col sm={12} md={9}>
             <h1>Your cart</h1>
 
@@ -85,7 +85,7 @@ function Order({ currentUser, token }) {
               .reverse()}
           </Col>
 
-          <Col sm={12} md={3} className="order-checkout-container">
+          <Col sm={12} md={3} className="order-checkout-ct">
             <h1>fdsafndjs</h1>
           </Col>
         </Row>

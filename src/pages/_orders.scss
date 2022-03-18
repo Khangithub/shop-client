@@ -7,7 +7,7 @@
     flex-direction: column;
     min-height: 100vh;
     
-    .order-list-container {
+    .order-list-ct {
         margin: 0 15px;
 
         h1 {
@@ -30,13 +30,13 @@
     }
 
     @media screen and (max-width: $large) {
-        .order-list-container {
+        .order-list-ct {
             display: flex;
             flex-direction: column-reverse;
         }
     }
 
-    .order-checkout-container {
+    .order-checkout-ct {
         display: flex;
         flex-direction: column;
         background-color: rgb(234, 237, 237);

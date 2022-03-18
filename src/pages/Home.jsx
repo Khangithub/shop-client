@@ -53,15 +53,7 @@ function Home({ currentUser, token }) {
     isEmpty(bestSaleProducts) ||
     isEmpty(newArrivalProducts)
   )
-    return (
-      <Loading
-        errMsg={{
-          ...mostDiscountsProducts,
-          ...bestSaleProducts,
-          ...newArrivalProducts,
-        }}
-      />
-    );
+    return <Loading />;
 
   if (productLoading) return <Loading />;
 

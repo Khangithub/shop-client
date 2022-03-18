@@ -53,12 +53,35 @@ $extraLarge: 1140px;
 @mixin cmtTextBox {
   flex: 1;
   border: 0;
-  background-color: #ececec;
+  background-color: $grey;
   padding: 10px;
   border-radius: 20px;
 
   &:focus {
     border: none;
     outline: none;
+  }
+}
+
+@mixin customedScrollbar {
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 }
