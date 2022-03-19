@@ -14,7 +14,7 @@ function NavBar({ currentUser, token }) {
   const dispatch = useDispatch();
   let [input, setInput] = useState("");
 
-  const { orders } = useSelector((state) => state.order);
+  const { orders } = useSelector(({order}) => order);
 
   useEffect(() => {
     if (token) {

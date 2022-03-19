@@ -5,7 +5,7 @@ const convertTimestamp = timestamp =>
     compact: true,
   }) + ' ago';
 
-const pretyTime = date => {
+const formatTime = date => {
   const hour = date.getHours ();
   const mins = date.getMinutes ();
 
@@ -19,4 +19,4 @@ const pretyTime = date => {
 
   return {formatedTime, formatedDate};
 };
-export {convertTimestamp, pretyTime};
+export {convertTimestamp, formatTime};

@@ -10,9 +10,7 @@ import "./_orders.scss";
 function Order({ currentUser, token }) {
   const dispatch = useDispatch();
 
-  const { orders, orderLoading, orderErr } = useSelector(
-    (state) => state.order
-  );
+  const { orders, orderLoading, orderErr } = useSelector(({ order }) => order);
 
   useEffect(() => {
     dispatch(getOrderReq({ token }));

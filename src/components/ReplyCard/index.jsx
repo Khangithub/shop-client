@@ -7,7 +7,7 @@ import "./_replyCard.scss";
 
 import {sendSvg, mediaSvg} from "../../assets";
 import { useDispatch } from "react-redux";
-import { convertTimestamp } from "../../helpers/date";
+import { convertTimestamp } from "../../helpers/time";
 
 function ReplyCard({ reply, token, currentUser, comment }) {
   const dispatch = useDispatch();

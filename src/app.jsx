@@ -14,7 +14,7 @@ import Product from "./pages/Product";
 function App() {
   const dispatch = useDispatch();
   const { currentUser, token, userLoading, userErr } = useSelector(
-    (state) => state.user
+    ({ user }) => user
   );
 
   useEffect(() => {

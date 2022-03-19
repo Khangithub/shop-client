@@ -49,10 +49,10 @@ function Product({ currentUser, token }) {
   });
 
   const { product, productLoading, productErr } = useSelector(
-    (state) => state.product
+    ({product}) => product
   );
 
-  const { cmtList, cmtLoading, cmtErr } = useSelector((state) => state.comment);
+  const { cmtList, cmtLoading, cmtErr } = useSelector(({comment}) => comment);
 
   useEffect(() => {
     socket.emit("join_room", `${currentUser._id}-${productId}-buying`);
@@ -61,7 +61,7 @@ function Product({ currentUser, token }) {
     dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
   }, [productId, currentUser, dispatch]);
 
-  const { productsByCategory } = useSelector((state) => state.product);
+  const { productsByCategory } = useSelector(({product}) => product);
 
   useEffect(() => {
     if (product && product.hasOwnProperty("category")) {
@@ -443,6 +443,7 @@ function Product({ currentUser, token }) {
         socket={socket}
         currentUser={currentUser}
         product={product}
+        token={token}
       />
       <Toast
         show={didAddOrder}

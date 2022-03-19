@@ -40,7 +40,7 @@ function Home({ currentUser, token }) {
     newArrivalProducts,
     productLoading,
     productErr,
-  } = useSelector((state) => state.product);
+  } = useSelector(({product}) => product);
 
   useEffect(() => {
     dispatch(getMostDiscountsProductsRequest({ pageIndex, limit }));
