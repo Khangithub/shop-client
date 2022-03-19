@@ -50,7 +50,7 @@
             right: -280px;
             height: 20px;
             margin-bottom: -25px;
-            color: $darkGrey;
+            color: $darkGray;
             width: 30px;
 
             &:focus {
@@ -106,13 +106,13 @@
             span {
                 &:first-child {
                     font-size: small;
-                    color: $darkGrey;
+                    color: $darkGray;
                 }
 
                 &:nth-child(2) {
                     font-size: 13px;
                     font-weight: bold;
-                    color: $darkGrey;
+                    color: $darkGray;
                 }
             }
         }
@@ -121,7 +121,7 @@
             margin-top: 10px !important;
             font-size: 14px;
             font-weight: bold;
-            color: $darkGrey;
+            color: $darkGray;
             cursor: pointer;
         }
     }

@@ -4,55 +4,129 @@
 .order-card {
     display: flex;
     flex-direction: column;
-    margin: 15px 0;
     align-items: stretch;
-    border: 1px solid lightgray;
+
+    margin: 15px 0;
     padding: 10px;
-    border-radius: 20px;
+
+    border: 1px solid lightgray;
     background-color: $white;
+    border-radius: 20px;
+
+
+    .visit-shop-link {
+        margin: 10px;
+    }
 
     .order-card-container {
-        margin: 15px 0 !important;
+        display: flex;
+        justify-content: space-evenly;
         align-items: center;
+
         text-align: center;
 
-        .order-name {
+        .order-info-ct {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            text-transform: capitalize;
 
-            img {
-                height: 70px;
-            }
-        }
+            flex: 0.67;
+            width: 100%;
 
-
-        .order-unit-price {
-            p {
-                color: gray;
-                text-decoration: line-through;
-            }
-        }
-
-        .order-quantity-btn {
-            @include quantityGroupBtn
-        }
-
-        .order-real-price {
-            color: $scarlet;
-        }
-
-        @media screen and (max-width: $large) {
-
-            .order-name,
-            .order-quantity-btn {
-                flex-direction: column;
+            .order-title {
+                display: none;
             }
 
-            .order-quantity-btn {
+            .order-name {
+                display: flex;
                 align-items: center;
 
+                text-transform: capitalize;
+
+                img {
+                    height: 90px;
+                }
+
+                small {
+                    max-width: 130px;
+                }
             }
+
+
+            .order-unit-price {
+                p {
+                    color: $darkGray;
+                    text-decoration: line-through;
+                }
+            }
+
+            .order-qty-ct {
+                .order-qty-grp-btn-ct {
+                    @include quantityGroupBtn;
+                }
+            }
+
+            .order-real-price {
+                color: $scarlet;
+            }
+        }
+
+        .del-order-btn {
+            width: 18px;
+            height: 18px;
+        }
+
+        @media screen and (max-width: $medium) {
+            .order-info-ct {
+                flex-direction: column;
+                align-items: flex-start;
+                flex: 1;
+
+                padding: 15px;
+
+                .order-title {
+                    display: inline;
+                    color: $black;
+                    margin-right: 10px;
+                    font-weight: bold;
+                    text-transform: capitalize;
+                    text-align: left;
+                }
+
+                .order-name {
+                    margin-bottom: 30px;
+
+                    small {
+                        max-width: none;
+                        text-align: left;
+                    }
+                }
+
+                .order-unit-price {
+                    display: flex;
+                    align-items: center;
+
+                    b {
+                        margin-right: 10px;
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+                }
+
+                .order-qty-ct {
+                    display: flex;
+                    align-items: center;
+
+                    margin-top: 50px;
+
+                    .order-qty-grp-btn-ct {
+                        margin-right: 10px;
+                    }
+                }
+            }
+
         }
 
     }
