@@ -1,21 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { Badge } from "react-bootstrap";
 import { closeSvg } from "../../assets";
-import { pretyTime } from "../../helpers/date";
+import { formatTime } from "../../helpers/time";
 import { scrollToBottom } from "../../helpers/dom";
-import HorizontalDevider from "../HorizontalDivider";
+import { HorizontalDivider, Loading } from "../";
 import "./_chatModal.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { getChatListReq } from "../../actions/chat";
+import { isEmpty } from "lodash";
 
-function ChatModal({ currentUser, product, socket }) {
+function ChatModal({ currentUser, product, token, socket }) {
+  const dispatch = useDispatch();
   const [showChatModal, setShowChatModal] = useState(false);
   const [curMsg, setCurMsg] = useState("");
   const [msgList, setMsgList] = useState([]);
+
+  useEffect(() => {
+    dispatch(
+      getChatListReq({
+        roomId: `${currentUser._id}-${product._id}-buying`,
+        token,
+      })
+    );
+  }, [currentUser, product, token, dispatch]);
+
+  const { chatList, chatLoading, chatErr } = useSelector(({ chat }) => chat);
+
+  useEffect(() => {
+    setMsgList(chatList);
+  }, [chatList]);
 
   useEffect(() => {
     socket.on("receive_message", (newMsg) => {
       setMsgList((list) => [...list, newMsg]);
     });
   }, [socket]);
+
+  if (chatLoading) return <Loading />;
+  if (!isEmpty(chatErr)) return <Loading />;
 
   return (
     <div className="chat-modal">
@@ -37,14 +59,13 @@ function ChatModal({ currentUser, product, socket }) {
               </div>
               <div className="chat-box">
                 {msgList.map(({ msg, from, to, createdAt }, index, arr) => {
-                  let isFrom = currentUser._id === from._id;
+                  let isFrom = currentUser._id === from;
                   let isThisMsgFromSameSenderWithPreMsg =
-                    index > 0 && arr[index - 1].from._id === from._id;
-
+                    index > 0 && arr[index - 1].from === from;
                   return (
                     <div key={index}>
                       {!isThisMsgFromSameSenderWithPreMsg && (
-                        <HorizontalDevider line={1} />
+                        <HorizontalDivider line={1} />
                       )}
                       <div
                         key={index}
@@ -69,10 +90,10 @@ function ChatModal({ currentUser, product, socket }) {
                   if (curMsg.trim() !== "" && e.keyCode === 13) {
                     const msgData = {
                       room: `${currentUser._id}-${product._id}-buying`,
-                      from: currentUser,
-                      to: product.saler,
+                      from: currentUser._id,
+                      to: product.saler._id,
                       msg: curMsg,
-                      createdAt: pretyTime(new Date()),
+                      createdAt: formatTime(new Date()),
                     };
                     await socket.emit("send_message", msgData);
                     setMsgList((list) => [...list, msgData]);
@@ -94,10 +115,10 @@ function ChatModal({ currentUser, product, socket }) {
                   if (curMsg.trim() !== "" && e.keyCode === 13) {
                     const msgData = {
                       room: `${currentUser._id}-${product._id}-buying`,
-                      to: currentUser,
-                      from: product.saler,
+                      to: currentUser._id,
+                      from: product.saler._id,
                       msg: curMsg,
-                      createdAt: pretyTime(new Date()),
+                      createdAt: formatTime(new Date()),
                     };
                     await socket.emit("send_message", msgData);
                     setMsgList((list) => [...list, msgData]);

@@ -14,7 +14,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
   const [quantity, setQuantity] = useState(order.quantity);
   var [timeoutPivot, setTimeoutPivot] = useState(null);
 
-  const { token } = useSelector((state) => state.user);
+  const { token } = useSelector(({ user }) => user);
 
   const decreaseQuantity = () => {
     const newVal = quantity - 1 < 0 ? 0 : quantity - 1;

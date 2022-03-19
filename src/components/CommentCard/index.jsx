@@ -7,7 +7,7 @@ import ReactPlayer from "react-player";
 
 import { tickSvg, sendSvg, mediaSvg } from "../../assets";
 
-import { convertTimestamp } from "../../helpers/date";
+import { convertTimestamp } from "../../helpers/time";
 import ReplyCard from "../ReplyCard";
 import "./_commentCard.scss";
 
