@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col } from "react-bootstrap";
-import { getOrderReq } from "../actions/order";
-import { isEmpty } from "lodash";
 import { NavBar, Footer, Loading, OrderCard } from "../components";
+import { getOrderReq } from "../actions/order";
 import { trashCanSvg } from "../assets";
+import { isEmpty } from "lodash";
+
 import "./_orders.scss";
 
 function Order({ currentUser, token }) {
@@ -25,49 +25,36 @@ function Order({ currentUser, token }) {
     <>
       <NavBar currentUser={currentUser} token={token} />
       <div className="order">
-        <Row className="order-list-ct">
-          <Col sm={12} md={9}>
+        <div className="order-list-ct">
+          <div className="order-list-layout">
             <h1>Your cart</h1>
 
-            <Row className="order-list-header">
-              <Col xs={1} lg={1}>
-                <input
-                  type="checkbox"
-                  name="selected-orders"
-                  id="selected-orders"
-                  checked={selectedOrders.length === orders.length}
-                  onChange={() => {
-                    if (selectedOrders.length === orders.length) {
-                      setSelectedOrders([]);
-                    } else {
-                      const allOrders = orders.map(
-                        (order) => order.product._id
-                      );
-                      setSelectedOrders(allOrders);
-                    }
-                  }}
-                />
-              </Col>
-              <Col xs={3} lg={3}>
-                <label htmlFor="selected-orders">
-                  Total Orders: ({orders.length} products)
-                </label>
-              </Col>
-              <Col xs={2} lg={2}>
-                unit price
-              </Col>
-              <Col xs={2} lg={2}>
-                quantity
-              </Col>
-              <Col xs={2} lg={2}>
-                real price
-              </Col>
-              <Col xs={1} lg={1}>
-                <div>
-                  <img src={trashCanSvg} alt="del" />
-                </div>
-              </Col>
-            </Row>
+            <div className="order-list-header">
+              <input
+                type="checkbox"
+                name="selected-orders"
+                id="selected-orders"
+                checked={selectedOrders.length === orders.length}
+                onChange={() => {
+                  if (selectedOrders.length === orders.length) {
+                    setSelectedOrders([]);
+                  } else {
+                    const allOrders = orders.map((order) => order.product._id);
+                    setSelectedOrders(allOrders);
+                  }
+                }}
+              />
+              <div htmlFor="selected-orders">
+                <strong>Total Orders:&nbsp;</strong>
+                <span>({orders.length} products)</span>
+              </div>
+
+              <b>unit price</b>
+              <b>quantity</b>
+              <b>real price</b>
+
+              <img src={trashCanSvg} alt="del" />
+            </div>
 
             {orders
               .map((order, index) => {
@@ -81,12 +68,12 @@ function Order({ currentUser, token }) {
                 );
               })
               .reverse()}
-          </Col>
+          </div>
 
-          <Col sm={12} md={3} className="order-checkout-ct">
-            <h1>fdsafndjs</h1>
-          </Col>
-        </Row>
+          <div className="order-checkout-ct">
+            <span>fdsafndjs</span>
+          </div>
+        </div>
       </div>
 
       <Footer />
