@@ -10,6 +10,7 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Product from "./pages/Product";
+import Settings from './pages/Settings';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,8 +22,7 @@ function App() {
     dispatch(getCurrentUserRequest());
   }, [dispatch]);
 
-  if (userLoading) return <Loading />;
-  if (!isEmpty(userErr)) return <Loading />;
+  if (userLoading || !isEmpty(userErr)) return <Loading />;
 
   return (
     <Router>
@@ -56,6 +56,14 @@ function App() {
             exact
             render={(props) => (
               <Orders {...props} currentUser={currentUser} token={token} />
+            )}
+          />
+
+          <Route
+            path="/settings"
+            exact
+            render={(props) => (
+              <Settings {...props} currentUser={currentUser} token={token} />
             )}
           />
 

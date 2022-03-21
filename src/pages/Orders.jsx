@@ -25,10 +25,10 @@ function Order({ currentUser, token }) {
     <>
       <NavBar currentUser={currentUser} token={token} />
       <div className="order">
+        <h2>Your cart</h2>
+
         <div className="order-list-ct">
           <div className="order-list-layout">
-            <h1>Your cart</h1>
-
             <div className="order-list-header">
               <input
                 type="checkbox"
@@ -71,7 +71,16 @@ function Order({ currentUser, token }) {
           </div>
 
           <div className="order-checkout-ct">
-            <span>fdsafndjs</span>
+            <div className="order-address-ct">
+              <div className="order-address-header">
+                <span>Deliver to</span>
+                <span>Change</span>
+              </div>
+
+              <div className="order-address-body">
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

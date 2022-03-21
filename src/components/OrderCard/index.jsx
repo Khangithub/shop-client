@@ -46,7 +46,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
       <small className="visit-shop-link">
         See more products from shop "{product.saler.username}"
       </small>
-      <div className="order-card-container">
+      <div className="order-card-ct">
         <input
           type="checkbox"
           name="order"

@@ -148,7 +148,7 @@ function Product({ currentUser, token }) {
             </Row>
           </Col>
           {!isEmpty(token) ? (
-            <Col sm={12} md={4} lg={3} className="product-qty-container">
+            <Col sm={12} md={4} lg={3} className="product-qty-ct">
               <div>
                 <h5>In Stock: {product.inStock} products available</h5>
                 <HorizontalDivider line={1} />

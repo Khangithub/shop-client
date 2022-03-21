@@ -80,7 +80,7 @@ function NavBar({ currentUser, token }) {
                   />
                 }
               >
-                <NavDropdown.Item href="/personalize">Setting</NavDropdown.Item>
+                <NavDropdown.Item href="/settings">Setting</NavDropdown.Item>
 
                 <NavDropdown.Item
                   className="setting-dropdown-user-btn"
