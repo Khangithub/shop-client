@@ -9,6 +9,7 @@ const getChatListCall = async ({roomId, token}) => {
       }
     );
     const chatListJson = await chatListReq.json ();
+    console.log ('chatListJson', chatListJson);
     return chatListJson.curMsgList;
   } catch (err) {
     throw err;

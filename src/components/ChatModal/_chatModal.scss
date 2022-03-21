@@ -14,7 +14,7 @@
     width: 700px;
     background: $white;
     padding: 10px;
-    border: 1px solid $lightGrey;
+    border: 1px solid $lightGray;
     border-radius: 20px;
 
     @media screen and (max-width: $medium) {
@@ -95,7 +95,7 @@
         textarea {
           width: 100%;
           border: 0;
-          background-color: $grey;
+          background-color: $gray;
           padding: 10px;
           border-radius: 20px;
           @include customedScrollbar;

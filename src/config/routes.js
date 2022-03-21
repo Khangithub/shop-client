@@ -1,10 +1,8 @@
 import React from 'react';
 import Product from './pages/Product';
-import NotFound from './pages/NotFound';
 import Products from './pages/Products';
 import ProductByCategory from './pages/ProductByCategory';
 import Search from './pages/Search';
-import Personalize from './pages/Personalize';
 import YourProducts from './pages/YourProducts';
 import YourBills from './pages/YourBills';
 
@@ -30,11 +28,6 @@ const routes = [
     main: ({props}) => <Search {...props} />,
   },
   {
-    path: '/personalize',
-    exact: true,
-    main: () => <Personalize />,
-  },
-  {
     path: '/productList/:category/:index', // tuyệt đối không được để route nào dưới route NotFound
     exact: false,
     main: ({match}) => <ProductByCategory match={match} />,
@@ -43,14 +36,7 @@ const routes = [
     path: '/productList/:index',
     exact: false,
     main: ({match}) => <Products match={match} />,
-  },
- 
-  //    {---------------------------------------------------------------------------------------------------------------------------}
-  {
-    path: '',
-    exact: false,
-    main: () => <NotFound />,
-  },
+  }
 ];
 
 export default routes;

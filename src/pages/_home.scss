@@ -3,7 +3,7 @@
 
 .home {
     @include parentLayout;
-    background-color: $grey;
+    background-color: $gray;
 
     .most-discounts-product-list {
         display: "flex";
