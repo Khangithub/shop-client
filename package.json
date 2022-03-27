@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
+    "country-calling-code": "^0.0.3",
     "firebase": "^8.0.2",
     "history": "^4.10.1",
     "jquery": "^3.4.1",

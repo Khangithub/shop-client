@@ -1,9 +1,21 @@
-@import  '../styles//colors';
+@import '../styles//colors';
 @import '../styles/layout';
 
 .settings {
     @include parentLayout;
     min-height: 100vh;
-
     margin-top: 30px;
+
+    .phone-ct {
+        div {
+            margin-bottom: 10px;
+        }
+
+        button {
+            @include goldenBtn;
+            width: fit-content;
+        }
+    }
+
+    
 }
