@@ -2,6 +2,7 @@ import {Types} from '../actions/chat';
 
 const INTIAL_STATE = {
   chatList: [],
+  conversations: [],
   chatLoading: true,
   chatErr: {},
 };
@@ -13,6 +14,14 @@ export default function chat (state = INTIAL_STATE, action) {
         ...state,
         chatLoading: false,
         chatList: action.payload.chatList,
+      };
+    }
+
+    case Types.GET_CONVERSATION_SUC: {
+      return {
+        ...state,
+        chatLoading: false,
+        conversations: action.payload.conversations,
       };
     }
 

@@ -3,10 +3,10 @@ import { Badge } from "react-bootstrap";
 import { closeSvg } from "../../assets";
 import { formatTime } from "../../helpers/time";
 import { scrollToBottom } from "../../helpers/dom";
-import { HorizontalDivider, Loading } from "../";
+import { Loading } from "../";
 import "./_chatModal.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { getChatListReq } from "../../actions/chat";
+import { getChatListReq, getConversationReq } from "../../actions/chat";
 import { isEmpty } from "lodash";
 
 function ChatModal({ currentUser, product, token, socket }) {
@@ -18,13 +18,21 @@ function ChatModal({ currentUser, product, token, socket }) {
   useEffect(() => {
     dispatch(
       getChatListReq({
-        roomId: `${currentUser._id}-${product._id}-buying`,
+        roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
         token,
       })
     );
-  }, [currentUser, product, token, dispatch]);
+    dispatch(
+      getConversationReq({
+        fromId: currentUser._id,
+        token,
+      })
+    );
+  }, [currentUser, currentUser._id, product._id, product, token, dispatch]);
 
-  const { chatList, chatLoading, chatErr } = useSelector(({ chat }) => chat);
+  const { chatList, conversations, chatLoading, chatErr } = useSelector(
+    ({ chat }) => chat
+  );
 
   useEffect(() => {
     setMsgList(chatList);
@@ -58,15 +66,19 @@ function ChatModal({ currentUser, product, token, socket }) {
                 <b>{product.saler.username}</b>
               </div>
               <div className="chat-box">
-                {msgList.map(({ msg, from, to, createdAt }, index, arr) => {
-                  let isFrom = currentUser._id === from;
-                  let isThisMsgFromSameSenderWithPreMsg =
-                    index > 0 && arr[index - 1].from === from;
+                {msgList.map(({ msg, from, createdAt }, index, self) => {
+                  let isFrom =
+                    typeof from === "object"
+                      ? currentUser._id === from._id
+                      : currentUser._id === from;
+
+                  // let isThisMsgFromSameSenderWithPreMsg =
+                  //   index > 0 && self[index - 1].from === from;
                   return (
                     <div key={index}>
-                      {!isThisMsgFromSameSenderWithPreMsg && (
+                      {/* {!isThisMsgFromSameSenderWithPreMsg && (
                         <HorizontalDivider line={1} />
-                      )}
+                      )} */}
                       <div
                         key={index}
                         className={`msg-ct ${isFrom ? "msg-from" : "msg-to"}`}
@@ -89,11 +101,12 @@ function ChatModal({ currentUser, product, token, socket }) {
                 onKeyUp={async (e) => {
                   if (curMsg.trim() !== "" && e.keyCode === 13) {
                     const msgData = {
-                      room: `${currentUser._id}-${product._id}-buying`,
+                      room: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
                       from: currentUser._id,
                       to: product.saler._id,
                       msg: curMsg,
                       createdAt: formatTime(new Date()),
+                      product: product._id,
                     };
                     await socket.emit("send_message", msgData);
                     setMsgList((list) => [...list, msgData]);
@@ -103,30 +116,28 @@ function ChatModal({ currentUser, product, token, socket }) {
                 }}
               />
             </div>
-            <div className="chat-list-ct">
-              <textarea
-                rows="2"
-                placeholder="Aa"
-                value={curMsg}
-                onChange={({ target: { value } }) => {
-                  setCurMsg(value);
-                }}
-                onKeyUp={async (e) => {
-                  if (curMsg.trim() !== "" && e.keyCode === 13) {
-                    const msgData = {
-                      room: `${currentUser._id}-${product._id}-buying`,
-                      to: currentUser._id,
-                      from: product.saler._id,
-                      msg: curMsg,
-                      createdAt: formatTime(new Date()),
-                    };
-                    await socket.emit("send_message", msgData);
-                    setMsgList((list) => [...list, msgData]);
-                    setCurMsg("");
-                    scrollToBottom(".chat-box");
-                  }
-                }}
-              />
+            <div className="cvs-list-ct">
+              {conversations
+                .map((cvs, index) => (
+                  <div className="cvs-ct" key={index}>
+                    <div className="csv-msg-ct">
+                      <img src={cvs.to.avatar} alt="" />
+
+                      <div>
+                        <b>{cvs.product.saler.username}</b>
+                        <div>{cvs.msg}</div>
+                      </div>
+                    </div>
+
+                    <div className="csv-product-ct">
+                      <div>
+                        <small>{cvs.createdAt.formatedDate}</small>
+                      </div>
+                      <img src={cvs.product.productImage} alt="" />
+                    </div>
+                  </div>
+                ))
+                .reverse()}
             </div>
           </div>
         </div>

@@ -107,8 +107,37 @@
         }
       }
 
-      .chat-list-ct {
+      .cvs-list-ct {
         flex: 1;
+
+        .cvs-ct {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border: 1px solid $gray;
+          padding: 5px;
+          border-radius: 10px;
+          margin-bottom: 10px;
+
+          &:hover {
+            background: $gray;
+          }
+
+          .csv-msg-ct {
+            display: flex;
+
+            img {
+              @include avatar;
+            }
+          }
+
+          .csv-product-ct {
+            img {
+              width: 55px;
+              height: 55px;
+            }
+          }
+        }
       }
     }
 
