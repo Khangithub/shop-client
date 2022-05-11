@@ -1,14 +1,14 @@
 import {Types} from '../actions/product';
 
 const INTIAL_STATE = {
-  mostDiscountsProducts: [],
-  bestSaleProducts: [],
-  newArrivalProducts: [],
+  mostDiscntProds: [],
+  bestSaleProds: [],
+  newArrivalProds: [],
   products: [],
   productsByCategory: [],
   product: {},
-  productLoading: true,
-  productErr: {},
+  prodLoading: true,
+  prodErr: {},
 };
 
 export default function products (state = INTIAL_STATE, action) {
@@ -16,31 +16,31 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
-        mostDiscountsProducts: action.payload.products,
+        prodLoading: false,
+        mostDiscntProds: action.payload.products,
       };
     }
 
     case Types.GET_BEST_SALE_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
-        bestSaleProducts: action.payload.products,
+        prodLoading: false,
+        bestSaleProds: action.payload.products,
       };
     }
 
     case Types.GET_NEW_ARRIVAL_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
-        newArrivalProducts: action.payload.products,
+        prodLoading: false,
+        newArrivalProds: action.payload.products,
       };
     }
 
     case Types.GET_PRODUCT_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
+        prodLoading: false,
         product: action.payload.product,
       };
     }
@@ -48,7 +48,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_ALL_PRODUCTS_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
+        prodLoading: false,
         products: action.payload.products,
       };
     }
@@ -56,7 +56,7 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.GET_PRODUCTS_BY_CATEGORY_SUCCESS: {
       return {
         ...state,
-        productLoading: false,
+        prodLoading: false,
         productsByCategory: action.payload.products
       }
     }
@@ -64,8 +64,8 @@ export default function products (state = INTIAL_STATE, action) {
     case Types.FAILED_REQUEST: {
       return {
         ...state,
-        productLoading: true,
-        productErr: action.payload.productErr,
+        prodLoading: true,
+        prodErr: action.payload.prodErr,
       };
     }
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signupRequest } from "../actions/user";
+import { signupReq } from "../actions/user";
 
 import { googleIcon } from "../assets";
 import "./_signup.scss";
@@ -44,7 +44,7 @@ function Signup() {
 
         <button
           onClick={() => {
-            dispatch(signupRequest({ role }));
+            dispatch(signupReq({ role }));
             history.push("/");
           }}
         >

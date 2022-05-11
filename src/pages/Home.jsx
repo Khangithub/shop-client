@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Carousel } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  getBestSaleProductsRequest,
-  getMostDiscountsProductsRequest,
-  getNewArrivalProductsRequest,
+  getBestSaleProdReq,
+  getMostDiscountsProdsReq,
+  getNewArrivalProdReq,
 } from "../actions/product";
 import { isEmpty } from "lodash";
 import {
@@ -35,29 +35,29 @@ function Home() {
   const [limit] = useState(6);
 
   const {
-    mostDiscountsProducts,
-    bestSaleProducts,
-    newArrivalProducts,
-    productLoading,
-    productErr,
+    mostDiscntProds,
+    bestSaleProds,
+    newArrivalProds,
+    prodLoading,
+    prodErr,
   } = useSelector(({product}) => product);
 
   useEffect(() => {
-    dispatch(getMostDiscountsProductsRequest({ pageIndex, limit }));
-    dispatch(getBestSaleProductsRequest({ pageIndex, limit }));
-    dispatch(getNewArrivalProductsRequest({ pageIndex, limit }));
+    dispatch(getMostDiscountsProdsReq({ pageIndex, limit }));
+    dispatch(getBestSaleProdReq({ pageIndex, limit }));
+    dispatch(getNewArrivalProdReq({ pageIndex, limit }));
   }, [dispatch, pageIndex, limit]);
 
   if (
-    isEmpty(mostDiscountsProducts) ||
-    isEmpty(bestSaleProducts) ||
-    isEmpty(newArrivalProducts)
+    isEmpty(mostDiscntProds) ||
+    isEmpty(bestSaleProds) ||
+    isEmpty(newArrivalProds)
   )
     return <Loading />;
 
-  if (productLoading) return <Loading />;
+  if (prodLoading) return <Loading />;
 
-  if (!isEmpty(productErr)) return <Loading />;
+  if (!isEmpty(prodErr)) return <Loading />;
 
   return (
     <>
@@ -65,7 +65,7 @@ function Home() {
       <div className="home">
         <Banner />
         <CategoryList />
-        <div className="best-sale-product-list">
+        <div className="prod-list">
           <Row>
             <Col xs={12} sm={4}>
               <Carousel>
@@ -87,14 +87,14 @@ function Home() {
               <div>
                 <Row>
                   <ProductCard
-                    product={bestSaleProducts[0]}
+                    product={bestSaleProds[0]}
                     sm={6}
                     md={6}
                     lg={6}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={bestSaleProducts[1]}
+                    product={bestSaleProds[1]}
                     sm={6}
                     md={6}
                     lg={6}
@@ -104,28 +104,28 @@ function Home() {
 
                 <Row>
                   <ProductCard
-                    product={bestSaleProducts[2]}
+                    product={bestSaleProds[2]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={bestSaleProducts[3]}
+                    product={bestSaleProds[3]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={bestSaleProducts[4]}
+                    product={bestSaleProds[4]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={bestSaleProducts[5]}
+                    product={bestSaleProds[5]}
                     sm={6}
                     md={6}
                     lg={3}
@@ -139,9 +139,9 @@ function Home() {
 
         <HorizontalDivider />
 
-        <div className="most-discounts-product-list">
+        <div className="prod-list">
           <Row>
-            {mostDiscountsProducts.map((product, index) => (
+            {mostDiscntProds.map((product, index) => (
               <ProductCard key={index} product={product} />
             ))}
           </Row>
@@ -149,20 +149,20 @@ function Home() {
 
         <HorizontalDivider />
 
-        <div className="new-arrival-product-list">
+        <div className="prod-list">
           <Row>
             <Col sm={8}>
               <div>
                 <Row>
                   <ProductCard
-                    product={newArrivalProducts[0]}
+                    product={newArrivalProds[0]}
                     sm={6}
                     md={6}
                     lg={6}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={newArrivalProducts[1]}
+                    product={newArrivalProds[1]}
                     sm={6}
                     md={6}
                     lg={6}
@@ -172,28 +172,28 @@ function Home() {
 
                 <Row>
                   <ProductCard
-                    product={newArrivalProducts[2]}
+                    product={newArrivalProds[2]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={newArrivalProducts[3]}
+                    product={newArrivalProds[3]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={newArrivalProducts[4]}
+                    product={newArrivalProds[4]}
                     sm={6}
                     md={6}
                     lg={3}
                     showPriceOnly
                   />
                   <ProductCard
-                    product={newArrivalProducts[5]}
+                    product={newArrivalProds[5]}
                     sm={6}
                     md={6}
                     lg={3}

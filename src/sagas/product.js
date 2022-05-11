@@ -30,7 +30,7 @@ function* getAllProductsGenerator({payload: {pageIndex, limit}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        productErr: err,
+        prodErr: err,
       })
     );
   }
@@ -49,7 +49,7 @@ function* getProductsByCategoryGenerator({
   } catch (err) {
     yield put (
       getFailedRequest ({
-        productErr: err,
+        prodErr: err,
       })
     );
   }
@@ -69,7 +69,7 @@ function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        productErr: err,
+        prodErr: err,
       })
     );
   }
@@ -101,7 +101,7 @@ function* getNewArrivalProductsGenerator({payload: {pageIndex, limit}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        productErr: err,
+        prodErr: err,
       })
     );
   }
@@ -116,7 +116,7 @@ function* getProductGenerator({payload: {productId}}) {
   } catch (err) {
     yield put (
       getFailedRequest ({
-        productErr: err,
+        prodErr: err,
       })
     );
   }

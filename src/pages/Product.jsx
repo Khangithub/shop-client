@@ -50,7 +50,7 @@ function Product() {
     preview: [],
   });
 
-  const { product, productLoading, productErr } = useSelector(
+  const { product, prodLoading, prodErr } = useSelector(
     ({ product }) => product
   );
 
@@ -81,8 +81,8 @@ function Product() {
   let [seeMoreText, setSeeMore] = useState(true);
 
   if (isEmpty(product)) return <Loading />;
-  if (productLoading || cmtLoading) return <Loading />;
-  if (!isEmpty(productErr) || !isEmpty(cmtErr)) return <Loading />;
+  if (prodLoading || cmtLoading) return <Loading />;
+  if (!isEmpty(prodErr) || !isEmpty(cmtErr)) return <Loading />;
 
   const truncatDes = (des) => {
     let copiedDes = "".concat(des);

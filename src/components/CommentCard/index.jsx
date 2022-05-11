@@ -11,8 +11,8 @@ import ReactPlayer from "react-player";
 import "./_commentCard.scss";
 
 function CommentCard({ comment }) {
-  const {currentUser, token} = useContext(UserCtx);
   const dispatch = useDispatch();
+  const {currentUser, token} = useContext(UserCtx);
   const [showRepModal, setShowRepModal] = useState(false);
   const [isEditCmt, setIsEditCmt] = useState(false);
   const [editedCmt, setEditedCmt] = useState(comment.mainComment);

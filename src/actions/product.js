@@ -32,7 +32,7 @@ const getProductsByCategoryRequest = ({category, pageIndex, limit}) => ({
   },
 });
 
-const getMostDiscountsProductsRequest = ({pageIndex, limit}) => ({
+const getMostDiscountsProdsReq = ({pageIndex, limit}) => ({
   type: Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
   payload: {
     pageIndex,
@@ -40,7 +40,7 @@ const getMostDiscountsProductsRequest = ({pageIndex, limit}) => ({
   },
 });
 
-const getBestSaleProductsRequest = ({pageIndex, limit}) => ({
+const getBestSaleProdReq = ({pageIndex, limit}) => ({
   type: Types.GET_BEST_SALE_PRODUCTS_REQUEST,
   payload: {
     pageIndex,
@@ -48,7 +48,7 @@ const getBestSaleProductsRequest = ({pageIndex, limit}) => ({
   },
 });
 
-const getNewArrivalProductsRequest = ({pageIndex, limit}) => ({
+const getNewArrivalProdReq = ({pageIndex, limit}) => ({
   type: Types.GET_NEW_ARRIVAL_PRODUCTS_REQUEST,
   payload: {
     pageIndex,
@@ -118,9 +118,9 @@ export {
   Types,
   getAllProductsRequest,
   getProductsByCategoryRequest,
-  getBestSaleProductsRequest,
-  getMostDiscountsProductsRequest,
-  getNewArrivalProductsRequest,
+  getBestSaleProdReq,
+  getMostDiscountsProdsReq,
+  getNewArrivalProdReq,
   getProductRequest,
   getAllProductsSuccess,
   getProductsByCategorySuccess,

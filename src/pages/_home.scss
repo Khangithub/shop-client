@@ -5,16 +5,7 @@
     @include parentLayout;
     background-color: $gray;
 
-    .most-discounts-product-list {
-        display: "flex";
-        position: "relative";
-        bottom: 100px;
-
-    }
-
-    .best-sale-product-list,
-    .new-arrival-product-list {
-
+    .prod-list {
         .carousel-item {
             background: $white;
             padding: 10px;

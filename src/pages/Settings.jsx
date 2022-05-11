@@ -1,116 +1,74 @@
 import React, { useContext, useState } from "react";
-import { Card, Accordion, Button, Badge } from "react-bootstrap";
-import { NavBar } from "../components";
-import phoneCodes from "country-calling-code";
-import "./_settings.scss";
-import firebase, { auth } from "../config/firebase";
+import { NavBar, Title } from "../components";
+import { Row, Col } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+// import firebase, { auth } from "../config/firebase";
 import { UserCtx } from "../context/user.context";
+import "./_settings.scss";
+import { chgUserAvtReq } from "../actions/user";
 
 function Settings() {
-  const { currentUser } = useContext(UserCtx);
-  const [phoneNumber, setPhoneNumber] = useState({
-    number: "",
-    code: "",
-  });
+  const dispatch = useDispatch();
+  const { currentUser, token } = useContext(UserCtx);
+  const [avt, setAvt] = useState(currentUser.avatar);
+
+  // const [phoneNumber, setPhoneNumber] = useState({
+  //   number: "",
+  //   code: "",
+  // });
 
   // const [phoneVeriModalShow, setPhoneVeriModalShow] = useState(false);
 
-  const configureCaptcha = () => {
-    return (window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-      "recaptcha",
-      {
-        size: "invisible",
-        callback: (_) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          handlePhoneVerification();
-          console.log("Recaptca varified");
-        },
-        defaultCountry: "VN",
-      }
-    ));
-  };
+  // const configureCaptcha = () => {
+  //   return (window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+  //     "recaptcha",
+  //     {
+  //       size: "invisible",
+  //       callback: (_) => {
+  //         handlePhoneVerification();
+  //         console.log("Recaptca varified");
+  //       },
+  //       defaultCountry: "VN",
+  //     }
+  //   ));
+  // };
 
-  const handlePhoneVerification = async () => {
-    try {
-      configureCaptcha();
-      const phone = "+" + phoneNumber.code + phoneNumber.number;
-      const appVerifier = window.recaptchaVerifier;
-      await auth.signInWithPhoneNumber(phone, appVerifier);
-    } catch (err) {
-      throw new Error(err.toString());
-    }
-  };
+  // const handlePhoneVerification = async () => {
+  //   try {
+  //     configureCaptcha();
+  //     const phone = "+" + phoneNumber.code + phoneNumber.number;
+  //     const appVerifier = window.recaptchaVerifier;
+  //     await auth.signInWithPhoneNumber(phone, appVerifier);
+  //   } catch (err) {
+  //     throw new Error(err.toString());
+  //   }
+  // };
 
   return (
     <>
       <NavBar />
-      <div className="settings">
-        <Accordion>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                <b>Phone Number </b>
-                {currentUser.phoneNumber === "" && (
-                  <Badge variant="danger">Not Updated</Badge>
-                )}
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <div className="phone-ct">
-                  <div className="phone-code-ct">
-                    <label htmlFor="phone-code">
-                      <b>Phone Code:&nbsp;</b>
-                    </label>
-                    <select
-                      name="phone-code"
-                      id="phone-code"
-                      defaultValue="Vietnam (84)"
-                      onChange={(e) =>
-                        setPhoneNumber({ ...phoneNumber, code: e.target.value })
-                      }
-                    >
-                      {phoneCodes.map(({ country, countryCodes }) => (
-                        <option value={countryCodes[0]} key={country}>
-                          {country} ({countryCodes[0]})
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="phonenumber-ct">
-                    <label htmlFor="phonenumber">
-                      <b>Phone Number: &nbsp;</b>
-                    </label>
-                    <input
-                      type="tel"
-                      name="phonenumber"
-                      id="phonenumber"
-                      value={phoneNumber.number}
-                      onChange={(e) => {
-                        setPhoneNumber({
-                          ...phoneNumber,
-                          number: e.target.value,
-                        });
-                      }}
-                      pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                    />
-                  </div>
-                  <button onClick={handlePhoneVerification}>
-                    Send Verification Code
-                  </button>
+      {/* 
+        <label htmlFor="phonenumber">
+          <b>Phone Number: &nbsp;</b>
+        </label>
+        <input
+          type="tel"
+          name="phonenumber"
+          id="phonenumber"
+          value={phoneNumber.number}
+          onChange={(e) => {
+            setPhoneNumber({
+              ...phoneNumber,
+              number: e.target.value,
+            });
+          }}
+          pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+        />
+      </div>
+      <button onClick={handlePhoneVerification}>Send Verification Code</button>
 
-                  <div id="recaptcha"></div>
-                </div>
-
-                <small>
-                  Your phone code will replace the very first number of your
-                  phonenumber. For example, if your phone code is +84 and your
-                  number is 0987654321 then select your phone code and just type
-                  987654321 to phonenumber input (remove the first "0" of your
-                  phonenumber)
-                </small>
-
-                {/* <Modal
+      <div id="recaptcha"></div> 
+       <Modal
                   show={phoneVeriModalShow}
                   onHide={() => setPhoneVeriModalShow(false)}
                   size="lg"
@@ -119,20 +77,33 @@ function Settings() {
                 >
                 
                 </Modal> */}
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                Click me!
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="1">
-              <Card.Body>Hello! I'm another body</Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+      <div className="settings">
+        <Row>
+          <Col md={12} lg={4}></Col>
+          <Col md={12} lg={8}>
+            <Title>change avatar</Title>
+            <div className="chg-avt-ct">
+              <img src={avt} alt="user-avatar" />
+              <form encType="multipart/form-data">
+                <input
+                  name="chg-avt"
+                  id="chg-avt"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const { files } = e.target;
+                    if (files.length === 1) {
+                      setAvt(URL.createObjectURL(files[0]));
+                      dispatch(chgUserAvtReq({ file: files[0], token }));
+                    }
+                  }}
+                />
+                <label htmlFor="chg-avt">Change</label>
+              </form>
+            </div>
+            <Title>Password</Title>
+          </Col>
+        </Row>
       </div>
     </>
   );
