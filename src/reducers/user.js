@@ -4,6 +4,7 @@ const INTIAL_STATE = {
   currentUser: {},
   token: "",
   userLoading: true,
+  avtChange: false,
   userErr: {},
 };
 
@@ -18,12 +19,20 @@ export default function user(state = INTIAL_STATE, action) {
       };
     }
 
+    case Types.CHG_USER_AVT_REQ: {
+      return {
+        ...state,
+        avtChange: true,
+      };
+    }
+
     case Types.CHG_USER_AVT_SUC: {
       let cpCurrentUser = { ...state.currentUser };
       cpCurrentUser.avatar = action.payload.file;
       return {
         ...state,
         currentUser: cpCurrentUser,
+        avtChange: false,
       };
     }
 

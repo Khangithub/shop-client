@@ -8,7 +8,7 @@ export const UserCtx = createContext();
 
 function UserCtxProvider({children}) {
   const dispatch = useDispatch();
-  const { currentUser, token, userLoading, userErr } = useSelector(
+  const { currentUser, token, userLoading, userErr, avtChange } = useSelector(
     ({ user }) => user
   );
 
@@ -19,7 +19,7 @@ function UserCtxProvider({children}) {
   if (userLoading || !isEmpty(userErr)) return <Loading />;
 
   return (
-    <UserCtx.Provider value={{ currentUser, token, userLoading, userErr }}>
+    <UserCtx.Provider value={{ currentUser, token, userLoading, userErr, avtChange }}>
       {children}
     </UserCtx.Provider>
   );

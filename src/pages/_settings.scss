@@ -4,5 +4,29 @@
 .settings {
     @include parentLayout;
     min-height: 100vh;
-   
+    margin-top: 30px;
+
+    .chg-avt-ct {
+        display: flex;
+        align-items: center;
+
+        img {
+            @include avatar;
+            height: 200px;
+            width: 200px;
+        }
+
+        input {
+            display: none;
+        }
+
+        label>h3 {
+            border: 1px solid;
+            border-radius: 10px;
+            cursor: pointer;
+
+            padding: 10px;
+
+        }
+    }
 }

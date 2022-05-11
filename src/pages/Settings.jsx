@@ -9,7 +9,7 @@ import { chgUserAvtReq } from "../actions/user";
 
 function Settings() {
   const dispatch = useDispatch();
-  const { currentUser, token } = useContext(UserCtx);
+  const { currentUser, token, avtChange } = useContext(UserCtx);
   const [avt, setAvt] = useState(currentUser.avatar);
 
   // const [phoneNumber, setPhoneNumber] = useState({
@@ -79,15 +79,18 @@ function Settings() {
                 </Modal> */}
       <div className="settings">
         <Row>
-          <Col md={12} lg={4}></Col>
+          <Col md={12} lg={4}>
+            <Title>Profile</Title>
+            <Title>Password</Title>
+          </Col>
           <Col md={12} lg={8}>
-            <Title>change avatar</Title>
             <div className="chg-avt-ct">
-              <img src={avt} alt="user-avatar" />
+              <img src={avt} alt="user-avt" draggable={false} />
               <form encType="multipart/form-data">
                 <input
                   name="chg-avt"
                   id="chg-avt"
+                  disabled={avtChange}
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
@@ -98,10 +101,11 @@ function Settings() {
                     }
                   }}
                 />
-                <label htmlFor="chg-avt">Change</label>
+                <label htmlFor="chg-avt">
+                  <h3>{avtChange ? "Pending Change" : "Change"}</h3>
+                </label>
               </form>
             </div>
-            <Title>Password</Title>
           </Col>
         </Row>
       </div>
