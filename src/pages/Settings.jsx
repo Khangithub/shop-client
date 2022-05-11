@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Card, Accordion, Button, Badge } from "react-bootstrap";
 import { NavBar } from "../components";
 import phoneCodes from "country-calling-code";
 import "./_settings.scss";
 import firebase, { auth } from "../config/firebase";
+import { UserCtx } from "../context/user.context";
 
-function Settings({ currentUser, token }) {
+function Settings() {
+  const { currentUser } = useContext(UserCtx);
   const [phoneNumber, setPhoneNumber] = useState({
     number: "",
     code: "",
@@ -33,7 +35,7 @@ function Settings({ currentUser, token }) {
       configureCaptcha();
       const phone = "+" + phoneNumber.code + phoneNumber.number;
       const appVerifier = window.recaptchaVerifier;
-      await auth.signInWithPhoneNumber(phone, appVerifier)
+      await auth.signInWithPhoneNumber(phone, appVerifier);
     } catch (err) {
       throw new Error(err.toString());
     }
@@ -41,7 +43,7 @@ function Settings({ currentUser, token }) {
 
   return (
     <>
-      <NavBar currentUser={currentUser} token={token} />
+      <NavBar />
       <div className="settings">
         <Accordion>
           <Card>

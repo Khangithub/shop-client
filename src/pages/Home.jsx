@@ -29,7 +29,7 @@ import {
 
 import "./_home.scss";
 
-function Home({ currentUser, token }) {
+function Home() {
   const dispatch = useDispatch();
   const [pageIndex] = useState(1);
   const [limit] = useState(6);
@@ -61,7 +61,7 @@ function Home({ currentUser, token }) {
 
   return (
     <>
-      <NavBar currentUser={currentUser} token={token} />
+      <NavBar />
       <div className="home">
         <Banner />
         <CategoryList />

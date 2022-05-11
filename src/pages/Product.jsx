@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import io from "socket.io-client";
 import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,13 +33,15 @@ import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
-import ChatModal from "../components/ChatModal";
+// import ChatModal from "../components/ChatModal";
+import { UserCtx } from "../context/user.context";
 
 const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
-function Product({ currentUser, token }) {
+function Product() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { token, currentUser } = useContext(UserCtx);
   const { productId } = useRouteMatch().params;
   const [didAddOrder, setAddOrder] = useState(false);
   const [mainComment, setMainComment] = useState("");
@@ -49,10 +51,10 @@ function Product({ currentUser, token }) {
   });
 
   const { product, productLoading, productErr } = useSelector(
-    ({product}) => product
+    ({ product }) => product
   );
 
-  const { cmtList, cmtLoading, cmtErr } = useSelector(({comment}) => comment);
+  const { cmtList, cmtLoading, cmtErr } = useSelector(({ comment }) => comment);
 
   useEffect(() => {
     socket.emit("join_room", `${currentUser._id}-${productId}-buying`);
@@ -61,7 +63,7 @@ function Product({ currentUser, token }) {
     dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
   }, [productId, currentUser, dispatch]);
 
-  const { productsByCategory } = useSelector(({product}) => product);
+  const { productsByCategory } = useSelector(({ product }) => product);
 
   useEffect(() => {
     if (product && product.hasOwnProperty("category")) {
@@ -80,8 +82,7 @@ function Product({ currentUser, token }) {
 
   if (isEmpty(product)) return <Loading />;
   if (productLoading || cmtLoading) return <Loading />;
-  if (!isEmpty(productErr) || !isEmpty(cmtErr))
-    return <Loading />;
+  if (!isEmpty(productErr) || !isEmpty(cmtErr)) return <Loading />;
 
   const truncatDes = (des) => {
     let copiedDes = "".concat(des);
@@ -100,7 +101,7 @@ function Product({ currentUser, token }) {
 
   return (
     <>
-      <NavBar currentUser={currentUser} token={token} />
+      <NavBar />
       <div className="product">
         <Row className="product-info-ct">
           <Col sm={12} md={4} lg={4}>
@@ -428,23 +429,16 @@ function Product({ currentUser, token }) {
         {cmtList
           .map((comment) => (
             <div key={comment._id}>
-              <CommentCard
-                comment={comment}
-                currentUser={currentUser}
-                productId={productId}
-                token={token}
-              />
+              <CommentCard comment={comment} productId={productId} />
               <HorizontalDivider line={1} />
             </div>
           ))
           .reverse()}
       </div>
-      <ChatModal
+      {/* <ChatModal
         socket={socket}
-        currentUser={currentUser}
         product={product}
-        token={token}
-      />
+      /> */}
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}

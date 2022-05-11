@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavBar, Footer, Loading, OrderCard } from "../components";
 import { getOrderReq } from "../actions/order";
@@ -6,10 +6,11 @@ import { trashCanSvg } from "../assets";
 import { isEmpty } from "lodash";
 
 import "./_orders.scss";
+import { UserCtx } from "../context/user.context";
 
-function Order({ currentUser, token }) {
+function Order() {
   const dispatch = useDispatch();
-
+  const { token } = useContext(UserCtx);
   const { orders, orderLoading, orderErr } = useSelector(({ order }) => order);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ function Order({ currentUser, token }) {
 
   return (
     <>
-      <NavBar currentUser={currentUser} token={token} />
+      <NavBar />
       <div className="order">
         <h2>Your cart</h2>
 
@@ -77,9 +78,7 @@ function Order({ currentUser, token }) {
                 <span>Change</span>
               </div>
 
-              <div className="order-address-body">
-
-              </div>
+              <div className="order-address-body"></div>
             </div>
           </div>
         </div>

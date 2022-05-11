@@ -1,29 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducers from "./reducers";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./sagas";
+import UserCtxProvider from "./context/user.context";
 
-import {composeWithDevTools} from 'redux-devtools-extension';
+import "./styles/index.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import './styles/index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import reducers from './reducers';
-import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagas';
-
-const sagaMiddleware = createSagaMiddleware ();
-const store = createStore (
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(
   reducers,
-  composeWithDevTools (applyMiddleware (sagaMiddleware))
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run (rootSaga);
+sagaMiddleware.run(rootSaga);
 
-ReactDOM.render (
+ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <UserCtxProvider>
+      <App />
+    </UserCtxProvider>
   </Provider>,
-  document.getElementById ('root')
+  document.getElementById("root")
 );

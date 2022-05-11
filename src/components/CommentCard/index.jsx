@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
 import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
-import ReactPlayer from "react-player";
-
+import { UserCtx } from "../../context/user.context";
 import { tickSvg, sendSvg, mediaSvg } from "../../assets";
-
 import { convertTimestamp } from "../../helpers/time";
 import ReplyCard from "../ReplyCard";
+import ReactPlayer from "react-player";
 import "./_commentCard.scss";
 
-function CommentCard({ comment, currentUser, token }) {
+function CommentCard({ comment }) {
+  const {currentUser, token} = useContext(UserCtx);
   const dispatch = useDispatch();
   const [showRepModal, setShowRepModal] = useState(false);
   const [isEditCmt, setIsEditCmt] = useState(false);
