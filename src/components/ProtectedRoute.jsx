@@ -1,21 +1,20 @@
-import React from 'react';
-import {Redirect, Route} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import React, { useContext } from "react";
+import { Redirect, Route } from "react-router-dom";
+import { UserCtx } from "../context/user.context";
 
-export default function ProtectedRoute({component: Component, ...rest}) {
-  const user = useSelector((state) => state.user.user);
-
+export default function ProtectedRoute({ component: Component, ...rest }) {
+  const { currentUser } = useContext(UserCtx);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (user) {
+        if (!!currentUser) {
           return <Component {...props} />;
         } else {
           return (
             <Redirect
               to={{
-                pathname: '/login',
+                pathname: "/login",
                 state: {
                   from: props.location,
                 },
