@@ -1,7 +1,7 @@
 import { Types } from "../actions/user";
 
 const INTIAL_STATE = {
-  currentUser: {},
+  currentUser: null,
   token: "",
   userLoading: true,
   avtChange: false,

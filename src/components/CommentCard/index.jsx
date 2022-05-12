@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
 import { UserCtx } from "../../context/user.context";
-import { tickSvg, sendSvg, mediaSvg } from "../../assets";
+import { sendSvg, mediaSvg, tickSvg } from "../../assets";
 import { convertTimestamp } from "../../helpers/time";
 import ReplyCard from "../ReplyCard";
 import ReactPlayer from "react-player";
@@ -12,7 +12,7 @@ import "./_commentCard.scss";
 
 function CommentCard({ comment }) {
   const dispatch = useDispatch();
-  const {currentUser, token} = useContext(UserCtx);
+  const { currentUser, token } = useContext(UserCtx);
   const [showRepModal, setShowRepModal] = useState(false);
   const [isEditCmt, setIsEditCmt] = useState(false);
   const [editedCmt, setEditedCmt] = useState(comment.mainComment);
@@ -184,33 +184,36 @@ function CommentCard({ comment }) {
             </Col>
           )}
         </div>
-        <Dropdown>
-          <Dropdown.Toggle>
-            <b>...</b>
-          </Dropdown.Toggle>
+        {!!currentUser && (
+          <Dropdown>
+            <Dropdown.Toggle>
+              <b>...</b>
+            </Dropdown.Toggle>
 
-          <Dropdown.Menu>
-            <Dropdown.Item
-              onClick={() => {
-                setShowRepModal(!showRepModal);
-              }}
-            >
-              Reply
-            </Dropdown.Item>
-            {currentUser._id === comment.commentator._id && (
-              <>
-                <Dropdown.Item onClick={() => setIsEditCmt(!isEditCmt)}>
-                  Edit
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => setDelCmtModalShow(true)}>
-                  Delete
-                </Dropdown.Item>
-              </>
-            )}
-          </Dropdown.Menu>
-        </Dropdown>
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => {
+                  setShowRepModal(!showRepModal);
+                }}
+              >
+                Reply
+              </Dropdown.Item>
+              {currentUser._id === comment.commentator._id && (
+                <>
+                  <Dropdown.Item onClick={() => setIsEditCmt(!isEditCmt)}>
+                    Edit
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => setDelCmtModalShow(true)}>
+                    Delete
+                  </Dropdown.Item>
+                </>
+              )}
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
       </div>
-      {token && (
+
+      {!!currentUser && (
         <div className="cmt-card-modal-list">
           <Modal
             show={delCmtModalShow}
@@ -376,15 +379,7 @@ function CommentCard({ comment }) {
       )}
 
       {comment.subComment.map((rep) => {
-        return (
-          <ReplyCard
-            key={rep._id}
-            reply={rep}
-            token={token}
-            currentUser={currentUser}
-            comment={comment}
-          />
-        );
+        return <ReplyCard key={rep._id} reply={rep} comment={comment} />;
       })}
     </Col>
   );

@@ -99,7 +99,7 @@ function NavBar() {
                 Login
               </button>
             )}
-            {token && (
+            {!!currentUser && (
               <Nav.Link href="/orders">
                 <Image src={cartSvg} className="navbar-icon" alt="cartSvg" />
                 <Badge variant="danger">{orders.length}</Badge>

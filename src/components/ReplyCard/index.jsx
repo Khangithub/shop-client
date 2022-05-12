@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { repCmtReq, delRepReq } from "../../actions/comment";
 import { Row, Modal, Button, Dropdown } from "react-bootstrap";
 import ReactPlayer from "react-player";
@@ -8,8 +8,10 @@ import "./_replyCard.scss";
 import {sendSvg, mediaSvg} from "../../assets";
 import { useDispatch } from "react-redux";
 import { convertTimestamp } from "../../helpers/time";
+import { UserCtx } from "../../context/user.context";
 
-function ReplyCard({ reply, token, currentUser, comment }) {
+function ReplyCard({ reply, comment }) {
+  const {currentUser, token} = useContext(UserCtx);
   const dispatch = useDispatch();
   const [showRepModal, setShowRepModal] = useState(false);
   const [delRepModalShow, setDelRepModalShow] = useState(false);
@@ -19,7 +21,7 @@ function ReplyCard({ reply, token, currentUser, comment }) {
   });
   const [content, setContent] = useState("");
 
-  return (
+  return !!currentUser && (
     <div
       className="rep-card"
       onClick={(e) => {

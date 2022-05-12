@@ -1,18 +1,12 @@
 import { isEmpty } from "lodash";
 import { auth, provider } from "../config/firebase";
 
-const loginStatus = {
-  UNAUTHORIZED: "loginStatus/unauthorized",
-  LOGGEDIN: "loginStatus/logged-in",
-};
-
 const getCurrentUserCall = async ({ token }) => {
   try {
-    if (isEmpty(token)) {
-      return {
-        status: loginStatus.UNAUTHORIZED,
-      };
+    if (!token) {
+      return null;
     }
+    
     const currentUserResponse = await fetch(
       process.env.REACT_APP_USERS_CURRENT_USER,
       {
@@ -24,7 +18,7 @@ const getCurrentUserCall = async ({ token }) => {
     );
 
     const currentUserJson = await currentUserResponse.json();
-    return { ...currentUserJson.currentUser, status: loginStatus.LOGGEDIN };
+    return { ...currentUserJson.currentUser };
   } catch (err) {
     return err;
   }
@@ -46,7 +40,7 @@ const loginWithEmailNPwdCall = async ({ email, password }) => {
     const loginJson = await loginReq.json();
     return {
       token: loginJson.token,
-      currentUser: { ...loginJson.currentUser, staus: loginStatus.LOGGEDIN },
+      currentUser: { ...loginJson.currentUser },
     };
   } catch (err) {
     return err;
@@ -76,7 +70,7 @@ const loginWithGgCall = async () => {
     const loginJson = await loginReq.json();
     return {
       token: loginJson.token,
-      currentUser: { ...loginJson.currentUser, staus: loginStatus.LOGGEDIN },
+      currentUser: { ...loginJson.currentUser },
     };
   } catch (err) {
     return err;
@@ -88,7 +82,6 @@ const signupCall = async ({ role }) => {
     const {
       user: { email, photoURL, displayName },
     } = await auth.signInWithPopup(provider);
-    console.log("call", email, photoURL, displayName);
 
     if (isEmpty(email)) {
       throw new Error("unable to signup with gg");
@@ -110,7 +103,7 @@ const signupCall = async ({ role }) => {
     const signupJson = await signupReq.json();
     return {
       token: signupJson.token,
-      currentUser: { ...signupJson.currentUser, staus: loginStatus.LOGGEDIN },
+      currentUser: { ...signupJson.currentUser },
     };
   } catch (err) {
     return err;
