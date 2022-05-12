@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ProtectedRoute } from "./components";
 import { Home, Product, Login, Signup, Orders, Settings } from "./pages";
 
 function App() {
@@ -18,16 +19,8 @@ function App() {
             exact
             render={(props) => <Signup {...props} />}
           />
-          <Route
-            path="/orders"
-            exact
-            render={(props) => <Orders {...props} />}
-          />
-          <Route
-            path="/settings"
-            exact
-            render={(props) => <Settings {...props} />}
-          />
+          <ProtectedRoute exact path="/orders" component={Orders} />
+          <ProtectedRoute exact path="/settings" component={Settings} />
           {/* {routes.map((route, index) => {
             return (
               <Route

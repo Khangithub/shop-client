@@ -9,3 +9,4 @@ export {default as OrderCard} from './OrderCard';
 export {default as CommentCard} from './CommentCard';
 export {default as Title} from './Title';
 export {default as Pagination} from './Pagination'
+export {default as ProtectedRoute} from './ProtectedRoute'
