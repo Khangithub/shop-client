@@ -21,16 +21,6 @@ function App() {
           />
           <ProtectedRoute exact path="/orders" component={Orders} />
           <ProtectedRoute exact path="/settings" component={Settings} />
-          {/* {routes.map((route, index) => {
-            return (
-              <Route
-                key={index}
-                exact={route.exact}
-                path={route.path}
-                component={route.main}
-              />
-            );
-          })} */}
         </Switch>
       </div>
     </Router>

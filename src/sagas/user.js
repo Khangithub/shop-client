@@ -45,13 +45,16 @@ function* loginWithEmailNPwdGenerator({ payload: { email, password } }) {
       email,
       password,
     });
-    cookies.set("token", token);
-    yield put(
-      getCurUserSuc({
-        currentUser,
-        token,
-      })
-    );
+
+    if (!!token && !!currentUser) {
+      cookies.set("token", token);
+      yield put(
+        getCurUserSuc({
+          currentUser,
+          token,
+        })
+      );
+    }
   } catch (err) {
     yield put(
       getFailedUserReq({
