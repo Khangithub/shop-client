@@ -1,25 +1,26 @@
 @import '../../styles/colors';
 @import '../../styles/layout';
+@import '../../styles/animation';
 
 .chat-modal {
+  @include fadeIn;
   position: fixed;
   bottom: 10px;
   right: 10px;
   z-index: 9999;
   cursor: pointer;
 
-
+  @media screen and (max-width: $medium) {
+    display: none;
+  }
 
   .chat-modal-layout {
+    @include fadeIn;
     width: 700px;
-    background: $white;
+    background: $black;
     padding: 10px;
-    border: 1px solid $lightGray;
+    border: 1px solid $black;
     border-radius: 20px;
-
-    @media screen and (max-width: $medium) {
-      display: none;
-    }
 
     display: flex;
     flex-direction: column;

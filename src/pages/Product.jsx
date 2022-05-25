@@ -33,7 +33,7 @@ import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
-// import ChatModal from "../components/ChatModal";
+import ChatModal from "../components/ChatModal";
 import { UserCtx } from "../context/user.context";
 
 // const socket = io.connect(process.env.REACT_APP_BASE_URL);
@@ -436,6 +436,7 @@ function Product() {
           ))
           .reverse()}
       </div>
+      <ChatModal product={product} />
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}
@@ -456,7 +457,7 @@ function Product() {
           {quantity === 1 ? "was" : "were"} added to your cart
         </Toast.Body>
       </Toast>
-      <Footer /> 
+      <Footer />
     </>
   );
 }

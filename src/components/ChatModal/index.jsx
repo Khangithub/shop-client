@@ -1,53 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
+import ReactDOM from "react-dom";
 import { Badge } from "react-bootstrap";
 import { closeSvg } from "../../assets";
-import { formatTime } from "../../helpers/time";
-import { scrollToBottom } from "../../helpers/dom";
-import { Loading } from "../";
-import "./_chatModal.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { getChatListReq, getConversationReq } from "../../actions/chat";
-import { isEmpty } from "lodash";
+// import { formatTime } from "../../helpers/time";
+// import { scrollToBottom } from "../../helpers/dom";
+// import { Loading } from "../";
+import { useSelector } from "react-redux";
+// import { getChatListReq, getConversationReq } from "../../actions/chat";
+// import { isEmpty } from "lodash";
+import { UserCtx } from "../../context/user.context";
 
-function ChatModal({ currentUser, product, token, socket }) {
-  const dispatch = useDispatch();
+import "./_chatModal.scss";
+
+function ChatModal({ product }) {
+  const { currentUser } = useContext(UserCtx);
+  // const dispatch = useDispatch();
   const [showChatModal, setShowChatModal] = useState(false);
   const [curMsg, setCurMsg] = useState("");
-  const [msgList, setMsgList] = useState([]);
+  const [msgList] = useState([]);
 
-  useEffect(() => {
-    dispatch(
-      getChatListReq({
-        roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
-        token,
-      })
-    );
-    dispatch(
-      getConversationReq({
-        fromId: currentUser._id,
-        token,
-      })
-    );
-  }, [currentUser, currentUser._id, product._id, product, token, dispatch]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getChatListReq({
+  //       roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
+  //       token,
+  //     })
+  //   );
+  //   dispatch(
+  //     getConversationReq({
+  //       fromId: currentUser._id,
+  //       token,
+  //     })
+  //   );
+  // }, [currentUser, currentUser._id, product._id, product, token, dispatch]);
 
-  const { chatList, conversations, chatLoading, chatErr } = useSelector(
-    ({ chat }) => chat
-  );
+  const { conversations } = useSelector(({ chat }) => chat);
 
-  useEffect(() => {
-    setMsgList(chatList);
-  }, [chatList]);
+  // useEffect(() => {
+  //   setMsgList(chatList);
+  // }, [chatList]);
 
-  useEffect(() => {
-    socket.on("receive_message", (newMsg) => {
-      setMsgList((list) => [...list, newMsg]);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (newMsg) => {
+  //     setMsgList((list) => [...list, newMsg]);
+  //   });
+  // }, [socket]);
 
-  if (chatLoading) return <Loading />;
-  if (!isEmpty(chatErr)) return <Loading />;
+  // if (chatLoading) return <Loading />;
+  // if (!isEmpty(chatErr)) return <Loading />;
 
-  return (
+  return ReactDOM.createPortal(
     <div className="chat-modal">
       {showChatModal && (
         <div className="chat-modal-layout">
@@ -98,22 +100,22 @@ function ChatModal({ currentUser, product, token, socket }) {
                 onChange={({ target: { value } }) => {
                   setCurMsg(value);
                 }}
-                onKeyUp={async (e) => {
-                  if (curMsg.trim() !== "" && e.keyCode === 13) {
-                    const msgData = {
-                      room: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
-                      from: currentUser._id,
-                      to: product.saler._id,
-                      msg: curMsg,
-                      createdAt: formatTime(new Date()),
-                      product: product._id,
-                    };
-                    await socket.emit("send_message", msgData);
-                    setMsgList((list) => [...list, msgData]);
-                    setCurMsg("");
-                    scrollToBottom(".chat-box");
-                  }
-                }}
+                // onKeyUp={async (e) => {
+                //   if (curMsg.trim() !== "" && e.keyCode === 13) {
+                //     const msgData = {
+                //       room: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
+                //       from: currentUser._id,
+                //       to: product.saler._id,
+                //       msg: curMsg,
+                //       createdAt: formatTime(new Date()),
+                //       product: product._id,
+                //     };
+                //     await socket.emit("send_message", msgData);
+                //     setMsgList((list) => [...list, msgData]);
+                //     setCurMsg("");
+                //     scrollToBottom(".chat-box");
+                //   }
+                // }}
               />
             </div>
             <div className="cvs-list-ct">
@@ -147,7 +149,8 @@ function ChatModal({ currentUser, product, token, socket }) {
           <h2>Chat</h2>
         </Badge>
       )}
-    </div>
+    </div>,
+    document.getElementById("chat-modal-root")
   );
 }
 
