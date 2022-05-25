@@ -1,15 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Col, Badge } from "react-bootstrap";
-import "./_productCard.scss";
 import { getUnitPrice } from "../../helpers/number";
-import EditProductButton from "./EditProductButton";
-import DeleteProductButton from "./DeleteProductButton";
+import "./_productCard.scss";
 
 export default function ProductCard({
   product,
-  canEdit,
-  canDelete,
   showPriceOnly,
   xs = 6,
   sm = 4,
@@ -19,27 +15,23 @@ export default function ProductCard({
   const history = useHistory();
 
   return (
-    <Col xs={xs} sm={sm} md={md} lg={lg} className="product-card">
-      <div className="product-card-button-list">
-        {canEdit && <EditProductButton product={product} />}
-        {canDelete && <DeleteProductButton product={product} />}
-      </div>
+    <Col xs={xs} sm={sm} md={md} lg={lg} className="prod-card-ct">
       <div
-        className="product-card-container"
+        className="prod-card-layout"
         onClick={() => {
           history.push(`/products/${product._id}`);
         }}
       >
         <div
-          className="product-card-img"
+          className="prod-card-img"
           style={{ background: `url(${product.productImage})` }}
         ></div>
 
-        <div className="product-card-info">
-          <h4 className="product-card-name">{product.name}</h4>
+        <div className="prod-card-info">
+          <h4 className="prod-card-name">{product.name}</h4>
 
-          <div className="product-card-price">
-            <div className={!product.discount ? "net-price--hide" : undefined}>
+          <div className="prod-card-price">
+            <div className={!product.discount ? "net-price--hide" : ""}>
               <b>{getUnitPrice(product)}$ &nbsp;&nbsp;</b>
               <Badge variant="danger">-{product.discount}%</Badge>
             </div>
@@ -77,7 +69,7 @@ export default function ProductCard({
                 ></div>
               </div>
 
-              <p className="product-card-sold-quantity">{`sold ${product.sold}/${product.inStock}`}</p>
+              <p className="prod-card-sold-qty">{`sold ${product.sold}/${product.inStock}`}</p>
             </>
           )}
         </div>

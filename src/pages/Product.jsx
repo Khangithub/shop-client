@@ -200,7 +200,7 @@ function Product() {
                     }, 3500);
                   }}
                 >
-                  Add to card
+                  ADD TO CART
                 </button>
                 <HorizontalDivider />
 
@@ -456,7 +456,7 @@ function Product() {
           {quantity === 1 ? "was" : "were"} added to your cart
         </Toast.Body>
       </Toast>
-      <Footer /> */}
+      <Footer /> 
     </>
   );
 }

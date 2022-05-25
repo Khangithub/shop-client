@@ -24,40 +24,45 @@
         }
 
 
-        .navbar-searchbox {
-            display: flex;
-            flex-direction: row;
+        .collapse {
+            justify-content: flex-end;
 
-            width: 100%;
-
-            border-radius: 10px;
-            border: 2px solid $gray;
-
-            padding: 10px;
-            margin-top: 10px;
-            background: $white;
-
-            @media screen and (min-width: $large) {
-                max-width: 600px;
-            }
-
-            input {
+            .navbar-searchbox {
                 display: flex;
-                border: 0;
-                padding: 5px 0;
-                line-height: 30px;
+                flex-direction: row;
+
                 width: 100%;
 
-                &:focus {
-                    outline: none;
-                    border: none;
+                border-radius: 10px;
+                border: 2px solid $gray;
+
+                padding: 10px;
+                margin-top: 10px;
+                background: $white;
+
+                @media screen and (min-width: $large) {
+                    max-width: 600px;
+                }
+
+                input {
+                    display: flex;
+                    border: 0;
+                    padding: 5px 0;
+                    line-height: 30px;
+                    width: 100%;
+
+                    &:focus {
+                        outline: none;
+                        border: none;
+                    }
+                }
+
+                img {
+                    width: 20px;
                 }
             }
-
-            img {
-                width: 20px;
-            }
         }
+
 
 
         .login_btn {
@@ -86,7 +91,7 @@
                 padding: 5px;
             }
         }
-        
+
         .nav-link {
             @media screen and (max-width: $medium) {
                 padding-left: 0;

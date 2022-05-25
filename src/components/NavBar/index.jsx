@@ -5,18 +5,18 @@ import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers/string";
 import { getOrderReq } from "../../actions/order";
 
-import {logoSvg, searchSvg, cartSvg} from "../../assets";
+import { logoSvg, searchSvg, cartSvg } from "../../assets";
 
 import "./_navbar.scss";
 import { UserCtx } from "../../context/user.context";
 
 function NavBar() {
-  const {currentUser, token} = useContext(UserCtx)
+  const { currentUser, token } = useContext(UserCtx);
   const history = useHistory();
   const dispatch = useDispatch();
   let [input, setInput] = useState("");
 
-  const { orders } = useSelector(({order}) => order);
+  const { orders } = useSelector(({ order }) => order);
 
   useEffect(() => {
     if (token) {
@@ -43,20 +43,6 @@ function NavBar() {
 
           <Navbar.Toggle />
           <Navbar.Collapse>
-            <Nav className="mr-auto">
-              {/* <Nav.Link href="/productList/1">
-                <Image
-                  className="navbar-icon"
-                  src={productSvg}
-                  alt="productSvg"
-                />
-              </Nav.Link> */}
-
-              {/* {currentUser && currentUser.role !== "client" && (
-                <AddProductBtn />
-              )} */}
-            </Nav>
-
             <form className="navbar-searchbox" onSubmit={handleSearch}>
               <input
                 type="text"
@@ -112,4 +98,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default React.memo(NavBar);
