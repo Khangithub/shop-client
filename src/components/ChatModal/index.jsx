@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Badge } from "react-bootstrap";
 import { closeSvg } from "../../assets";
@@ -9,15 +9,37 @@ import { useSelector } from "react-redux";
 // import { getChatListReq, getConversationReq } from "../../actions/chat";
 // import { isEmpty } from "lodash";
 import { UserCtx } from "../../context/user.context";
+import { MouseCtx } from "../../context/mouse.context";
 
 import "./_chatModal.scss";
 
 function ChatModal({ product }) {
   const { currentUser } = useContext(UserCtx);
-  // const dispatch = useDispatch();
+  const { corr } = useContext(MouseCtx);
+  const ref = useRef(null);
   const [showChatModal, setShowChatModal] = useState(false);
   const [curMsg, setCurMsg] = useState("");
   const [msgList] = useState([]);
+
+  useEffect(() => {
+    if (!ref.current) {
+      return;
+    }
+
+    let { top, left, bottom, right } = ref.current.getBoundingClientRect();
+
+    if (
+      !(
+        top <= corr.yCorr &&
+        corr.yCorr <= bottom &&
+        left <= corr.xCorr &&
+        corr.xCorr <= right
+      )
+    ) {
+      //if mouse click out of the modal
+      setShowChatModal(false);
+    }
+  }, [corr]);
 
   // useEffect(() => {
   //   dispatch(
@@ -52,7 +74,7 @@ function ChatModal({ product }) {
   return ReactDOM.createPortal(
     <div className="chat-modal">
       {showChatModal && (
-        <div className="chat-modal-layout">
+        <div className="chat-modal-ct" ref={ref}>
           <div className="chat-modal-header">
             <h2>Chat</h2>
             <img
@@ -61,7 +83,7 @@ function ChatModal({ product }) {
               onClick={() => setShowChatModal(false)}
             />
           </div>
-          <div className="chat-modal-ct">
+          <div className="chat-modal-body">
             <div className="current-chat">
               <div className="chat-avatar">
                 <img src={product.saler.avatar} alt="" />

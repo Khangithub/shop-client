@@ -28,16 +28,7 @@ function CommentCard({ comment }) {
   const [content, setContent] = useState("");
 
   return (
-    <Col
-      className="cmt-card"
-      onClick={(e) => {
-        const ignoreClickOnMeElement = document.getElementById(
-          `modal-${comment._id}`
-        );
-        const isClickInsideElement = ignoreClickOnMeElement?.contains(e.target);
-        if (isClickInsideElement === false) setShowRepModal(false);
-      }}
-    >
+    <Col className="cmt-card">
       <div className="cmt-card-ct">
         <img
           src={comment.commentator.avatar}

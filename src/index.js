@@ -8,6 +8,7 @@ import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 import UserCtxProvider from "./context/user.context";
+import MouseCtxProvider from "./context/mouse.context";
 
 import "./styles/index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -22,9 +23,11 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <UserCtxProvider>
-      <App />
-    </UserCtxProvider>
+    <MouseCtxProvider>
+      <UserCtxProvider>
+        <App />
+      </UserCtxProvider>
+    </MouseCtxProvider>
   </Provider>,
   document.getElementById("root")
 );
