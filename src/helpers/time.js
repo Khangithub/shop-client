@@ -1,22 +1,8 @@
-import prettyMs from 'pretty-ms';
+import prettyMs from "pretty-ms";
 
-const convertTimestamp = timestamp =>
-  prettyMs (Date.now () - new Date (timestamp), {
+const convertTimestamp = (timestamp) =>
+  prettyMs(Date.now() - new Date(timestamp), {
     compact: true,
-  }) + ' ago';
+  }) + " ago";
 
-const formatTime = date => {
-  const hour = date.getHours ();
-  const mins = date.getMinutes ();
-
-  const day = date.getDay ();
-  const month = date.getMonth ();
-  const year = date.getFullYear ();
-
-  const formatedTime =
-    (hour > 12 ? hour - 12 : hour) + ':' + mins + (hour > 12 ? ' PM' : ' AM');
-  const formatedDate = day + '/' + month + '/' + year;
-
-  return {formatedTime, formatedDate};
-};
-export {convertTimestamp, formatTime};
+export { convertTimestamp };

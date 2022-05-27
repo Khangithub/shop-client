@@ -1,13 +1,12 @@
-import {Types} from '../actions/chat';
+import { Types } from "../actions/chat";
 
 const INTIAL_STATE = {
   chatList: [],
-  conversations: [],
   chatLoading: true,
   chatErr: {},
 };
 
-export default function chat (state = INTIAL_STATE, action) {
+export default function chat(state = INTIAL_STATE, action) {
   switch (action.type) {
     case Types.GET_CHAT_LIST_SUC: {
       return {
@@ -17,11 +16,11 @@ export default function chat (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.GET_CONVERSATION_SUC: {
+    case Types.UPDATE_CHAT_LIST: {
+      let updatedChatList = [...state.chatList, action.payload];
       return {
         ...state,
-        chatLoading: false,
-        conversations: action.payload.conversations,
+        chatList: updatedChatList,
       };
     }
 

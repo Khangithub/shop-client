@@ -9,6 +9,7 @@ import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
 import UserCtxProvider from "./context/user.context";
 import MouseCtxProvider from "./context/mouse.context";
+import SocketCtxProvider from "./context/socket.context";
 
 import "./styles/index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,11 +24,13 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
-    <MouseCtxProvider>
-      <UserCtxProvider>
-        <App />
-      </UserCtxProvider>
-    </MouseCtxProvider>
+    <SocketCtxProvider>
+      <MouseCtxProvider>
+        <UserCtxProvider>
+          <App />
+        </UserCtxProvider>
+      </MouseCtxProvider>
+    </SocketCtxProvider>
   </Provider>,
   document.getElementById("root")
 );
