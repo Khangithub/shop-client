@@ -31,11 +31,8 @@ import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
 import ChatModal from "../components/ChatModal";
 import { UserCtx } from "../context/user.context";
-import io from "socket.io-client";
 
 import "./_product.scss";
-
-const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
 function Product() {
   const dispatch = useDispatch();
@@ -434,7 +431,7 @@ function Product() {
           ))
           .reverse()}
       </div>
-      {token && <ChatModal product={product} socket={socket} />}
+      {token && <ChatModal product={product} />}
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}

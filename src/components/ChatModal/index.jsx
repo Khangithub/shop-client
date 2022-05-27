@@ -5,10 +5,12 @@ import { useDispatch } from "react-redux";
 import { UserCtx } from "../../context/user.context";
 import { MouseCtx } from "../../context/mouse.context";
 import { getChatListReq } from "../../actions/chat";
+import io from "socket.io-client";
 
 import "./_chatModal.scss";
 
-function ChatModal({ product, socket }) {
+function ChatModal({ product }) {
+  const socket = io.connect(process.env.REACT_APP_BASE_URL);
   const dispatch = useDispatch();
   const { currentUser, token } = useContext(UserCtx);
   const { corr } = useContext(MouseCtx);
@@ -37,6 +39,8 @@ function ChatModal({ product, socket }) {
 
   useEffect(() => {
     if (showChatModal) {
+      socket.emit("join_room", `${currentUser._id}-${product.saler._id}-${product._id}-buying`);
+
       dispatch(
         getChatListReq({
           roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
@@ -44,7 +48,7 @@ function ChatModal({ product, socket }) {
         })
       );
     }
-  }, [currentUser, product, token, dispatch, showChatModal]);
+  }, [currentUser, product, token, dispatch, showChatModal, socket]);
 
   // const { conversations } = useSelector(({ chat }) => chat);
 
