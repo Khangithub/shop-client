@@ -3,8 +3,8 @@
 @import '../../styles/animation';
 
 .chat-modal {
-  @include fadeIn;
-  
+  color: $white;
+
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -17,6 +17,7 @@
 
   .chat-modal-ct {
     @include fadeIn;
+
     width: 700px;
     background: $black;
     padding: 10px;
@@ -28,11 +29,17 @@
 
     .chat-modal-header {
       display: flex;
+      justify-content: space-between;
+      text-align: center;
 
-      img {
-        margin-left: auto;
+      span {
+        background: $darkGray;
         width: 30px;
         height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: large;
       }
     }
 
@@ -40,14 +47,14 @@
       display: flex;
       height: 500px;
 
-      .current-chat {
+      .current-chat-ct {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
         flex: 1;
         height: 100%;
 
-        .chat-avatar {
+        .current-chat-header {
           display: flex;
           align-items: center;
           margin-bottom: auto;
@@ -57,7 +64,7 @@
           }
         }
 
-        .chat-box {
+        .current-chat-body {
           max-height: 400px;
           overflow-y: scroll;
           @include customedScrollbar;
@@ -111,35 +118,6 @@
 
       .cvs-list-ct {
         flex: 1;
-
-        .cvs-ct {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border: 1px solid $gray;
-          padding: 5px;
-          border-radius: 10px;
-          margin-bottom: 10px;
-
-          &:hover {
-            background: $gray;
-          }
-
-          .csv-msg-ct {
-            display: flex;
-
-            img {
-              @include avatar;
-            }
-          }
-
-          .csv-product-ct {
-            img {
-              width: 55px;
-              height: 55px;
-            }
-          }
-        }
       }
     }
 

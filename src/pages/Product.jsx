@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-// import io from "socket.io-client";
+import io from "socket.io-client";
 import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -36,7 +36,7 @@ import { addOrderReq } from "../actions/order";
 import ChatModal from "../components/ChatModal";
 import { UserCtx } from "../context/user.context";
 
-// const socket = io.connect(process.env.REACT_APP_BASE_URL);
+const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
 function Product() {
   const dispatch = useDispatch();
@@ -436,7 +436,7 @@ function Product() {
           ))
           .reverse()}
       </div>
-      <ChatModal product={product} />
+      <ChatModal product={product} socket={socket} />
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}
