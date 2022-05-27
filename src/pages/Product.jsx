@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import io from "socket.io-client";
 import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
@@ -27,14 +26,14 @@ import {
   sendSvg,
   closeSvg,
 } from "../assets";
-
-import "./_product.scss";
 import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
-
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
 import ChatModal from "../components/ChatModal";
 import { UserCtx } from "../context/user.context";
+import io from "socket.io-client";
+
+import "./_product.scss";
 
 const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
@@ -57,7 +56,6 @@ function Product() {
   const { cmtList, cmtLoading, cmtErr } = useSelector(({ comment }) => comment);
 
   useEffect(() => {
-    // socket.emit("join_room", `${currentUser._id}-${productId}-buying`);
     setQuantity(1);
     dispatch(getProductRequest({ productId }));
     dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));

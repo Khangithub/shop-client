@@ -1,7 +1,7 @@
 const getChatListCall = async ({roomId, token}) => {
   try {
     const chatListReq = await fetch (
-      process.env.REACT_APP_CHATS + '/' + roomId,
+      process.env.REACT_APP_CHATS + roomId,
       {
         headers: {
           Authorization: 'Bearer '.concat (token),
@@ -9,7 +9,7 @@ const getChatListCall = async ({roomId, token}) => {
       }
     );
     const chatListJson = await chatListReq.json ();
-    return chatListJson.curMsgList;
+    return chatListJson.chatList;
   } catch (err) {
     throw err;
   }

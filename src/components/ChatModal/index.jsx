@@ -1,14 +1,16 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Badge } from "react-bootstrap";
-// import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { UserCtx } from "../../context/user.context";
 import { MouseCtx } from "../../context/mouse.context";
+import { getChatListReq } from "../../actions/chat";
 
 import "./_chatModal.scss";
 
 function ChatModal({ product, socket }) {
-  const { currentUser } = useContext(UserCtx);
+  const dispatch = useDispatch();
+  const { currentUser, token } = useContext(UserCtx);
   const { corr } = useContext(MouseCtx);
   const ref = useRef(null);
   const [showChatModal, setShowChatModal] = useState(false);
@@ -32,6 +34,17 @@ function ChatModal({ product, socket }) {
       setShowChatModal(false);
     }
   }, [corr]);
+
+  useEffect(() => {
+    if (showChatModal) {
+      dispatch(
+        getChatListReq({
+          roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
+          token,
+        })
+      );
+    }
+  }, [currentUser, product, token, dispatch, showChatModal]);
 
   // const { conversations } = useSelector(({ chat }) => chat);
 
@@ -92,4 +105,4 @@ function ChatModal({ product, socket }) {
   );
 }
 
-export default ChatModal;
+export default React.memo(ChatModal);
