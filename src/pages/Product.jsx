@@ -431,7 +431,7 @@ function Product() {
           ))
           .reverse()}
       </div>
-      {token && <ChatModal product={product} />}
+      {token && <ChatModal prod={product} />}
       <Toast
         show={didAddOrder}
         onClose={() => setAddOrder(!didAddOrder)}

@@ -5,19 +5,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserCtx } from "../../context/user.context";
 import { MouseCtx } from "../../context/mouse.context";
 import { SocketCtx } from "../../context/socket.context";
-import { getMsgListReq, updateMsgList } from "../../actions/chat";
+import { getChatsRq, getMsgsRq, updateMsgs } from "../../actions/chat";
 
 import "./_chatModal.scss";
 import { convertTimestamp } from "../../helpers/time";
 
-function ChatModal({ product }) {
+function ChatModal({ prod }) {
   const dispatch = useDispatch();
   const { currentUser, token } = useContext(UserCtx);
   const socket = useContext(SocketCtx);
   const { corr } = useContext(MouseCtx);
   const ref = useRef(null);
+  const [product, setProduct] = useState(prod);
   const [showChatModal, setShowChatModal] = useState(false);
   const [msgContent, setMsgContent] = useState("");
+
+  useEffect(() => {
+    setProduct(prod);
+  }, [prod]);
 
   useEffect(() => {
     if (!ref.current) {
@@ -46,8 +51,15 @@ function ChatModal({ product }) {
       );
 
       dispatch(
-        getMsgListReq({
+        getMsgsRq({
           roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
+          token,
+        })
+      );
+
+      dispatch(
+        getChatsRq({
+          userId: currentUser._id,
           token,
         })
       );
@@ -59,7 +71,7 @@ function ChatModal({ product }) {
       "receive_message",
       ({ from, content, createdAt, type, mediaList }) => {
         dispatch(
-          updateMsgList({
+          updateMsgs({
             from,
             content,
             createdAt,
@@ -71,7 +83,7 @@ function ChatModal({ product }) {
     );
   }, [socket, dispatch]);
 
-  const { msgList } = useSelector(({ chat }) => chat);
+  const { msgs, chats } = useSelector(({ chat }) => chat);
 
   return ReactDOM.createPortal(
     <div className="chat-modal">
@@ -88,31 +100,29 @@ function ChatModal({ product }) {
                 <b>{product.saler.username}</b>
               </div>
               <div className="current-chat-body">
-                {msgList.map(
-                  ({ content, from, createdAt, type }, index) => {
-                    let isMyMsg =
-                      typeof from === "string"
-                        ? from === currentUser._id
-                        : from._id === currentUser._id;
+                {msgs.map(({ content, from, createdAt, type }, index) => {
+                  let isMyMsg =
+                    typeof from === "string"
+                      ? from === currentUser._id
+                      : from._id === currentUser._id;
 
-                    if (type === "text") {
-                      return (
-                        <div
-                          key={index}
-                          className={isMyMsg ? "my-msg-ct" : "shop-msg-ct"}
-                        >
-                          <span className="msg-content">{content}</span>
-                          <span>{convertTimestamp(createdAt)}</span>
-                          <span role="img" aria-label="">
-                            ✅
-                          </span>
-                        </div>
-                      );
-                    }
-
-                    return null;
+                  if (type === "text") {
+                    return (
+                      <div
+                        key={index}
+                        className={isMyMsg ? "my-msg-ct" : "shop-msg-ct"}
+                      >
+                        <span className="msg-content">{content}</span>
+                        <span>{convertTimestamp(createdAt)}</span>
+                        <span role="img" aria-label="">
+                          ✅
+                        </span>
+                      </div>
+                    );
                   }
-                )}
+
+                  return null;
+                })}
               </div>
               <textarea
                 rows="2"
@@ -142,7 +152,36 @@ function ChatModal({ product }) {
                 <span>package</span>
               </div>
             </div>
-            <div className="cvs-list-ct"></div>
+            <div className="chats-ct">
+              {chats.map((chat, index) => {
+                return (
+                  <div
+                    className={
+                      product._id === chat.product._id
+                        ? "chat-active-prod chat-item-ct"
+                        : "chat-item-ct"
+                    }
+                    onClick={() => setProduct(chat.product)}
+                    key={index}
+                  >
+                    <img src={chat.product.productImage} alt="productImage" />
+                    <div className="chat-item-content">
+                      <b>{chat.product.saler.username}</b>
+
+                      <div>
+                        <small>
+                          {chat.messages[0].from._id === currentUser._id
+                            ? "You: "
+                            : "Shop: "}
+                        </small>
+                        <span> {chat.messages[0].content}</span>
+                        <small>{convertTimestamp(chat.updatedAt)}</small>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

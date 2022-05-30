@@ -1,22 +1,38 @@
 import { call, fork, put, takeEvery } from "redux-saga/effects";
-import { failedMsgReq, getMsgListSuc, Types } from "../actions/chat";
-import { getMsgListCall } from "../api/chat";
+import { failedMsgRq, getMsgsSc, getChatsSc, Types } from "../actions/chat";
+import { getChatsCall, getMsgListCall } from "../api/chat";
 
 // generator functions
-function* getChatListGenerator({ payload: { roomId, token } }) {
+function* getMsgsGenerator({ payload: { roomId, token } }) {
   try {
-    const msgList = yield call(getMsgListCall, {
+    const msgs = yield call(getMsgListCall, {
       roomId,
       token,
     });
     yield put(
-      getMsgListSuc({
-        msgList,
+      getMsgsSc({
+        msgs,
       })
     );
   } catch (err) {
     yield put(
-      failedMsgReq({
+      failedMsgRq({
+        chatErr: err,
+      })
+    );
+  }
+}
+
+function* getChatsGenerator({ payload: { userId, token } }) {
+  try {
+    const chats = yield call(getChatsCall, {
+      userId,
+      token,
+    });
+    yield put(getChatsSc({ chats }));
+  } catch (err) {
+    yield put(
+      failedMsgRq({
         chatErr: err,
       })
     );
@@ -24,10 +40,14 @@ function* getChatListGenerator({ payload: { roomId, token } }) {
 }
 
 // wacher functions
-function* getChatListWatcher() {
-  yield takeEvery(Types.GET_MSG_LIST_REQ, getChatListGenerator);
+function* getMsgsWatcher() {
+  yield takeEvery(Types.GET_MSGS_RQ, getMsgsGenerator);
 }
 
-const chatSaga = [fork(getChatListWatcher)];
+function* getChatsWatcher() {
+  yield takeEvery(Types.GET_CHATS_RQ, getChatsGenerator);
+}
+
+const chatSaga = [fork(getMsgsWatcher), fork(getChatsWatcher)];
 
 export default chatSaga;

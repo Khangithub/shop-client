@@ -12,21 +12,18 @@ const getMsgListCall = async ({ roomId, token }) => {
   }
 };
 
-const getConversationListCall = async ({ fromId, token }) => {
+const getChatsCall = async ({ userId, token }) => {
   try {
-    const conversationListReq = await fetch(
-      process.env.REACT_APP_CONVERSATION + fromId,
-      {
-        headers: {
-          Authorization: "Bearer ".concat(token),
-        },
-      }
-    );
-    const conversationListJson = await conversationListReq.json();
-    return conversationListJson.conversations;
+    const chatsReq = await fetch(process.env.REACT_APP_CHATS + 'of/buyer/' + userId, {
+      headers: {
+        Authorization: "Bearer ".concat(token),
+      },
+    });
+    const chatsJson = await chatsReq.json();
+    return chatsJson.chats;
   } catch (err) {
     throw err;
   }
 };
 
-export { getMsgListCall, getConversationListCall };
+export { getMsgListCall, getChatsCall };

@@ -1,30 +1,39 @@
 import { Types } from "../actions/chat";
 
 const INTIAL_STATE = {
-  msgList: [],
+  msgs: [],
+  chats: [],
   chatLoading: true,
   chatErr: {},
 };
 
 export default function chat(state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_MSG_LIST_SUC: {
+    case Types.GET_MSGS_SC: {
       return {
         ...state,
         chatLoading: false,
-        msgList: action.payload.msgList,
+        msgs: action.payload.msgs,
       };
     }
 
-    case Types.UPDATE_MSG_LIST: {
-      let updatedChatList = [...state.msgList, action.payload];
+    case Types.UPDATE_MSGS: {
+      let updatedChatList = [...state.msgs, action.payload];
       return {
         ...state,
-        msgList: updatedChatList,
+        msgs: updatedChatList,
       };
     }
 
-    case Types.FAILED_MSG_REQ: {
+    case Types.GET_CHATS_SC: {
+      return {
+        ...state,
+        chatLoading: false,
+        chats: action.payload.chats,
+      };
+    }
+
+    case Types.FAILED_MSG_RQ: {
       return {
         ...state,
         chatLoading: true,

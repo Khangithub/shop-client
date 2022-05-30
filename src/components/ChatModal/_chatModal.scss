@@ -18,7 +18,7 @@
   .chat-modal-ct {
     @include fadeIn;
 
-    width: 700px;
+    width: 800px;
     background: $black;
     padding: 10px;
     border: 1px solid $black;
@@ -51,7 +51,7 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        flex: 1;
+        width: 400px;
         height: 100%;
 
         .current-chat-header {
@@ -118,8 +118,47 @@
         }
       }
 
-      .cvs-list-ct {
-        flex: 1;
+      .chats-ct {
+        width: 400px;
+
+        .chat-active-prod {
+          background: $darkGray;
+          border-radius: 4px;
+        }
+
+        .chat-item-ct {
+          display: flex;
+          align-items: center;
+
+          margin: 5px;
+          padding: 5px;
+
+          img {
+            height: 60px;
+            width: 60px;
+            margin-right: 5px;
+          }
+
+          .chat-item-content {
+            div {
+              small {
+                font-style: italic;
+              }
+
+              span {
+                display: inline-block;
+                width: 220px;
+
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                position: relative;
+                top: 6px;
+              }
+            }
+          }
+        }
       }
     }
 
