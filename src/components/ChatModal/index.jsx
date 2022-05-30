@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserCtx } from "../../context/user.context";
 import { MouseCtx } from "../../context/mouse.context";
 import { SocketCtx } from "../../context/socket.context";
-import { getChatListReq, updateChatList } from "../../actions/chat";
+import { getMsgListReq, updateMsgList } from "../../actions/chat";
 
 import "./_chatModal.scss";
 import { convertTimestamp } from "../../helpers/time";
@@ -46,7 +46,7 @@ function ChatModal({ product }) {
       );
 
       dispatch(
-        getChatListReq({
+        getMsgListReq({
           roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
           token,
         })
@@ -59,7 +59,7 @@ function ChatModal({ product }) {
       "receive_message",
       ({ from, content, createdAt, type, mediaList }) => {
         dispatch(
-          updateChatList({
+          updateMsgList({
             from,
             content,
             createdAt,
@@ -71,7 +71,7 @@ function ChatModal({ product }) {
     );
   }, [socket, dispatch]);
 
-  const { chatList, chatErr } = useSelector(({ chat }) => chat);
+  const { msgList } = useSelector(({ chat }) => chat);
 
   return ReactDOM.createPortal(
     <div className="chat-modal">
@@ -88,7 +88,7 @@ function ChatModal({ product }) {
                 <b>{product.saler.username}</b>
               </div>
               <div className="current-chat-body">
-                {chatList.map(
+                {msgList.map(
                   ({ content, from, createdAt, type }, index) => {
                     let isMyMsg =
                       typeof from === "string"
@@ -109,6 +109,8 @@ function ChatModal({ product }) {
                         </div>
                       );
                     }
+
+                    return null;
                   }
                 )}
               </div>

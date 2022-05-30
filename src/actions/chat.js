@@ -1,20 +1,20 @@
 const Types = {
-  GET_CHAT_LIST_REQ: "chat/get_chat_list_req",
-  GET_CHAT_LIST_SUC: "chat/get_chat_list_suc",
-  UPDATE_CHAT_LIST: "chat/update_chat_list",
-  FAILED_CHAT_REQ: "chat/failed_chat_req",
+  GET_MSG_LIST_REQ: "chat/get_msg_list_req",
+  GET_MSG_LIST_SUC: "chat/get_msg_list_suc",
+  UPDATE_MSG_LIST: "chat/update_msg_list",
+  FAILED_MSG_REQ: "chat/failed_msg_req",
 };
 
-const getChatListReq = ({ token, roomId }) => ({
-  type: Types.GET_CHAT_LIST_REQ,
+const getMsgListReq = ({ token, roomId }) => ({
+  type: Types.GET_MSG_LIST_REQ,
   payload: {
     token,
     roomId,
   },
 });
 
-const updateChatList = ({ from, content, createdAt, type, mediaList }) => ({
-  type: Types.UPDATE_CHAT_LIST,
+const updateMsgList = ({ from, content, createdAt, type, mediaList }) => ({
+  type: Types.UPDATE_MSG_LIST,
   payload: {
     from,
     content,
@@ -24,18 +24,18 @@ const updateChatList = ({ from, content, createdAt, type, mediaList }) => ({
   },
 });
 
-const getChatListSuc = ({ chatList }) => ({
-  type: Types.GET_CHAT_LIST_SUC,
+const getMsgListSuc = ({ msgList }) => ({
+  type: Types.GET_MSG_LIST_SUC,
   payload: {
-    chatList,
+    msgList,
   },
 });
 
-const failedChatReq = ({ err }) => ({
-  type: Types.FAILED_CHAT_REQ,
+const failedMsgReq = ({ err }) => ({
+  type: Types.FAILED_MSG_REQ,
   payload: {
     err,
   },
 });
 
-export { getChatListReq, updateChatList, getChatListSuc, failedChatReq, Types };
+export { getMsgListReq, updateMsgList, getMsgListSuc, failedMsgReq, Types };

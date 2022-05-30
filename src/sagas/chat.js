@@ -1,22 +1,22 @@
 import { call, fork, put, takeEvery } from "redux-saga/effects";
-import { failedChatReq, getChatListSuc, Types } from "../actions/chat";
-import { getChatListCall } from "../api/chat";
+import { failedMsgReq, getMsgListSuc, Types } from "../actions/chat";
+import { getMsgListCall } from "../api/chat";
 
 // generator functions
 function* getChatListGenerator({ payload: { roomId, token } }) {
   try {
-    const chatList = yield call(getChatListCall, {
+    const msgList = yield call(getMsgListCall, {
       roomId,
       token,
     });
     yield put(
-      getChatListSuc({
-        chatList,
+      getMsgListSuc({
+        msgList,
       })
     );
   } catch (err) {
     yield put(
-      failedChatReq({
+      failedMsgReq({
         chatErr: err,
       })
     );
@@ -25,7 +25,7 @@ function* getChatListGenerator({ payload: { roomId, token } }) {
 
 // wacher functions
 function* getChatListWatcher() {
-  yield takeEvery(Types.GET_CHAT_LIST_REQ, getChatListGenerator);
+  yield takeEvery(Types.GET_MSG_LIST_REQ, getChatListGenerator);
 }
 
 const chatSaga = [fork(getChatListWatcher)];

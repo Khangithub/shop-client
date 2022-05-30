@@ -91,6 +91,16 @@
               border-radius: 10px 0 10px 10px;
             }
           }
+
+          .shop-msg-ct {
+
+            .msg-content {
+              background: $white;
+              color: $black;
+              border-radius: 0 10px 10px 10px;
+              margin-right: 5px;
+            }
+          }
         }
 
         textarea {

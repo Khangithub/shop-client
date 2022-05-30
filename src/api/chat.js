@@ -1,35 +1,32 @@
-const getChatListCall = async ({roomId, token}) => {
+const getMsgListCall = async ({ roomId, token }) => {
   try {
-    const chatListReq = await fetch (
-      process.env.REACT_APP_CHATS + roomId,
-      {
-        headers: {
-          Authorization: 'Bearer '.concat (token),
-        },
-      }
-    );
-    const chatListJson = await chatListReq.json ();
-    return chatListJson.chatList;
+    const msgListReq = await fetch(process.env.REACT_APP_CHATS + roomId, {
+      headers: {
+        Authorization: "Bearer ".concat(token),
+      },
+    });
+    const msgListJson = await msgListReq.json();
+    return msgListJson.msgs;
   } catch (err) {
     throw err;
   }
 };
 
-const getConversationListCall = async ({fromId, token}) => {
+const getConversationListCall = async ({ fromId, token }) => {
   try {
-    const conversationListReq = await fetch (
+    const conversationListReq = await fetch(
       process.env.REACT_APP_CONVERSATION + fromId,
       {
         headers: {
-          Authorization: 'Bearer '.concat (token),
+          Authorization: "Bearer ".concat(token),
         },
       }
     );
-    const conversationListJson = await conversationListReq.json ();
+    const conversationListJson = await conversationListReq.json();
     return conversationListJson.conversations;
   } catch (err) {
     throw err;
   }
 };
 
-export {getChatListCall, getConversationListCall};
+export { getMsgListCall, getConversationListCall };
