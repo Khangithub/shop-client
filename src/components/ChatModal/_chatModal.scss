@@ -65,7 +65,7 @@
         }
 
         .current-chat-body {
-          max-height: 400px;
+          max-height: 350px;
           overflow-y: scroll;
           @include customedScrollbar;
 
@@ -120,6 +120,9 @@
 
       .chats-ct {
         width: 400px;
+        max-height: 500px;
+        overflow-y: scroll;
+        @include customedScrollbar;
 
         .chat-active-prod {
           background: $darkGray;

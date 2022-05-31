@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserCtx } from "../../context/user.context";
 import { MouseCtx } from "../../context/mouse.context";
 import { SocketCtx } from "../../context/socket.context";
-import { getChatsRq, getMsgsRq, updateMsgs } from "../../actions/chat";
+import { getChatsRq, getMsgsRq, updateChats, updateMsgs } from "../../actions/chat";
+import { convertTimestamp } from "../../helpers/time";
 
 import "./_chatModal.scss";
-import { convertTimestamp } from "../../helpers/time";
 
 function ChatModal({ prod }) {
   const dispatch = useDispatch();
@@ -69,16 +69,46 @@ function ChatModal({ prod }) {
   useEffect(() => {
     socket.on(
       "receive_message",
-      ({ from, content, createdAt, type, mediaList }) => {
+      ({
+        isNewChat,
+        room,
+        productId,
+        productImage,
+        productName,
+        salerId,
+        salerUsername,
+        content,
+        fromId,
+        type,
+        createdAt,
+        mediaList
+      }) => {
         dispatch(
           updateMsgs({
-            from,
+            fromId,
             content,
             createdAt,
             type,
             mediaList,
           })
         );
+
+        dispatch(
+          updateChats({
+            isNewChat,
+            room,
+            productId,
+            productImage,
+            productName,
+            salerId,
+            salerUsername,
+            content,
+            fromId,
+            type,
+            createdAt,
+            mediaList,
+          })
+        )
       }
     );
   }, [socket, dispatch]);
@@ -133,14 +163,17 @@ function ChatModal({ prod }) {
                 }}
                 onKeyUp={async (e) => {
                   if (msgContent.trim() !== "" && e.keyCode === 13) {
-                    const d = new Date();
                     const msgData = {
                       room: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
-                      product: product._id,
+                      productId: product._id,
+                      productImage: product.productImage,
+                      productName: product.name,
+                      salerId: product.saler._id,
+                      salerUsername: product.saler.username,
                       content: msgContent,
-                      from: currentUser._id,
+                      fromId: currentUser._id,
                       type: "text",
-                      createdAt: d.toString(),
+                      createdAt: new Date(),
                     };
                     await socket.emit("send_message", msgData);
                     setMsgContent("");
@@ -164,10 +197,9 @@ function ChatModal({ prod }) {
                     onClick={() => setProduct(chat.product)}
                     key={index}
                   >
-                    <img src={chat.product.productImage} alt="productImage" />
+                    <img src={chat.product.productImage} alt="prod-img" />
                     <div className="chat-item-content">
                       <b>{chat.product.saler.username}</b>
-
                       <div>
                         <small>
                           {chat.messages[0].from._id === currentUser._id
