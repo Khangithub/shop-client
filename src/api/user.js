@@ -1,30 +1,33 @@
 import { isEmpty } from "lodash";
 import { auth, provider } from "../config/firebase";
+import errMsg from "../config/errMsg.json";
 
-const getCurrentUserCall = async ({ token }) => {
+const getCurUserCall = async ({ token }) => {
   try {
     if (!token) {
-      return null;
+      throw Error(errMsg.TOKEN_NOT_FOUND);
     }
-    
-    const currentUserResponse = await fetch(
-      process.env.REACT_APP_USERS_CURRENT_USER,
-      {
-        headers: {
-          Authorization: "Bearer ".concat(token),
-          "content-type": "application/json; charset=UTF-8",
-        },
-      }
-    );
 
-    const currentUserJson = await currentUserResponse.json();
-    return { ...currentUserJson.currentUser };
+    const curUserRq = await fetch(process.env.REACT_APP_USERS_CURRENT_USER, {
+      headers: {
+        Authorization: "Bearer ".concat(token),
+        "content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (curUserRq.status === 200) {
+      const curUserJson = await curUserRq.json();
+      return curUserJson.currentUser;
+    } else {
+      let errContent = await curUserRq.text();
+      throw Error(errContent);
+    }
   } catch (err) {
     return err;
   }
 };
 
-const loginWithEmailNPwdCall = async ({ email, password }) => {
+const lgEmailNPwdCall = async ({ email, password }) => {
   try {
     const loginReq = await fetch(process.env.REACT_APP_USERS_LOGIN + "pwd", {
       method: "POST",
@@ -47,17 +50,17 @@ const loginWithEmailNPwdCall = async ({ email, password }) => {
   }
 };
 
-const loginWithGgCall = async () => {
+const lgGgCall = async () => {
   try {
     const {
       user: { email },
     } = await auth.signInWithPopup(provider);
 
     if (isEmpty(email)) {
-      throw new Error("unable to login with gg");
+      throw Error(errMsg.EMAIL_NOT_FOUND);
     }
 
-    const loginReq = await fetch(process.env.REACT_APP_USERS_LOGIN + "google", {
+    const ggLgRq = await fetch(process.env.REACT_APP_USERS_LOGIN + "google", {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -67,31 +70,34 @@ const loginWithGgCall = async () => {
       },
     });
 
-    const loginJson = await loginReq.json();
-    return {
-      token: loginJson.token,
-      currentUser: { ...loginJson.currentUser },
-    };
+    if (ggLgRq.status === 200) {
+      const ggLgJson = await ggLgRq.json();
+      return ggLgJson;
+    } else {
+      let errContent = await ggLgRq.text();
+      throw Error(errContent);
+    }
+
   } catch (err) {
     return err;
   }
 };
 
-const signupCall = async ({ role }) => {
+const signupCall = async () => {
   try {
     const {
       user: { email, photoURL, displayName },
     } = await auth.signInWithPopup(provider);
 
     if (isEmpty(email)) {
-      throw new Error("unable to signup with gg");
+      throw new Error(errMsg.EMAIL_NOT_FOUND);
     }
 
-    const signupReq = await fetch(process.env.REACT_APP_USERS_SIGNUP, {
+    const signupRq = await fetch(process.env.REACT_APP_USERS_SIGNUP, {
       method: "POST",
       body: JSON.stringify({
         email,
-        role,
+        role: "client",
         avatar: photoURL,
         username: displayName,
       }),
@@ -100,7 +106,7 @@ const signupCall = async ({ role }) => {
       },
     });
 
-    const signupJson = await signupReq.json();
+    const signupJson = await signupRq.json();
     return {
       token: signupJson.token,
       currentUser: { ...signupJson.currentUser },
@@ -110,7 +116,7 @@ const signupCall = async ({ role }) => {
   }
 };
 
-const chgUserAvtCall = async ({ token, file }) => {
+const chgAvtCall = async ({ token, file }) => {
   const formData = new FormData();
   formData.append("chg-avt", file);
   const chgAvtReq = await fetch(
@@ -127,10 +133,27 @@ const chgUserAvtCall = async ({ token, file }) => {
   return chgAvtJson;
 };
 
+const getNewTokensCall = async ({ refToken }) => {
+  const tokensRq = await fetch(process.env.REACT_APP_GET_NEW_TOKENS, {
+    headers: {
+      Authorization: "Bearer ".concat(refToken),
+    },
+  });
+
+  if (tokensRq.status === 200) {
+    const tokensJson = await tokensRq.json();
+    return tokensJson;
+  } else {
+    let errContent = await tokensRq.text();
+    throw Error(errContent);
+  }
+};
+
 export {
-  getCurrentUserCall,
-  loginWithEmailNPwdCall,
-  loginWithGgCall,
+  getCurUserCall,
+  lgEmailNPwdCall,
+  lgGgCall,
   signupCall,
-  chgUserAvtCall,
+  chgAvtCall,
+  getNewTokensCall,
 };

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signupReq } from "../actions/user";
+import { signupRq } from "../actions/user";
 
 import { googleIcon } from "../assets";
 import "./_signup.scss";
@@ -9,7 +9,6 @@ import "./_signup.scss";
 function Signup() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [role, setRole] = useState("client");
 
   return (
     <div className="signup">
@@ -18,33 +17,9 @@ function Signup() {
           <b>Sign up</b>
         </h1>
 
-        <form>
-          <input
-            type="radio"
-            name="role"
-            value="client"
-            defaultChecked
-            onClick={(e) => {
-              setRole(e.target.value);
-            }}
-          />
-          <label htmlFor="client">I want to be a client</label>
-          <br />
-          <input
-            type="radio"
-            name="role"
-            value="saler"
-            onClick={(e) => {
-              setRole(e.target.value);
-            }}
-          />
-          <label htmlFor="saler">I want to be a saleman</label>
-          <br />
-        </form>
-
         <button
           onClick={() => {
-            dispatch(signupReq({ role }));
+            dispatch(signupRq());
             history.push("/");
           }}
         >

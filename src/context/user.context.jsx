@@ -1,5 +1,5 @@
 import React, { createContext, useEffect } from "react";
-import { getCurUserReq } from "../actions/user";
+import { getCurUserRq } from "../actions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { Loading } from "../components";
 import { isEmpty } from "lodash";
@@ -13,7 +13,7 @@ function UserCtxProvider({children}) {
   );
 
   useEffect(() => {
-    dispatch(getCurUserReq());
+    dispatch(getCurUserRq());
   }, [dispatch]);
 
   if (userLoading || !isEmpty(userErr)) return <Loading />;

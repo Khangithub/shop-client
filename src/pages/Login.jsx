@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { googleIcon, visibleOffSvg, visibleSvg } from "../assets";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginWithEmailRq, loginWithGgRq } from "../actions/user";
+import { lgEmailNPwdRq, lgGgRq } from "../actions/user";
 import "./_login.scss";
 
 function Login() {
@@ -47,7 +47,7 @@ function Login() {
             className="login-btn"
             onClick={() => {
               dispatch(
-                loginWithEmailRq({
+                lgEmailNPwdRq({
                   email: account.email,
                   password: account.password,
                 })
@@ -65,7 +65,7 @@ function Login() {
           </h4>
           <button
             onClick={() => {
-              dispatch(loginWithGgRq());
+              dispatch(lgGgRq());
               history.push("/");
             }}
           >

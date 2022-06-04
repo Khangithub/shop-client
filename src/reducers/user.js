@@ -3,6 +3,7 @@ import { Types } from "../actions/user";
 const INTIAL_STATE = {
   currentUser: null,
   token: "",
+  refToken: "",
   userLoading: true,
   avtChange: false,
   userErr: {},
@@ -10,23 +11,24 @@ const INTIAL_STATE = {
 
 export default function user(state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_CUR_USER_SUC: {
+    case Types.GET_CUR_USER_SC: {
       return {
         ...state,
         userLoading: false,
         token: action.payload.token,
+        refToken: action.payload.refToken,
         currentUser: action.payload.currentUser,
       };
     }
 
-    case Types.CHG_USER_AVT_REQ: {
+    case Types.CHG_USER_AVT_RQ: {
       return {
         ...state,
         avtChange: true,
       };
     }
 
-    case Types.CHG_USER_AVT_SUC: {
+    case Types.CHG_USER_AVT_SC: {
       let cpCurrentUser = { ...state.currentUser };
       cpCurrentUser.avatar = action.payload.file;
       return {
@@ -36,7 +38,7 @@ export default function user(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.FAILED_USER_REQ: {
+    case Types.FAIL_USER_RQ: {
       return {
         ...state,
         userLoading: true,

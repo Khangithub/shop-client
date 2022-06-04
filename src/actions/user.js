@@ -1,65 +1,65 @@
 const Types = {
-  GET_CUR_USER_REQ: "user/get_cur_user_req",
-  GET_CUR_USER_SUC: "user/get_cur_user_suc",
-  LOGIN_WITH_PWD_REQ: "user/login_with_pwd_req",
-  LOGIN_WITH_GG_REQ: "user/login_with_gg_req",
-  SIGNUP_REQ: "user/signup_req",
-  FAILED_USER_REQ: "user/failed_user_req",
-  CHG_USER_AVT_REQ: "user/chg_avt_req",
-  CHG_USER_AVT_SUC: "user/chg_avt_suc",
+  GET_CUR_USER_RQ: "user/get_cur_user_rq",
+  GET_CUR_USER_SC: "user/get_cur_user_sc",
+  LG_WITH_PWD_RQ: "user/lg_with_pwd_rq",
+  LG_WITH_GG_RQ: "user/lg_with_gg_rq",
+  SIGNUP_RQ: "user/signup_rq",
+  CHG_USER_AVT_RQ: "user/chg_avt_rq",
+  CHG_USER_AVT_SC: "user/chg_avt_sc",
+  GET_NEW_TOKENS_RQ: "user/get_new_tokens_rq",
+  FAIL_USER_RQ: "user/fail_user_rq",
 };
 
-const getCurUserReq = () => ({
-  type: Types.GET_CUR_USER_REQ,
+const getCurUserRq = () => ({
+  type: Types.GET_CUR_USER_RQ,
 });
 
-const loginWithEmailRq = ({ email, password }) => ({
-  type: Types.LOGIN_WITH_PWD_REQ,
+const lgEmailNPwdRq = ({ email, password }) => ({
+  type: Types.LG_WITH_PWD_RQ,
   payload: {
     email,
     password,
   },
 });
 
-const loginWithGgRq = () => ({
-  type: Types.LOGIN_WITH_GG_REQ,
+const lgGgRq = () => ({
+  type: Types.LG_WITH_GG_RQ,
 });
 
-const signupReq = ({ email, role, avatar, username }) => ({
-  type: Types.SIGNUP_REQ,
-  payload: {
-    email,
-    role,
-    avatar,
-    username,
-  },
+const signupRq = () => ({
+  type: Types.SIGNUP_RQ,
 });
 
-const chgUserAvtReq = ({ file, token }) => ({
-  type: Types.CHG_USER_AVT_REQ,
+const chgUserAvtRq = ({ file, token }) => ({
+  type: Types.CHG_USER_AVT_RQ,
   payload: {
     file,
     token,
   },
 });
 
-const getCurUserSuc = ({ currentUser, token }) => ({
-  type: Types.GET_CUR_USER_SUC,
+const getNewTokensRq = () => ({
+  type: Types.GET_NEW_TOKENS_RQ,
+});
+
+const getCurUserSc = ({ currentUser, token, refToken }) => ({
+  type: Types.GET_CUR_USER_SC,
   payload: {
     currentUser,
     token,
+    refToken
   },
 });
 
-const chgUserAvtSuc = ({ file }) => ({
-  type: Types.CHG_USER_AVT_SUC,
+const chgUserAvtSc = ({ file }) => ({
+  type: Types.CHG_USER_AVT_SC,
   payload: {
     file,
   },
 });
 
-const getFailedUserReq = ({ userErr }) => ({
-  type: Types.FAILED_USER_REQ,
+const getFailUserRq = ({ userErr }) => ({
+  type: Types.FAIL_USER_RQ,
   payload: {
     userErr,
   },
@@ -67,12 +67,13 @@ const getFailedUserReq = ({ userErr }) => ({
 
 export {
   Types,
-  getCurUserReq,
-  loginWithGgRq,
-  loginWithEmailRq,
-  signupReq,
-  chgUserAvtReq,
-  getCurUserSuc,
-  chgUserAvtSuc,
-  getFailedUserReq,
+  getCurUserRq,
+  getNewTokensRq,
+  lgGgRq,
+  lgEmailNPwdRq,
+  signupRq,
+  chgUserAvtRq,
+  getCurUserSc,
+  chgUserAvtSc,
+  getFailUserRq,
 };

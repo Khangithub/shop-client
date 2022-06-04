@@ -1,0 +1,8 @@
+{
+  "TOKEN_NOT_FOUND": "token not found",
+  "EMAIL_NOT_FOUND": "email not found",
+  "TOKEN_EXPIRED_ERROR": "TokenExpiredError",
+  "JWT_EXPIRED": "jwt expired",
+  "JSON_WEB_TOKEN_ERROR": "JsonWebTokenError",
+  "INVALID_SIGNATURE":"invalid signature"
+}
