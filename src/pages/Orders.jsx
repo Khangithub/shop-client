@@ -6,7 +6,7 @@ import { trashCanSvg } from "../assets";
 import { isEmpty } from "lodash";
 
 import "./_orders.scss";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/user";
 
 function Order() {
   const dispatch = useDispatch();

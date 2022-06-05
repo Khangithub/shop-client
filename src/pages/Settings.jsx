@@ -3,7 +3,7 @@ import { NavBar, Title } from "../components";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 // import firebase, { auth } from "../config/firebase";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/user";
 import "./_settings.scss";
 import { chgUserAvtRq } from "../actions/user";
 

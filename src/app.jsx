@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./components";
-import { MouseCtx } from "./context/mouse.context";
+import { MouseCtx } from "./context/mouse";
 import { Home, Product, Login, Signup, Orders, Settings } from "./pages";
 
 function App() {

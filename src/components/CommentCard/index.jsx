@@ -3,7 +3,7 @@ import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
 import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
-import { UserCtx } from "../../context/user.context";
+import { UserCtx } from "../../context/user";
 import { sendSvg, mediaSvg, tickSvg } from "../../assets";
 import { convertTimestamp } from "../../helpers/time";
 import ReplyCard from "../ReplyCard";

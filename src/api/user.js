@@ -17,7 +17,7 @@ const getCurUserCall = async ({ token }) => {
 
     if (curUserRq.status === 200) {
       const curUserJson = await curUserRq.json();
-      return curUserJson.currentUser;
+      return curUserJson;
     } else {
       let errContent = await curUserRq.text();
       throw Error(errContent);
@@ -27,9 +27,9 @@ const getCurUserCall = async ({ token }) => {
   }
 };
 
-const lgEmailNPwdCall = async ({ email, password }) => {
+const lgPwdCall = async ({ email, password }) => {
   try {
-    const loginReq = await fetch(process.env.REACT_APP_USERS_LOGIN + "pwd", {
+    const lgRq = await fetch(process.env.REACT_APP_USERS_LOGIN + "pwd", {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -40,11 +40,13 @@ const lgEmailNPwdCall = async ({ email, password }) => {
       },
     });
 
-    const loginJson = await loginReq.json();
-    return {
-      token: loginJson.token,
-      currentUser: { ...loginJson.currentUser },
-    };
+    if (lgRq.status === 200) {
+      const lgJson = await lgRq.json();
+      return lgJson;
+    } else {
+      let errContent = await lgRq.text();
+      throw Error(errContent);
+    }
   } catch (err) {
     return err;
   }
@@ -77,7 +79,6 @@ const lgGgCall = async () => {
       let errContent = await ggLgRq.text();
       throw Error(errContent);
     }
-
   } catch (err) {
     return err;
   }
@@ -106,11 +107,13 @@ const signupCall = async () => {
       },
     });
 
-    const signupJson = await signupRq.json();
-    return {
-      token: signupJson.token,
-      currentUser: { ...signupJson.currentUser },
-    };
+    if (signupRq.status === 200) {
+      const signupJson = await signupRq.json();
+      return signupJson;
+    } else {
+      let errContent = await signupRq.text();
+      throw Error(errContent);
+    }
   } catch (err) {
     return err;
   }
@@ -151,7 +154,7 @@ const getNewTokensCall = async ({ refToken }) => {
 
 export {
   getCurUserCall,
-  lgEmailNPwdCall,
+  lgPwdCall,
   lgGgCall,
   signupCall,
   chgAvtCall,

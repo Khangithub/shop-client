@@ -8,7 +8,7 @@ import {
 } from "../actions/user";
 import {
   getCurUserCall,
-  lgEmailNPwdCall,
+  lgPwdCall,
   lgGgCall,
   signupCall,
   chgAvtCall,
@@ -29,15 +29,23 @@ function* getCurUserGen() {
 
     if (curUserData instanceof Error) {
       throw Error(curUserData);
-    }
+    } else {
+      let { currentUser, token, refToken } = curUserData;
+      cookies.set("token", token);
+      cookies.set("refToken", refToken);
 
-    yield put(
-      getCurUserSc({
-        currentUser: curUserData,
-        token,
-      })
-    );
+      yield put(
+        getCurUserSc({
+          currentUser,
+          token,
+          refToken,
+        })
+      );
+    }
   } catch (err) {
+    /**
+     * if expired token or invalid signature -> update new current user, token and refresh token
+     */
     if (
       (err.message.includes(errMsg.TOKEN_EXPIRED_ERROR) &&
         err.message.includes(errMsg.JWT_EXPIRED)) ||
@@ -65,32 +73,81 @@ function* getCurUserGen() {
 
         if (curUserData instanceof Error) {
           throw Error(curUserData);
+        } else {
+          let { currentUser, token, refToken } = curUserData;
+          cookies.set("token", token);
+          cookies.set("refToken", refToken);
+          yield put(
+            getCurUserSc({
+              currentUser,
+              token,
+              refToken,
+            })
+          );
+
+          return;
         }
-
-        yield put(
-          getCurUserSc({
-            currentUser: curUserData,
-            token: newToken,
-            refToken: newRefToken,
-          })
-        );
-
-        return;
       }
     }
 
+    /**
+     * if token not exist
+     * if refresher token exist -> update new current user, token, refresher token
+     * else -> not update
+     */
     if (err.message.includes(errMsg.TOKEN_NOT_FOUND)) {
-      yield put(
-        getCurUserSc({
-          currentUser: undefined,
-          token: "",
-          refToken: "",
-        })
-      );
+      if (refToken) {
+        const tokensData = yield call(getNewTokensCall, {
+          refToken,
+        });
+
+        if (tokensData instanceof Error) {
+          yield put(
+            getFailUserRq({
+              userErr: tokensData,
+            })
+          );
+        } else {
+          let { newToken, newRefToken } = tokensData;
+          cookies.set("token", newToken);
+          cookies.set("refToken", newRefToken);
+
+          const curUserData = yield call(getCurUserCall, {
+            token: newToken,
+          });
+
+          if (curUserData instanceof Error) {
+            throw Error(curUserData);
+          } else {
+            let { currentUser, token, refToken } = curUserData;
+            cookies.set("token", token);
+            cookies.set("refToken", refToken);
+
+            yield put(
+              getCurUserSc({
+                currentUser,
+                token,
+                refToken,
+              })
+            );
+          }
+        }
+      } else {
+        yield put(
+          getCurUserSc({
+            currentUser: undefined,
+            token: "",
+            refToken: "",
+          })
+        );
+      }
 
       return;
     }
 
+    /**
+     * update error when api crashes
+     */
     yield put(
       getFailUserRq({
         userErr: err.message,
@@ -99,19 +156,24 @@ function* getCurUserGen() {
   }
 }
 
-function* lgEmailNPwdGen({ payload: { email, password } }) {
+function* lgPwdGen({ payload: { email, password } }) {
   try {
-    const { token, currentUser } = yield call(lgEmailNPwdCall, {
+    const lgPwdData = yield call(lgPwdCall, {
       email,
       password,
     });
 
-    if (!!token && !!currentUser) {
+    if (lgPwdData instanceof Error) {
+      throw Error(lgPwdData);
+    } else {
+      let { currentUser, token, refToken } = lgPwdData;
       cookies.set("token", token);
+      cookies.set("refToken", refToken);
       yield put(
         getCurUserSc({
           currentUser,
           token,
+          refToken,
         })
       );
     }
@@ -130,19 +192,19 @@ function* lgGgGen() {
 
     if (lgGgData instanceof Error) {
       throw Error(lgGgData);
+    } else {
+      let { token, refToken, currentUser } = lgGgData;
+      cookies.set("token", token);
+      cookies.set("refToken", refToken);
+
+      yield put(
+        getCurUserSc({
+          currentUser,
+          token,
+          refToken,
+        })
+      );
     }
-
-    let { token, refToken, currentUser } = lgGgData;
-    cookies.set("token", token);
-    cookies.set("refToken", refToken);
-
-    yield put(
-      getCurUserSc({
-        currentUser,
-        token,
-        refToken,
-      })
-    );
   } catch (err) {
     yield put(
       getFailUserRq({
@@ -154,14 +216,23 @@ function* lgGgGen() {
 
 function* signupGen() {
   try {
-    const { token, currentUser } = yield call(signupCall);
-    cookies.set("token", token);
-    yield put(
-      getCurUserSc({
-        currentUser,
-        token,
-      })
-    );
+    const signUpData = yield call(signupCall);
+   
+    if (signUpData instanceof Error) {
+      throw Error(signUpData);
+    } else {
+      let { token, refToken, currentUser } = signUpData;
+      cookies.set("token", token);
+      cookies.set("refToken", refToken);
+
+      yield put(
+        getCurUserSc({
+          currentUser,
+          token,
+          refToken,
+        })
+      );
+    }
   } catch (err) {
     yield put(
       getFailUserRq({
@@ -196,22 +267,22 @@ function* getCurUserWatch() {
   yield takeLatest(Types.GET_CUR_USER_RQ, getCurUserGen);
 }
 
-function* lgEmailNPwdWatch() {
-  yield takeEvery(Types.LG_WITH_PWD_RQ, lgEmailNPwdGen);
+function* lgPwdWatch() {
+  yield takeEvery(Types.LG_PWD_RQ, lgPwdGen);
 }
 
 function* lgGgWatch() {
-  yield takeEvery(Types.LG_WITH_GG_RQ, lgGgGen);
+  yield takeEvery(Types.LG_GG_RQ, lgGgGen);
 }
 function* signupWatch() {
   yield takeEvery(Types.SIGNUP_RQ, signupGen);
 }
 function* chgAvtWatch() {
-  yield takeEvery(Types.CHG_USER_AVT_RQ, chgAvtGen);
+  yield takeEvery(Types.CHG_AVT_RQ, chgAvtGen);
 }
 const userSaga = [
   fork(getCurUserWatch),
-  fork(lgEmailNPwdWatch),
+  fork(lgPwdWatch),
   fork(lgGgWatch),
   fork(signupWatch),
   fork(chgAvtWatch),

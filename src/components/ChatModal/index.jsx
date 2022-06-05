@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { UserCtx } from "../../context/user.context";
-import { MouseCtx } from "../../context/mouse.context";
-import { SocketCtx } from "../../context/socket.context";
+import { UserCtx } from "../../context/user";
+import { MouseCtx } from "../../context/mouse";
+import { SocketCtx } from "../../context/socket";
 import { getChatsRq, getMsgsRq, updateChats, updateMsgs } from "../../actions/chat";
 import { convertTimestamp } from "../../helpers/time";
 

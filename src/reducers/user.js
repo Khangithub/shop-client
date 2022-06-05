@@ -12,6 +12,7 @@ const INTIAL_STATE = {
 export default function user(state = INTIAL_STATE, action) {
   switch (action.type) {
     case Types.GET_CUR_USER_SC: {
+      console.log("action ->", action.payload);
       return {
         ...state,
         userLoading: false,
@@ -21,7 +22,7 @@ export default function user(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.CHG_USER_AVT_RQ: {
+    case Types.CHG_AVT_RQ: {
       return {
         ...state,
         avtChange: true,

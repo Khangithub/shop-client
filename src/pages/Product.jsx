@@ -30,7 +30,7 @@ import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
 import ReactPlayer from "react-player";
 import { addOrderReq } from "../actions/order";
 import ChatModal from "../components/ChatModal";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/user";
 
 import "./_product.scss";
 

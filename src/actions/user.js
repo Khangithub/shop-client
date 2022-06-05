@@ -1,10 +1,10 @@
 const Types = {
   GET_CUR_USER_RQ: "user/get_cur_user_rq",
   GET_CUR_USER_SC: "user/get_cur_user_sc",
-  LG_WITH_PWD_RQ: "user/lg_with_pwd_rq",
-  LG_WITH_GG_RQ: "user/lg_with_gg_rq",
+  LG_PWD_RQ: "user/lg_with_pwd_rq",
+  LG_GG_RQ: "user/lg_with_gg_rq",
   SIGNUP_RQ: "user/signup_rq",
-  CHG_USER_AVT_RQ: "user/chg_avt_rq",
+  CHG_AVT_RQ: "user/chg_avt_rq",
   CHG_USER_AVT_SC: "user/chg_avt_sc",
   GET_NEW_TOKENS_RQ: "user/get_new_tokens_rq",
   FAIL_USER_RQ: "user/fail_user_rq",
@@ -15,7 +15,7 @@ const getCurUserRq = () => ({
 });
 
 const lgEmailNPwdRq = ({ email, password }) => ({
-  type: Types.LG_WITH_PWD_RQ,
+  type: Types.LG_PWD_RQ,
   payload: {
     email,
     password,
@@ -23,7 +23,7 @@ const lgEmailNPwdRq = ({ email, password }) => ({
 });
 
 const lgGgRq = () => ({
-  type: Types.LG_WITH_GG_RQ,
+  type: Types.LG_GG_RQ,
 });
 
 const signupRq = () => ({
@@ -31,7 +31,7 @@ const signupRq = () => ({
 });
 
 const chgUserAvtRq = ({ file, token }) => ({
-  type: Types.CHG_USER_AVT_RQ,
+  type: Types.CHG_AVT_RQ,
   payload: {
     file,
     token,
