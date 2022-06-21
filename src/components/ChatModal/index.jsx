@@ -6,7 +6,7 @@ import { UserCtx } from "../../context/user";
 import { MouseCtx } from "../../context/mouse";
 import { SocketCtx } from "../../context/socket";
 import { getChatsRq, getMsgsRq, updateChats, updateMsgs } from "../../actions/chat";
-import { convertTimestamp } from "../../helpers/time";
+import { convertTimestamp } from "../../utils/time";
 
 import "./_chatModal.scss";
 

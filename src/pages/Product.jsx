@@ -7,7 +7,7 @@ import {
   getProductsByCategoryRequest,
 } from "../actions/product";
 import { isEmpty } from "lodash";
-import { getUnitPrice } from "../helpers/number";
+import { getUnitPrice } from "../utils/number";
 import {
   NavBar,
   Loading,

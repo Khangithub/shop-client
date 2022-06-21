@@ -6,7 +6,7 @@ import Linkify from "react-linkify";
 
 import { sendSvg, mediaSvg } from "../../assets";
 import { useDispatch } from "react-redux";
-import { convertTimestamp } from "../../helpers/time";
+import { convertTimestamp } from "../../utils/time";
 import { UserCtx } from "../../context/user";
 
 import "./_replyCard.scss";

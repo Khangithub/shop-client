@@ -5,7 +5,7 @@ import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
 import { UserCtx } from "../../context/user";
 import { sendSvg, mediaSvg, tickSvg } from "../../assets";
-import { convertTimestamp } from "../../helpers/time";
+import { convertTimestamp } from "../../utils/time";
 import ReplyCard from "../ReplyCard";
 import ReactPlayer from "react-player";
 import "./_commentCard.scss";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { delOrderReq, editOrderReq } from "../../actions/order";
-import { getUnitPrice, getPrice } from "../../helpers/number";
+import { getUnitPrice, getPrice } from "../../utils/number";
 import { trashCanSvg } from "../../assets";
 
 import "./_orderCard.scss";

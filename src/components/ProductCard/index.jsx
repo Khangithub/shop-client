@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Col, Badge } from "react-bootstrap";
-import { getUnitPrice } from "../../helpers/number";
+import { getUnitPrice } from "../../utils/number";
 import "./_productCard.scss";
 
 export default function ProductCard({

@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import { backToTop } from "../../helpers/dom";
+import { backToTop } from "../../utils/dom";
 import "./_footer.scss";
 
 export default function Index() {
