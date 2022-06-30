@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
-import UserCtxProvider from "./context/user.context";
+import UserCtxProvider from "./context/userCtx";
 import MouseCtxProvider from "./context/mouse.context";
 import SocketCtxProvider from "./context/socket.context";
 

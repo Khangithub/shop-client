@@ -1,5 +1,5 @@
-@import '../styles/_layout';
-@import '../styles/_colors';
+@import "../styles/_layout";
+@import "../styles/_colors";
 
 .login {
     display: flex;
@@ -12,36 +12,30 @@
     .login-ct {
         width: 100%;
         max-width: 360px;
-        display: flex;
         flex-direction: column;
-        margin: 5px;
         border: 1px solid $lightGray;
         padding: 20px;
         background: $white;
-
-        h1 {
-            font-weight: bold;
-        }
     }
 
     .login-form {
         display: flex;
-        flex: 1;
         flex-direction: column;
+        flex: 1;
 
         input {
-            display: flex;
-            flex: 1;
             width: 100%;
-            padding: 5px;
+
             line-height: 25px;
             border-width: 2px;
+            border-radius: 5px;
+
+            padding: 5px;
             margin: 5px 0;
 
             &:focus {
                 outline: none;
                 border: 2px solid $goldenRod;
-                border-radius: 5px;
             }
         }
 
@@ -49,9 +43,12 @@
             position: relative;
             top: -35px;
             right: -280px;
-            height: 20px;
+
             margin-bottom: -25px;
+
             color: $darkGray;
+
+            height: 20px;
             width: 30px;
 
             &:focus {
@@ -60,70 +57,27 @@
         }
 
         .login-btn {
-            margin-top: 10px;
             @include goldenBtn;
+            margin-top: 10px;
         }
     }
 
-    .gg-login-ct {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-
-        button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 2px;
-            width: 100%;
-            height: 40px;
-            border-style: solid;
-            border-width: 1px;
-            font-size: large;
-            font-weight: 700;
-            padding: 5px;
-
-            img {
-                width: 30px;
-                height: 30px;
-                margin-right: 10px;
-            }
-        }
+    .gg-lg-btn {
+        @include outlineImgBtn;
     }
 
-    .login-term-container {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+    .gg-term-ct {
         margin-top: 15px;
+        text-align: center;
+        color: $darkGray;
+        font-size: small;
 
-        .term {
-            text-align: center;
-            border-bottom: 1px solid $lightGray;
-            padding-bottom: 10px;
-
-            span {
-                &:first-child {
-                    font-size: small;
-                    color: $darkGray;
-                }
-
-                &:nth-child(2) {
-                    font-size: 13px;
-                    font-weight: bold;
-                    color: $darkGray;
-                }
-            }
+        p:first-child > span:nth-child(2) {
+            font-weight: bold;
         }
 
-        p {
-            margin-top: 10px !important;
-            font-size: 14px;
+        p:last-child {
             font-weight: bold;
-            color: $darkGray;
-            cursor: pointer;
         }
     }
 }

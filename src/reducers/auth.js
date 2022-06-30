@@ -1,16 +1,16 @@
-import { Types } from "../actions/user";
+import { Types } from "../actions/auth";
 
 const INTIAL_STATE = {
   currentUser: null,
   token: "",
   userLoading: true,
   avtChange: false,
-  userErr: {},
+  authError: null,
 };
 
 export default function user(state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_CUR_USER_SUC: {
+    case Types.GET_CURRENT_USER_SUCCESS: {
       return {
         ...state,
         userLoading: false,
@@ -19,14 +19,14 @@ export default function user(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.CHG_USER_AVT_REQ: {
+    case Types.CHANGE_AVATAR: {
       return {
         ...state,
         avtChange: true,
       };
     }
 
-    case Types.CHG_USER_AVT_SUC: {
+    case Types.CHANGE_AVATAR_SUCCESS: {
       let cpCurrentUser = { ...state.currentUser };
       cpCurrentUser.avatar = action.payload.file;
       return {
@@ -36,12 +36,19 @@ export default function user(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.FAILED_USER_REQ: {
+    case Types.FAILED_AUTH_ACTION: {
       return {
         ...state,
-        userLoading: true,
-        userErr: action.payload.userErr,
+        userLoading: false,
+        authError: action.payload.authError,
       };
+    }
+
+    case Types.RESET_AUTH_ERROR: {
+      return {
+        ...state,
+        authError: null
+      }
     }
 
     default: {

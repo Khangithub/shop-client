@@ -2,10 +2,10 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { Badge } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { UserCtx } from "../../context/user.context";
+import { UserCtx } from "../../context/userCtx";
 import { MouseCtx } from "../../context/mouse.context";
 import { SocketCtx } from "../../context/socket.context";
-import { getChatsRq, getMsgsRq, updateChats, updateMsgs } from "../../actions/chat";
+import { getChatsAction, getMessagesAction, updateChatsAction, updateMessagesAction } from "../../actions/chat";
 import { convertTimestamp } from "../../helpers/time";
 
 import "./_chatModal.scss";
@@ -51,14 +51,14 @@ function ChatModal({ prod }) {
       );
 
       dispatch(
-        getMsgsRq({
+        getMessagesAction({
           roomId: `${currentUser._id}-${product.saler._id}-${product._id}-buying`,
           token,
         })
       );
 
       dispatch(
-        getChatsRq({
+        getChatsAction({
           userId: currentUser._id,
           token,
         })
@@ -84,7 +84,7 @@ function ChatModal({ prod }) {
         mediaList
       }) => {
         dispatch(
-          updateMsgs({
+          updateMessagesAction({
             fromId,
             content,
             createdAt,
@@ -94,7 +94,7 @@ function ChatModal({ prod }) {
         );
 
         dispatch(
-          updateChats({
+          updateChatsAction({
             isNewChat,
             room,
             productId,

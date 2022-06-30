@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { repCmtReq, delRepReq } from "../../actions/comment";
+import { replyCommentAction, removeReplyAction } from "../../actions/comment";
 import { Row, Modal, Button, Dropdown } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import Linkify from "react-linkify";
@@ -7,7 +7,7 @@ import Linkify from "react-linkify";
 import { sendSvg, mediaSvg } from "../../assets";
 import { useDispatch } from "react-redux";
 import { convertTimestamp } from "../../helpers/time";
-import { UserCtx } from "../../context/user.context";
+import { UserCtx } from "../../context/userCtx";
 
 import "./_replyCard.scss";
 
@@ -148,7 +148,7 @@ function ReplyCard({ reply, comment }) {
                       alt="send-icon"
                       onClick={() => {
                         dispatch(
-                          repCmtReq({
+                          removeReplyAction({
                             commentId: comment._id,
                             content,
                             token,
@@ -180,7 +180,7 @@ function ReplyCard({ reply, comment }) {
                   e.target.style.height = e.target.scrollHeight + "px";
                   if (content.trim() !== "" && e.keyCode === 13) {
                     dispatch(
-                      repCmtReq({
+                      replyCommentAction({
                         commentId: comment._id,
                         content,
                         token,
@@ -249,7 +249,7 @@ function ReplyCard({ reply, comment }) {
               variant="danger"
               onClick={() => {
                 dispatch(
-                  delRepReq({
+                  removeReplyAction({
                     commentId: comment._id,
                     repId: reply._id,
                     token,

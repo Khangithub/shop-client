@@ -9,7 +9,7 @@ const INTIAL_STATE = {
 
 export default function chat(state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_MSGS_SC: {
+    case Types.GET_MESSAGES_SUCCESS: {
       return {
         ...state,
         chatLoading: false,
@@ -17,7 +17,7 @@ export default function chat(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.UPDATE_MSGS: {
+    case Types.UPDATE_MESSAGE: {
       const { fromId, content, createdAt, type, mediaList } = action.payload;
 
       let cpMsgs = [
@@ -100,7 +100,7 @@ export default function chat(state = INTIAL_STATE, action) {
       }
     }
 
-    case Types.GET_CHATS_SC: {
+    case Types.GET_CHATS_SUCCESS: {
       return {
         ...state,
         chatLoading: false,
@@ -108,7 +108,7 @@ export default function chat(state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.FAILED_MSG_RQ: {
+    case Types.FAILED_CHAT_ACTION: {
       return {
         ...state,
         chatLoading: true,

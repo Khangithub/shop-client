@@ -1,64 +1,31 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signupReq } from "../actions/user";
+import React from 'react';
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {signupAction} from '../actions/auth';
+import {googleIcon} from '../assets';
+import './_signup.scss';
 
-import { googleIcon } from "../assets";
-import "./_signup.scss";
-
-function Signup() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const [role, setRole] = useState("client");
+function Signup () {
+  const history = useHistory ();
+  const dispatch = useDispatch ();
 
   return (
     <div className="signup">
-      <div className="signup-container">
-        <h1>
-          <b>Sign up</b>
-        </h1>
+      <div className="signup-ct">
+        <h1> Sign up </h1>
 
-        <form>
-          <input
-            type="radio"
-            name="role"
-            value="client"
-            defaultChecked
-            onClick={(e) => {
-              setRole(e.target.value);
-            }}
-          />
-          <label htmlFor="client">I want to be a client</label>
-          <br />
-          <input
-            type="radio"
-            name="role"
-            value="saler"
-            onClick={(e) => {
-              setRole(e.target.value);
-            }}
-          />
-          <label htmlFor="saler">I want to be a saleman</label>
-          <br />
-        </form>
-
-        <button
-          onClick={() => {
-            dispatch(signupReq({ role }));
-            history.push("/");
-          }}
-        >
+        <button onClick={() => dispatch (signupAction ())}>
           <img src={googleIcon} alt="google" />
-          Signup with Google
+          <span>Signup with Google</span>
         </button>
 
-        <div className="signup-term-container ">
-          <div className="term">
+        <div className="signup-term-ct ">
+          <p>
             <span>By continuing with Shopeeholic, you agreed with </span>
             <span>Terms of Service, Privacy Policy</span>
-          </div>
+          </p>
 
-          <p onClick={() => history.push("/login")}>
+          <p onClick={() => history.push ('/login')}>
             Already have an account? Login
           </p>
         </div>

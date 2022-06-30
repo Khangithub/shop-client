@@ -37,7 +37,7 @@ export default function products (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.GET_PRODUCT_SUCCESS: {
+    case Types.GET_CURRENT_PRODUCT_SUCCESS: {
       return {
         ...state,
         prodLoading: false,
@@ -61,7 +61,7 @@ export default function products (state = INTIAL_STATE, action) {
       }
     }
 
-    case Types.FAILED_REQUEST: {
+    case Types.FAILED_PRODUCT_ACTION: {
       return {
         ...state,
         prodLoading: true,

@@ -1,6 +1,6 @@
 import {all} from 'redux-saga/effects';
 import ProductSaga from './product';
-import UserSaga from './user';
+import UserSaga from './auth';
 import OrderSaga from './order';
 import CommentSaga from './comment';
 import ChatSaga from './chat';

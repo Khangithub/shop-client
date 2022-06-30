@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Redirect, Route } from "react-router-dom";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/userCtx";
 
 export default function ProtectedRoute({ component: Component, ...rest }) {
   const { currentUser } = useContext(UserCtx);

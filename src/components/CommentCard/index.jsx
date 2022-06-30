@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import Linkify from "react-linkify";
 import { useDispatch } from "react-redux";
-import { delCmtReq, editCmtReq, repCmtReq } from "../../actions/comment";
+import { removeCommentAction, editCommentAction, replyCommentAction } from "../../actions/comment";
 import { Col, Row, Modal, Button, Dropdown } from "react-bootstrap";
-import { UserCtx } from "../../context/user.context";
+import { UserCtx } from "../../context/userCtx";
 import { sendSvg, mediaSvg, tickSvg } from "../../assets";
 import { convertTimestamp } from "../../helpers/time";
 import ReplyCard from "../ReplyCard";
@@ -77,7 +77,7 @@ function CommentCard({ comment }) {
                   alt="tick-btn"
                   onClick={() => {
                     dispatch(
-                      editCmtReq({
+                      editCommentAction({
                         commentId: comment._id,
                         mainComment: editedCmt,
                         mediaList: editedCmtMedia.origin,
@@ -135,7 +135,7 @@ function CommentCard({ comment }) {
                   e.target.style.height = e.target.scrollHeight + "px";
                   if (editedCmt.trim() !== "" && e.keyCode === 13) {
                     dispatch(
-                      editCmtReq({
+                      editCommentAction({
                         commentId: comment._id,
                         mainComment: editedCmt,
                         mediaList: editedCmtMedia.origin,
@@ -226,7 +226,7 @@ function CommentCard({ comment }) {
               <Button
                 variant="danger"
                 onClick={() => {
-                  dispatch(delCmtReq({ commentId: comment._id, token }));
+                  dispatch(removeCommentAction({ commentId: comment._id, token }));
                   setDelCmtModalShow(false);
                 }}
               >
@@ -287,7 +287,7 @@ function CommentCard({ comment }) {
                         alt="send-icon"
                         onClick={() => {
                           dispatch(
-                            repCmtReq({
+                            replyCommentAction({
                               commentId: comment._id,
                               content,
                               token,
@@ -319,7 +319,7 @@ function CommentCard({ comment }) {
                     e.target.style.height = e.target.scrollHeight + "px";
                     if (content.trim() !== "" && e.keyCode === 13) {
                       dispatch(
-                        repCmtReq({
+                        replyCommentAction({
                           commentId: comment._id,
                           content,
                           token,

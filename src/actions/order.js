@@ -1,24 +1,24 @@
 const Types = {
-  GET_ORDERS_RQ: 'orders/get_orders_rq',
-  GET_ORDERS_SC: 'orders/get_orders_sc',
-  ADD_ORDER_RQ: 'orders/add_order_rq',
-  ADD_ORDER_SC: 'orders/add_order_sc',
-  EDIT_ORDER_RQ: 'orders/edit_order_rq',
-  EDIT_ORDER_SC: 'orders/edit_order_sc',
-  DEL_ORDER_RQ: 'orders/del_order_rq',
-  DEL_ORDER_SC: 'orders/del_order_sc',
-  FAILED_ORDERS_REQUEST: 'orders/get_failed_request',
+  GET_ORDERS: "[ORDER] get orders",
+  GET_ORDERS_SUCCESS: "[ORDER] get orders success",
+  CREATE_ORDER: "[ORDER] create order",
+  CREATE_ORDER_SUCCESS: "[ORDER] create order success",
+  EDIT_ORDER: "[ORDER] edit order",
+  EDIT_ORDER_SUCCESS: "[ORDER] edit order success",
+  REMOVE_ORDER: "[ORDER] remove order",
+  REMOVE_ORDER_SUCCESS: "[ORDER] remove order success",
+  FAILED_ORDER_ACTION: "[ORDER] failed order action",
 };
 
-const getOrderReq = ({token}) => ({
-  type: Types.GET_ORDERS_RQ,
+const getOrdersAction = ({ token }) => ({
+  type: Types.GET_ORDERS,
   payload: {
     token,
   },
 });
 
-const addOrderReq = ({product, token, quantity}) => ({
-  type: Types.ADD_ORDER_RQ,
+const createOrderAction = ({ product, token, quantity }) => ({
+  type: Types.CREATE_ORDER,
   payload: {
     product,
     token,
@@ -26,8 +26,8 @@ const addOrderReq = ({product, token, quantity}) => ({
   },
 });
 
-const editOrderReq = ({orderId, quantity, token}) => ({
-  type: Types.EDIT_ORDER_RQ,
+const editOrderAction = ({ orderId, quantity, token }) => ({
+  type: Types.EDIT_ORDER,
   payload: {
     orderId,
     quantity,
@@ -35,46 +35,46 @@ const editOrderReq = ({orderId, quantity, token}) => ({
   },
 });
 
-const delOrderReq = ({orderId, token}) => ({
-  type: Types.DEL_ORDER_RQ,
+const removeOrderAction = ({ orderId, token }) => ({
+  type: Types.REMOVE_ORDER,
   payload: {
     orderId,
     token,
   },
 });
 
-const getOrdersSuccess = ({orders}) => ({
-  type: Types.GET_ORDERS_SC,
+const getOrdersSuccessAction = ({ orders }) => ({
+  type: Types.GET_ORDERS_SUCCESS,
   payload: {
     orders,
   },
 });
 
-const addOrderSuc = ({order, message}) => ({
-  type: Types.ADD_ORDER_SC,
+const createOrderSuccessAction = ({ order, message }) => ({
+  type: Types.CREATE_ORDER_SUCCESS,
   payload: {
     order,
-    message
+    message,
   },
 });
 
-const editOrderSuc = ({orderId, quantity}) => ({
-  type: Types.EDIT_ORDER_SC,
+const editOrderSuccessAction = ({ orderId, quantity }) => ({
+  type: Types.EDIT_ORDER_SUCCESS,
   payload: {
     orderId,
     quantity,
   },
 });
 
-const delOrderSuc = ({orderId}) => ({
-  type: Types.DEL_ORDER_SC,
+const removeOrderSuccessAction = ({ orderId }) => ({
+  type: Types.REMOVE_ORDER_SUCCESS,
   payload: {
     orderId,
   },
 });
 
-const getOrdersFailedRequest = ({err}) => ({
-  type: Types.FAILED_ORDERS_REQUEST,
+const getFailedOrderAction = ({ err }) => ({
+  type: Types.FAILED_ORDER_ACTION,
   payload: {
     err,
   },
@@ -82,13 +82,13 @@ const getOrdersFailedRequest = ({err}) => ({
 
 export {
   Types,
-  getOrderReq,
-  addOrderReq,
-  getOrdersFailedRequest,
-  delOrderReq,
-  getOrdersSuccess,
-  addOrderSuc,
-  editOrderSuc,
-  delOrderSuc,
-  editOrderReq,
+  getOrdersAction,
+  createOrderAction,
+  getFailedOrderAction,
+  removeOrderAction,
+  getOrdersSuccessAction,
+  createOrderSuccessAction,
+  editOrderSuccessAction,
+  removeOrderSuccessAction,
+  editOrderAction,
 };

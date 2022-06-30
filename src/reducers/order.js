@@ -8,7 +8,7 @@ const INTIAL_STATE = {
 
 export default function order (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_ORDERS_SC: {
+    case Types.GET_ORDERS_SUCCESS: {
       return {
         ...state,
         orderLoading: false,
@@ -16,7 +16,7 @@ export default function order (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.ADD_ORDER_SC: {
+    case Types.CREATE_ORDER_SUCCESS: {
       const {order, message} = action.payload;
       const cpOrders = state.orders;
       if (message === 'added') {
@@ -40,7 +40,7 @@ export default function order (state = INTIAL_STATE, action) {
       break;
     }
 
-    case Types.EDIT_ORDER_SC: {
+    case Types.EDIT_ORDER_SUCCESS: {
       const {orderId, quantity} = action.payload;
       const cpOrders = state.orders;
       const orderIndex = cpOrders.map (({_id}) => _id).indexOf (orderId);
@@ -52,7 +52,7 @@ export default function order (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.DEL_ORDER_SC: {
+    case Types.REMOVE_ORDER_SUCCESS: {
       const {orderId} = action.payload;
       const cpOrders = state.orders;
       const orderIndex = cpOrders.map (({_id}) => _id).indexOf (orderId);
@@ -64,7 +64,7 @@ export default function order (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.FAILED_REQUEST: {
+    case Types.FAILED_ORDER_ACTION: {
       return {
         ...state,
         orderLoading: true,

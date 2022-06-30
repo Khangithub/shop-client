@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { delOrderReq, editOrderReq } from "../../actions/order";
 import { getUnitPrice, getPrice } from "../../helpers/number";
 import { trashCanSvg } from "../../assets";
-
 import "./_orderCard.scss";
+import { editOrderAction, removeOrderAction } from "../../actions/order";
 
 function OrderCard({ order, selectedOrders, setSelectedOrders }) {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
 
     setTimeoutPivot(
       setTimeout(() => {
-        dispatch(editOrderReq({ orderId: _id, quantity: newVal, token }));
+        dispatch(editOrderAction({ orderId: _id, quantity: newVal, token }));
       }, 2000)
     );
   };
@@ -36,7 +35,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
 
     setTimeoutPivot(
       setTimeout(() => {
-        dispatch(editOrderReq({ orderId: _id, quantity: newVal, token }));
+        dispatch(editOrderAction({ orderId: _id, quantity: newVal, token }));
       }, 2000)
     );
   };
@@ -103,7 +102,7 @@ function OrderCard({ order, selectedOrders, setSelectedOrders }) {
           className="del-order-btn"
           src={trashCanSvg}
           alt=""
-          onClick={() => dispatch(delOrderReq({ orderId: order._id, token }))}
+          onClick={() => dispatch(removeOrderAction({ orderId: order._id, token }))}
         />
       </div>
     </div>

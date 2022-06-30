@@ -1,6 +1,6 @@
 import { call, fork, put, takeEvery } from "redux-saga/effects";
-import { failedMsgRq, getMsgsSc, getChatsSc, Types } from "../actions/chat";
-import { getChatsCall, getMsgListCall } from "../api/chat";
+import { getFailedMessagesAction, getMessagesSuccessAction, getChatSuccessAction, Types } from "../actions/chat";
+import { getChatsCall, getMsgListCall } from "../apis/chat";
 
 // generator functions
 function* getMsgsGenerator({ payload: { roomId, token } }) {
@@ -10,13 +10,13 @@ function* getMsgsGenerator({ payload: { roomId, token } }) {
       token,
     });
     yield put(
-      getMsgsSc({
+      getMessagesSuccessAction({
         msgs,
       })
     );
   } catch (err) {
     yield put(
-      failedMsgRq({
+      getFailedMessagesAction({
         chatErr: err,
       })
     );
@@ -29,10 +29,10 @@ function* getChatsGenerator({ payload: { userId, token } }) {
       userId,
       token,
     });
-    yield put(getChatsSc({ chats }));
+    yield put(getChatSuccessAction({ chats }));
   } catch (err) {
     yield put(
-      failedMsgRq({
+      getFailedMessagesAction({
         chatErr: err,
       })
     );
@@ -40,14 +40,14 @@ function* getChatsGenerator({ payload: { userId, token } }) {
 }
 
 // wacher functions
-function* getMsgsWatcher() {
-  yield takeEvery(Types.GET_MSGS_RQ, getMsgsGenerator);
+function* getMessagesWatcher() {
+  yield takeEvery(Types.GET_MESSAGES, getMsgsGenerator);
 }
 
 function* getChatsWatcher() {
-  yield takeEvery(Types.GET_CHATS_RQ, getChatsGenerator);
+  yield takeEvery(Types.GET_CHATS, getChatsGenerator);
 }
 
-const chatSaga = [fork(getMsgsWatcher), fork(getChatsWatcher)];
+const chatSaga = [fork(getMessagesWatcher), fork(getChatsWatcher)];
 
 export default chatSaga;

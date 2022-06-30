@@ -85,3 +85,20 @@ $extraLarge: 1140px;
     background: #555;
   }
 }
+
+@mixin outlineImgBtn {
+  border: none;
+  border-radius: 30px;
+  
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  
+  font-size: x-large;
+
+  img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+  }
+}

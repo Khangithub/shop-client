@@ -9,7 +9,7 @@ var _effects = require("redux-saga/effects");
 
 var _product = require("../actions/product");
 
-var _product2 = require("../api/product");
+var _product2 = require("../apis/product");
 
 var _marked =
 /*#__PURE__*/

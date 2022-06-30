@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Carousel } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getBestSaleProdReq,
-  getMostDiscountsProdsReq,
-  getNewArrivalProdReq,
-} from "../actions/product";
 import { isEmpty } from "lodash";
 import {
   Banner,
@@ -28,6 +23,7 @@ import {
 } from "../assets";
 
 import "./_home.scss";
+import { getBestSaleProductsAction, getMostDiscountsProductsAction, getNewArrivalProductsAction } from "../actions/product";
 
 function Home() {
   const dispatch = useDispatch();
@@ -43,9 +39,9 @@ function Home() {
   } = useSelector(({product}) => product);
 
   useEffect(() => {
-    dispatch(getMostDiscountsProdsReq({ pageIndex, limit }));
-    dispatch(getBestSaleProdReq({ pageIndex, limit }));
-    dispatch(getNewArrivalProdReq({ pageIndex, limit }));
+    dispatch(getMostDiscountsProductsAction({ pageIndex, limit }));
+    dispatch(getBestSaleProductsAction({ pageIndex, limit }));
+    dispatch(getNewArrivalProductsAction({ pageIndex, limit }));
   }, [dispatch, pageIndex, limit]);
 
   if (

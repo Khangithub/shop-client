@@ -1,14 +1,5 @@
 import {call, fork, put, takeLatest} from 'redux-saga/effects';
-import {
-  getMostDiscountsProductsSuccess,
-  getBestSaleProductsSuccess,
-  getFailedRequest,
-  Types,
-  getNewArrivalProductsSuccess,
-  getProductSuccess,
-  getAllProductsSuccess,
-  getProductsByCategorySuccess,
-} from '../actions/product';
+import { getBestSaleProductsSuccessAction, getCurrentProductsSuccessAction, getFailedProductAction, getMostDiscountsProductsSuccessAction, getNewArrivalProductsSuccessAction, getProductsByCategorySuccessAction, getProductsSuccessAction, Types } from '../actions/product';
 import {
   getProductsByCategoryCall,
   getMostDiscoutsProductsCall,
@@ -16,7 +7,7 @@ import {
   getNewArrivalProductsCall,
   getProductCall,
   getAllProductsCall,
-} from '../api/product';
+} from '../apis/product';
 
 // generator functions
 function* getAllProductsGenerator({payload: {pageIndex, limit}}) {
@@ -26,10 +17,10 @@ function* getAllProductsGenerator({payload: {pageIndex, limit}}) {
       limit,
     });
 
-    yield put (getAllProductsSuccess ({products}));
+    yield put (getProductsSuccessAction ({products}));
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         prodErr: err,
       })
     );
@@ -45,10 +36,10 @@ function* getProductsByCategoryGenerator({
       pageIndex,
       limit,
     });
-    yield put (getProductsByCategorySuccess ({products}));
+    yield put (getProductsByCategorySuccessAction ({products}));
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         prodErr: err,
       })
     );
@@ -62,13 +53,13 @@ function* getMostDiscountsProductsGenerator({payload: {pageIndex, limit}}) {
       limit,
     });
     yield put (
-      getMostDiscountsProductsSuccess ({
+      getMostDiscountsProductsSuccessAction ({
         products,
       })
     );
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         prodErr: err,
       })
     );
@@ -81,10 +72,10 @@ function* getBestSaleProductsGenerator({payload: {pageIndex, limit}}) {
       pageIndex,
       limit,
     });
-    yield put (getBestSaleProductsSuccess ({products}));
+    yield put (getBestSaleProductsSuccessAction ({products}));
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         err,
       })
     );
@@ -97,25 +88,25 @@ function* getNewArrivalProductsGenerator({payload: {pageIndex, limit}}) {
       pageIndex,
       limit,
     });
-    yield put (getNewArrivalProductsSuccess ({products}));
+    yield put (getNewArrivalProductsSuccessAction ({products}));
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         prodErr: err,
       })
     );
   }
 }
 
-function* getProductGenerator({payload: {productId}}) {
+function* getCurrentProductGenerator({payload: {productId}}) {
   try {
     const product = yield call (getProductCall, {
       productId,
     });
-    yield put (getProductSuccess ({product}));
+    yield put (getCurrentProductsSuccessAction ({product}));
   } catch (err) {
     yield put (
-      getFailedRequest ({
+      getFailedProductAction ({
         prodErr: err,
       })
     );
@@ -125,36 +116,36 @@ function* getProductGenerator({payload: {productId}}) {
 // watcher functions
 function* getMostDiscountsProductsRequestWatcher () {
   yield takeLatest (
-    Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
+    Types.GET_MOST_DISCOUNTS_PRODUCTS,
     getMostDiscountsProductsGenerator
   );
 }
 
 function* getBestSaleProductsWatcher () {
   yield takeLatest (
-    Types.GET_BEST_SALE_PRODUCTS_REQUEST,
+    Types.GET_BEST_SALE_PRODUCTS,
     getBestSaleProductsGenerator
   );
 }
 
 function* getNewArrivalProductsWatcher () {
   yield takeLatest (
-    Types.GET_NEW_ARRIVAL_PRODUCTS_REQUEST,
+    Types.GET_NEW_ARRIVAL_PRODUCTS,
     getNewArrivalProductsGenerator
   );
 }
 
-function* getProductWatcher () {
-  yield takeLatest (Types.GET_PRODUCT_REQUEST, getProductGenerator);
+function* getCurrentProductWatcher () {
+  yield takeLatest (Types.GET_CURRENT_PRODUCT, getCurrentProductGenerator);
 }
 
 function* getAllProductsWatcher () {
-  yield takeLatest (Types.GET_ALL_PRODUCTS_REQUEST, getAllProductsGenerator);
+  yield takeLatest (Types.GET_ALL_PRODUCTS, getAllProductsGenerator);
 }
 
 function* getProductsByCategoryWatcher () {
   yield takeLatest (
-    Types.GET_PRODUCTS_BY_CATEGORY_REQUEST,
+    Types.GET_PRODUCTS_BY_CATEGORY,
     getProductsByCategoryGenerator
   );
 }
@@ -164,7 +155,7 @@ const productSaga = [
   fork (getMostDiscountsProductsRequestWatcher),
   fork (getBestSaleProductsWatcher),
   fork (getNewArrivalProductsWatcher),
-  fork (getProductWatcher),
+  fork (getCurrentProductWatcher),
   fork (getProductsByCategoryWatcher),
 ];
 

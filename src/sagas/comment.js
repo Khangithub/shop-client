@@ -1,13 +1,13 @@
 import {call, fork, put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {
-  addCmtSuc,
-  delCmtSuc,
-  delRepSuc,
-  editCmtSuc,
-  failedCmtReq,
-  getCmtListSuc,
-  repCmtSuc,
+  createCommentSuccessAction,
+  getFailedCommentAction,
+  getCommentsSuccessAction,
+  replyCommentSuccessAction,
+  removeCommentSuccessAction,
   Types,
+  editCommentSuccessAction,
+  removeReplySuccessAction,
 } from '../actions/comment';
 import {
   addCmtCall,
@@ -16,10 +16,10 @@ import {
   editCmtCall,
   getProductCmtCall,
   repCmtCall,
-} from '../api/comment';
+} from '../apis/comment';
 
 // generator functions
-function* addCmtGenerator({payload: {productId, mainComment, media, token}}) {
+function* createCommentGenerator({payload: {productId, mainComment, media, token}}) {
   try {
     const {message, doc} = yield call (addCmtCall, {
       productId,
@@ -30,38 +30,38 @@ function* addCmtGenerator({payload: {productId, mainComment, media, token}}) {
 
     if (message === 'updated') {
       yield put (
-        addCmtSuc ({
+        createCommentSuccessAction ({
           newCmt: doc,
         })
       );
     }
   } catch (err) {
     yield put (
-      failedCmtReq ({
+      getFailedCommentAction ({
         cmtErr: err,
       })
     );
   }
 }
 
-function* getProductCmtGenerator({payload: {productId, batch, limit}}) {
+function* getCommentsOfProductGenerator({payload: {productId, batch, limit}}) {
   try {
     const cmtList = yield call (getProductCmtCall, {productId, batch, limit});
     yield put (
-      getCmtListSuc ({
+      getCommentsSuccessAction ({
         cmtList,
       })
     );
   } catch (err) {
     yield put (
-      failedCmtReq ({
+      getFailedCommentAction ({
         cmtErr: err,
       })
     );
   }
 }
 
-function* repCmtGenerator({
+function* replyCommentGenerator({
   payload: {commentId, receiver, content, media, token},
 }) {
   try {
@@ -74,17 +74,17 @@ function* repCmtGenerator({
     });
 
     yield put (
-      repCmtSuc ({
+      replyCommentSuccessAction ({
         commentId,
         newRep: doc,
       })
     );
   } catch (err) {
-    yield put (failedCmtReq ({err}));
+    yield put (getFailedCommentAction ({err}));
   }
 }
 
-function* delCmtGenerator({payload: {commentId, token}}) {
+function* removeCommentGenerator({payload: {commentId, token}}) {
   try {
     const res = yield call (delCmtCall, {
       commentId,
@@ -93,17 +93,17 @@ function* delCmtGenerator({payload: {commentId, token}}) {
 
     if (res.message === 'deleted') {
       yield put (
-        delCmtSuc ({
+        removeCommentSuccessAction ({
           commentId: res.commentId,
         })
       );
     }
   } catch (err) {
-    yield put (failedCmtReq ({err}));
+    yield put (getFailedCommentAction ({err}));
   }
 }
 
-function* editCmtGenerator({
+function* editCommentGenerator({
   payload: {commentId, mainComment, mediaList, token},
 }) {
   try {
@@ -115,7 +115,7 @@ function* editCmtGenerator({
     });
     if (res.message === 'edited') {
       yield put (
-        editCmtSuc ({
+        editCommentSuccessAction ({
           commentId: commentId,
           mainComment: res.mainComment,
           mediaList: res.mediaList,
@@ -123,11 +123,11 @@ function* editCmtGenerator({
       );
     }
   } catch (err) {
-    yield put (failedCmtReq ({err}));
+    yield put (getFailedCommentAction ({err}));
   }
 }
 
-function* delRepGenerator({payload: {commentId, repId, token}}) {
+function* removeReplyGenerator({payload: {commentId, repId, token}}) {
   try {
     const res = yield call (delRepCall, {
       commentId,
@@ -137,49 +137,49 @@ function* delRepGenerator({payload: {commentId, repId, token}}) {
 
     if (res.message === 'deleted') {
       yield put (
-        delRepSuc ({
+        removeReplySuccessAction ({
           commentId: res.commentId,
           repId: res.repId
         })
       );
     }
   } catch (err) {
-    yield put (failedCmtReq ({err}));
+    yield put (getFailedCommentAction ({err}));
   }
 }
 
 // wacher functions
-function* addCmtWatcher () {
-  yield takeEvery (Types.ADD_CMT_REQ, addCmtGenerator);
+function* createCommentWatcher () {
+  yield takeEvery (Types.CREATE_COMMENT, createCommentGenerator);
 }
 
-function* getProductCmtWatcher () {
-  yield takeLatest (Types.GET_CMT_LIST_FR_PRODUCT_REQ, getProductCmtGenerator);
+function* getCommentsOfProductWatcher () {
+  yield takeLatest (Types.GET_COMMENTS_OF_PRODUCT, getCommentsOfProductGenerator);
 }
 
-function* repCmtWatcher () {
-  yield takeLatest (Types.REP_CMT_REQ, repCmtGenerator);
+function* replyCommentWatcher () {
+  yield takeLatest (Types.REPLY_COMMENT, replyCommentGenerator);
 }
 
-function* delCmtWatcher () {
-  yield takeLatest (Types.DEL_CMT_REQ, delCmtGenerator);
+function* removeCommentWatcher () {
+  yield takeLatest (Types.REMOVE_COMMENT, removeCommentGenerator);
 }
 
-function* editCmtWatcher () {
-  yield takeLatest (Types.EDIT_CMT_REQ, editCmtGenerator);
+function* editCommentWatcher () {
+  yield takeLatest (Types.EDIT_COMMENT, editCommentGenerator);
 }
 
-function* delRepWatcher () {
-  yield takeLatest (Types.DEL_REP_REQ, delRepGenerator);
+function* removeReplyWatcher () {
+  yield takeLatest (Types.REMOVE_REPLY, removeReplyGenerator);
 }
 
 const commentSaga = [
-  fork (addCmtWatcher),
-  fork (getProductCmtWatcher),
-  fork (repCmtWatcher),
-  fork (editCmtWatcher),
-  fork (delCmtWatcher),
-  fork (delRepWatcher),
+  fork (createCommentWatcher),
+  fork (getCommentsOfProductWatcher),
+  fork (replyCommentWatcher),
+  fork (editCommentWatcher),
+  fork (removeCommentWatcher),
+  fork (removeReplyWatcher),
 ];
 
 export default commentSaga;

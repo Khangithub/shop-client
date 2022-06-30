@@ -2,10 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Row, Col, Badge, Carousel, Toast } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouteMatch, useHistory } from "react-router-dom";
-import {
-  getProductRequest,
-  getProductsByCategoryRequest,
-} from "../actions/product";
 import { isEmpty } from "lodash";
 import { getUnitPrice } from "../helpers/number";
 import {
@@ -26,13 +22,14 @@ import {
   sendSvg,
   closeSvg,
 } from "../assets";
-import { addCmtReq, getCmtListFromProductReq } from "../actions/comment";
+import { createCommentAction, getCommentsOfProductAction } from "../actions/comment";
 import ReactPlayer from "react-player";
-import { addOrderReq } from "../actions/order";
 import ChatModal from "../components/ChatModal";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/userCtx";
 
 import "./_product.scss";
+import { createOrderAction } from "../actions/order";
+import { getCurrentProductAction, getProductsByCategoryAction } from "../actions/product";
 
 function Product() {
   const dispatch = useDispatch();
@@ -54,8 +51,8 @@ function Product() {
 
   useEffect(() => {
     setQuantity(1);
-    dispatch(getProductRequest({ productId }));
-    dispatch(getCmtListFromProductReq({ productId, batch: 0, limit: 0 }));
+    dispatch(getCurrentProductAction({ productId }));
+    dispatch(getCommentsOfProductAction({ productId, batch: 0, limit: 0 }));
   }, [productId, currentUser, dispatch]);
 
   const { productsByCategory } = useSelector(({ product }) => product);
@@ -63,7 +60,7 @@ function Product() {
   useEffect(() => {
     if (product && product.hasOwnProperty("category")) {
       dispatch(
-        getProductsByCategoryRequest({
+        getProductsByCategoryAction({
           category: product.category,
           pageIndex: 1,
           limit: 6,
@@ -187,7 +184,7 @@ function Product() {
                   className="add-to-cart-btn"
                   onClick={() => {
                     dispatch(
-                      addOrderReq({ product: productId, token, quantity })
+                      createOrderAction({ product: productId, token, quantity })
                     );
                     setAddOrder(true);
                     setTimeout(() => {
@@ -347,7 +344,7 @@ function Product() {
                       alt="send-icon"
                       onClick={() => {
                         dispatch(
-                          addCmtReq({
+                          createCommentAction({
                             productId,
                             mainComment,
                             media: cmtMedia.origin,
@@ -378,7 +375,7 @@ function Product() {
                   e.target.style.height = e.target.scrollHeight + "px";
                   if (mainComment.trim() !== "" && e.keyCode === 13) {
                     dispatch(
-                      addCmtReq({
+                      createCommentAction({
                         productId,
                         mainComment,
                         media: cmtMedia.origin,

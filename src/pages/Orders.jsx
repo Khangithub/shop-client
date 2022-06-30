@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavBar, Footer, Loading, OrderCard } from "../components";
-import { getOrderReq } from "../actions/order";
 import { trashCanSvg } from "../assets";
 import { isEmpty } from "lodash";
-
+import { UserCtx } from "../context/userCtx";
+import { getOrdersAction } from "../actions/order";
 import "./_orders.scss";
-import { UserCtx } from "../context/user.context";
+
 
 function Order() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ function Order() {
   const { orders, orderLoading, orderErr } = useSelector(({ order }) => order);
 
   useEffect(() => {
-    dispatch(getOrderReq({ token }));
+    dispatch(getOrdersAction({ token }));
   }, [dispatch, token]);
 
   const [selectedOrders, setSelectedOrders] = useState([]);

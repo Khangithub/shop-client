@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Navbar, Nav, Image, Badge, NavDropdown } from "react-bootstrap";
 import { removeAscent } from "../../helpers/string";
-import { getOrderReq } from "../../actions/order";
 
 import { logoSvg, searchSvg, cartSvg } from "../../assets";
 
 import "./_navbar.scss";
-import { UserCtx } from "../../context/user.context";
+import { UserCtx } from "../../context/userCtx";
+import { getOrdersAction } from "../../actions/order";
 
 function NavBar() {
   const { currentUser, token } = useContext(UserCtx);
@@ -20,7 +20,7 @@ function NavBar() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getOrderReq({ token }));
+      dispatch(getOrdersAction({ token }));
     }
   }, [dispatch, token]);
 

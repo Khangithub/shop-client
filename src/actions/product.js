@@ -1,30 +1,30 @@
 const Types = {
-  GET_MOST_DISCOUNTS_PRODUCTS_REQUEST: 'products/get_most_discounts_products_request',
-  GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: 'products/get_most_discounts_products_success',
-  GET_NEW_ARRIVAL_PRODUCTS_REQUEST: 'products/get_new_arrival_products_request',
-  GET_NEW_ARRIVAL_PRODUCTS_SUCCESS: 'products/get_new_arrival_products_success',
-  GET_BEST_SALE_PRODUCTS_REQUEST: 'products/get_best_sale_products_request',
-  GET_BEST_SALE_PRODUCTS_SUCCESS: 'products/get_best_sale_products_success',
-  GET_PRODUCT_REQUEST: 'products/get_product_request',
-  GET_PRODUCT_SUCCESS: 'products/get_product_success',
-  GET_ALL_PRODUCTS_REQUEST: 'products/get_all_products_request',
-  GET_ALL_PRODUCTS_SUCCESS: 'products/get_all_products_success',
-  GET_PRODUCTS_BY_CATEGORY_REQUEST: 'products/get_products_by_category_request',
-  GET_PRODUCTS_BY_CATEGORY_SUCCESS: 'products/get_products_by_category_success',
-  FAILED_REQUEST: 'products/failed_request',
+  GET_MOST_DISCOUNTS_PRODUCTS: '[PRODUCTS] get most discounts products',
+  GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS: '[PRODUCTS] get most discounts products success',
+  GET_NEW_ARRIVAL_PRODUCTS: '[PRODUCTS] get new arrival products',
+  GET_NEW_ARRIVAL_PRODUCTS_SUCCESS: '[PRODUCTS] get new arrival products success',
+  GET_BEST_SALE_PRODUCTS: '[PRODUCTS] get best sale products',
+  GET_BEST_SALE_PRODUCTS_SUCCESS: '[PRODUCTS] get best sale products success',
+  GET_CURRENT_PRODUCT: '[PRODUCTS] get product',
+  GET_CURRENT_PRODUCT_SUCCESS: '[PRODUCTS] get product success',
+  GET_ALL_PRODUCTS: '[PRODUCTS] get all products',
+  GET_ALL_PRODUCTS_SUCCESS: '[PRODUCTS] get all products success',
+  GET_PRODUCTS_BY_CATEGORY: '[PRODUCTS] get products by category',
+  GET_PRODUCTS_BY_CATEGORY_SUCCESS: '[PRODUCTS] get products by category success',
+  FAILED_PRODUCT_ACTION: '[PRODUCTS] failed product action',
 };
 
 // request actions
-const getAllProductsRequest = ({pageIndex, limit}) => ({
-  type: Types.GET_ALL_PRODUCTS_REQUEST,
+const getAllProductAction  = ({pageIndex, limit}) => ({
+  type: Types.GET_ALL_PRODUCTS,
   payload: {
     pageIndex,
     limit,
   },
 });
 
-const getProductsByCategoryRequest = ({category, pageIndex, limit}) => ({
-  type: Types.GET_PRODUCTS_BY_CATEGORY_REQUEST,
+const getProductsByCategoryAction  = ({category, pageIndex, limit}) => ({
+  type: Types.GET_PRODUCTS_BY_CATEGORY,
   payload: {
     category,
     pageIndex,
@@ -32,83 +32,83 @@ const getProductsByCategoryRequest = ({category, pageIndex, limit}) => ({
   },
 });
 
-const getMostDiscountsProdsReq = ({pageIndex, limit}) => ({
-  type: Types.GET_MOST_DISCOUNTS_PRODUCTS_REQUEST,
+const getMostDiscountsProductsAction = ({pageIndex, limit}) => ({
+  type: Types.GET_MOST_DISCOUNTS_PRODUCTS,
   payload: {
     pageIndex,
     limit,
   },
 });
 
-const getBestSaleProdReq = ({pageIndex, limit}) => ({
-  type: Types.GET_BEST_SALE_PRODUCTS_REQUEST,
+const getBestSaleProductsAction = ({pageIndex, limit}) => ({
+  type: Types.GET_BEST_SALE_PRODUCTS,
   payload: {
     pageIndex,
     limit,
   },
 });
 
-const getNewArrivalProdReq = ({pageIndex, limit}) => ({
-  type: Types.GET_NEW_ARRIVAL_PRODUCTS_REQUEST,
+const getNewArrivalProductsAction = ({pageIndex, limit}) => ({
+  type: Types.GET_NEW_ARRIVAL_PRODUCTS,
   payload: {
     pageIndex,
     limit,
   },
 });
 
-const getProductRequest = ({productId}) => ({
-  type: Types.GET_PRODUCT_REQUEST,
+const getCurrentProductAction  = ({productId}) => ({
+  type: Types.GET_CURRENT_PRODUCT,
   payload: {
     productId,
   },
 });
 
 // success actions
-const getAllProductsSuccess = ({products}) => ({
+const getProductsSuccessAction = ({products}) => ({
   type: Types.GET_ALL_PRODUCTS_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getProductsByCategorySuccess = ({products}) => ({
+const getProductsByCategorySuccessAction = ({products}) => ({
   type: Types.GET_PRODUCTS_BY_CATEGORY_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getMostDiscountsProductsSuccess = ({products}) => ({
+const getMostDiscountsProductsSuccessAction = ({products}) => ({
   type: Types.GET_MOST_DISCOUNTS_PRODUCTS_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getBestSaleProductsSuccess = ({products}) => ({
+const getBestSaleProductsSuccessAction = ({products}) => ({
   type: Types.GET_BEST_SALE_PRODUCTS_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getNewArrivalProductsSuccess = ({products}) => ({
+const getNewArrivalProductsSuccessAction = ({products}) => ({
   type: Types.GET_NEW_ARRIVAL_PRODUCTS_SUCCESS,
   payload: {
     products,
   },
 });
 
-const getProductSuccess = ({product}) => ({
-  type: Types.GET_PRODUCT_SUCCESS,
+const getCurrentProductsSuccessAction = ({product}) => ({
+  type: Types.GET_CURRENT_PRODUCT_SUCCESS,
   payload: {
     product,
   },
 });
 
 // failed actions
-const getFailedRequest = ({err}) => ({
-  type: Types.FAILED_REQUEST,
+const getFailedProductAction  = ({err}) => ({
+  type: Types.FAILED_PRODUCT_ACTION,
   payload: {
     err,
   },
@@ -116,17 +116,17 @@ const getFailedRequest = ({err}) => ({
 
 export {
   Types,
-  getAllProductsRequest,
-  getProductsByCategoryRequest,
-  getBestSaleProdReq,
-  getMostDiscountsProdsReq,
-  getNewArrivalProdReq,
-  getProductRequest,
-  getAllProductsSuccess,
-  getProductsByCategorySuccess,
-  getBestSaleProductsSuccess,
-  getMostDiscountsProductsSuccess,
-  getNewArrivalProductsSuccess,
-  getProductSuccess,
-  getFailedRequest,
+  getAllProductAction ,
+  getProductsByCategoryAction,
+  getBestSaleProductsAction,
+  getMostDiscountsProductsAction,
+  getNewArrivalProductsAction,
+  getCurrentProductAction,
+  getProductsSuccessAction,
+  getProductsByCategorySuccessAction,
+  getBestSaleProductsSuccessAction,
+  getMostDiscountsProductsSuccessAction,
+  getNewArrivalProductsSuccessAction,
+  getCurrentProductsSuccessAction,
+  getFailedProductAction,
 };

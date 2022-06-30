@@ -8,7 +8,7 @@ const INTIAL_STATE = {
 
 export default function cmt (state = INTIAL_STATE, action) {
   switch (action.type) {
-    case Types.GET_CMT_LIST_SUC: {
+    case Types.GET_COMMENTS_SUCCESS: {
       return {
         ...state,
         cmtLoading: false,
@@ -16,7 +16,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.ADD_CMT_SUC: {
+    case Types.CREATE_COMMENT_SUCCESS: {
       const {newCmt} = action.payload;
       const {cmtList} = state;
       return {
@@ -26,7 +26,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.REP_CMT_SUC: {
+    case Types.REPLY_COMMENT_SUCCESS: {
       const {newRep, commentId} = action.payload;
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
@@ -39,7 +39,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.EDIT_CMT_SUC: {
+    case Types.EDIT_COMMENT_SUCCESS: {
       const {commentId, mediaList, mainComment} = action.payload;
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
@@ -56,7 +56,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.DEL_CMT_SUC: {
+    case Types.REMOVE_COMMENT_SUCCESS: {
       const {commentId} = action.payload;
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
@@ -69,7 +69,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.DEL_REP_SUC: {
+    case Types.REMOVE_REPLY_SUCCESS: {
       const {commentId, repId} = action.payload;
       const newCmtList = state.cmtList;
       const cmtIndex = newCmtList.map (({_id}) => _id).indexOf (commentId);
@@ -86,7 +86,7 @@ export default function cmt (state = INTIAL_STATE, action) {
       };
     }
 
-    case Types.FAILED_CMT_REQ: {
+    case Types.FAILED_COMMET_ACTION: {
       return {
         ...state,
         cmtLoading: true,

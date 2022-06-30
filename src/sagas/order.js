@@ -1,18 +1,11 @@
 import {call, fork, put, takeLatest, takeEvery} from 'redux-saga/effects';
-import {
-  delOrderSuc,
-  getOrdersFailedRequest,
-  getOrdersSuccess,
-  Types,
-  editOrderSuc,
-  addOrderSuc,
-} from '../actions/order';
+import { createOrderSuccessAction, editOrderSuccessAction, getFailedOrderAction, getOrdersSuccessAction, removeOrderSuccessAction, Types } from '../actions/order';
 import {
   delOrderCall,
   getOrdersCall,
   editOrderCall,
   addOrderCall,
-} from '../api/order';
+} from '../apis/order';
 
 function* getOrdersGenerator({payload: {token}}) {
   try {
@@ -21,30 +14,30 @@ function* getOrdersGenerator({payload: {token}}) {
     });
 
     yield put (
-      getOrdersSuccess ({
+      getOrdersSuccessAction ({
         orders,
       })
     );
   } catch (err) {
     yield put (
-      getOrdersFailedRequest ({
+      getFailedOrderAction ({
         orderErr: err,
       })
     );
   }
 }
 
-function* addOrderGenerator({payload: {token, product, quantity}}) {
+function* createOrderGenerator({payload: {token, product, quantity}}) {
   try {
     const {message, doc} = yield call (addOrderCall, {
       token,
       product,
       quantity,
     });
-    yield put (addOrderSuc ({message, order: doc}));
+    yield put (createOrderSuccessAction ({message, order: doc}));
   } catch (err) {
     yield put (
-      getOrdersFailedRequest ({
+      getFailedOrderAction ({
         orderErr: err,
       })
     );
@@ -61,18 +54,18 @@ function* updateOrdersItemGenerator({payload: {orderId, quantity, token}}) {
 
     if (message === 'updated') {
       yield put (
-        editOrderSuc ({
+        editOrderSuccessAction ({
           orderId,
           quantity,
         })
       );
     }
   } catch (err) {
-    yield put (getOrdersFailedRequest ({err}));
+    yield put (getFailedOrderAction ({err}));
   }
 }
 
-function* delOrderGenerator({payload: {orderId, token}}) {
+function* removeOrderGenerator({payload: {orderId, token}}) {
   try {
     const res = yield call (delOrderCall, {
       orderId,
@@ -81,37 +74,37 @@ function* delOrderGenerator({payload: {orderId, token}}) {
 
     if (res.message === 'deleted') {
       yield put (
-        delOrderSuc ({
+        removeOrderSuccessAction ({
           orderId: res.orderId,
         })
       );
     }
   } catch (err) {
-    yield put (getOrdersFailedRequest ({err}));
+    yield put (getFailedOrderAction ({err}));
   }
 }
 
 // wacher functions
 function* getOrdersWatcher () {
-  yield takeLatest (Types.GET_ORDERS_RQ, getOrdersGenerator);
+  yield takeLatest (Types.GET_ORDERS, getOrdersGenerator);
 }
 
-function* addOrderWatcher () {
-  yield takeEvery (Types.ADD_ORDER_RQ, addOrderGenerator);
+function* createOrderWatcher () {
+  yield takeEvery (Types.CREATE_ORDER, createOrderGenerator);
 }
 
 function* updateOrdersItemRequestWatcher () {
-  yield takeLatest (Types.EDIT_ORDER_RQ, updateOrdersItemGenerator);
+  yield takeLatest (Types.EDIT_ORDER, updateOrdersItemGenerator);
 }
 
-function* delOrderWatcher () {
-  yield takeLatest (Types.DEL_ORDER_RQ, delOrderGenerator);
+function* removeOrderWatcheer () {
+  yield takeLatest (Types.REMOVE_ORDER, removeOrderGenerator);
 }
 const orderSaga = [
   fork (getOrdersWatcher),
-  fork (addOrderWatcher),
+  fork (createOrderWatcher),
   fork (updateOrdersItemRequestWatcher),
-  fork (delOrderWatcher),
+  fork (removeOrderWatcheer),
 ];
 
 export default orderSaga;

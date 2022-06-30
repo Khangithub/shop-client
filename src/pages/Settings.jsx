@@ -3,9 +3,9 @@ import { NavBar, Title } from "../components";
 import { Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 // import firebase, { auth } from "../config/firebase";
-import { UserCtx } from "../context/user.context";
+import { UserCtx } from "../context/userCtx";
+import { changeAvatarAction } from "../actions/auth";
 import "./_settings.scss";
-import { chgUserAvtReq } from "../actions/user";
 
 function Settings() {
   const dispatch = useDispatch();
@@ -97,7 +97,7 @@ function Settings() {
                     const { files } = e.target;
                     if (files.length === 1) {
                       setAvt(URL.createObjectURL(files[0]));
-                      dispatch(chgUserAvtReq({ file: files[0], token }));
+                      dispatch(changeAvatarAction({ file: files[0], token }));
                     }
                   }}
                 />

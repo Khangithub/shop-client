@@ -1,31 +1,31 @@
 const Types = {
-  GET_MSGS_RQ: "chat/get_msgs_rq",
-  GET_MSGS_SC: "chat/get_msgs_sc",
-  UPDATE_MSGS: "chat/update_msgs",
-  UPDATE_CHATS: "chat/update_chats",
-  GET_CHATS_RQ: "chat/get_chats_rq",
-  GET_CHATS_SC: "chat/get_chats_sc",
-  FAILED_MSG_RQ: "chat/failed_msg_rq",
+  GET_MESSAGES: "[CHAT] get messages",
+  GET_MESSAGES_SUCCESS: "[CHAT] get messages success",
+  UPDATE_MESSAGE: "[CHAT] update messages",
+  UPDATE_CHATS: "[CHAT] update chats",
+  GET_CHATS: "[CHAT] get chats",
+  GET_CHATS_SUCCESS: "[CHAT] get chats success",
+  FAILED_CHAT_ACTION: "[CHAT] failed chat action",
 };
 
-const getMsgsRq = ({ token, roomId }) => ({
-  type: Types.GET_MSGS_RQ,
+const getMessagesAction = ({ token, roomId }) => ({
+  type: Types.GET_MESSAGES,
   payload: {
     token,
     roomId,
   },
 });
 
-const getChatsRq = ({ userId, token }) => ({
-  type: Types.GET_CHATS_RQ,
+const getChatsAction = ({ userId, token }) => ({
+  type: Types.GET_CHATS,
   payload: {
     userId,
     token,
   },
 });
 
-const updateMsgs = ({ fromId, content, createdAt, type, mediaList }) => ({
-  type: Types.UPDATE_MSGS,
+const updateMessagesAction = ({ fromId, content, createdAt, type, mediaList }) => ({
+  type: Types.UPDATE_MESSAGE,
   payload: {
     fromId,
     content,
@@ -35,7 +35,7 @@ const updateMsgs = ({ fromId, content, createdAt, type, mediaList }) => ({
   },
 });
 
-const updateChats = ({
+const updateChatsAction = ({
   isNewChat,
   room,
   productId,
@@ -66,34 +66,34 @@ const updateChats = ({
   },
 });
 
-const getMsgsSc = ({ msgs }) => ({
-  type: Types.GET_MSGS_SC,
+const getMessagesSuccessAction = ({ msgs }) => ({
+  type: Types.GET_MESSAGES_SUCCESS,
   payload: {
     msgs,
   },
 });
 
-const getChatsSc = ({ chats }) => ({
-  type: Types.GET_CHATS_SC,
+const getChatSuccessAction = ({ chats }) => ({
+  type: Types.GET_CHATS_SUCCESS,
   payload: {
     chats,
   },
 });
 
-const failedMsgRq = ({ err }) => ({
-  type: Types.FAILED_MSG_RQ,
+const getFailedMessagesAction = ({ err }) => ({
+  type: Types.FAILED_CHAT_ACTION,
   payload: {
     err,
   },
 });
 
 export {
-  getMsgsRq,
-  getChatsRq,
-  updateMsgs,
-  updateChats,
-  getChatsSc,
-  getMsgsSc,
-  failedMsgRq,
   Types,
+  getMessagesAction,
+  getChatsAction,
+  updateMessagesAction,
+  updateChatsAction,
+  getChatSuccessAction,
+  getMessagesSuccessAction,
+  getFailedMessagesAction,
 };
